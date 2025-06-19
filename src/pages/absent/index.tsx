@@ -1,7 +1,7 @@
-import ParamPagination from "@/components/param/pagination";
-import ParamSelect from "@/components/param/param-select";
-import { ParamInputSearch } from "@/components/param/search-input";
-import ParamTabs from "@/components/param/tabs";
+import ParamPagination from "@/ccomponents/param/pagination";
+import ParamSelect from "@/ccomponents/param/param-select";
+import { ParamInputSearch } from "@/ccomponents/param/search-input";
+import ParamTabs from "@/ccomponents/param/tabs";
 import DataTable from "@/components/ui/table";
 import Tabs from "@/components/ui/tabs";
 import {

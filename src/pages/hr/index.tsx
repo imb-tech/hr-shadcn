@@ -1,7 +1,7 @@
 import DeleteModal from "@/components/elements/delete-modal";
-import ParamPagination from "@/components/param/pagination";
-import ParamSelect from "@/components/param/param-select";
-import { ParamInputSearch } from "@/components/param/search-input";
+import ParamPagination from "@/ccomponents/param/pagination";
+import ParamSelect from "@/ccomponents/param/param-select";
+import { ParamInputSearch } from "@/ccomponents/param/search-input";
 import PButton from "@/components/ui/p-button";
 import DataTable from "@/components/ui/table";
 import {

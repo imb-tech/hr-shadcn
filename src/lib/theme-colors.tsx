@@ -42,6 +42,7 @@ export const themes = {
             border: "12 6.5% 15.1%",
             input: "12 6.5% 15.1%",
             ring: "20.5 90.2% 48.2%",
+            radius: "0.5rem",
         },
     },
     Blue: {
@@ -87,6 +88,7 @@ export const themes = {
             border: "217.2 32.6% 17.5%",
             input: "217.2 32.6% 17.5%",
             ring: "224.3 76.3% 48%",
+            radius: "0.5rem",
         },
     },
     Green: {
@@ -132,6 +134,7 @@ export const themes = {
             border: "240 3.7% 15.9%",
             input: "240 3.7% 15.9%",
             ring: "142.4 71.8% 29.2%",
+            radius: "0.5rem",
         },
     },
     Rose: {
@@ -177,6 +180,7 @@ export const themes = {
             border: "240 3.7% 15.9%",
             input: "240 3.7% 15.9%",
             ring: "346.8 77.2% 49.8%",
+            radius: "0.5rem",
         },
     },
     Zinc: {
@@ -222,6 +226,7 @@ export const themes = {
             border: "240 3.7% 15.9%",
             input: "240 3.7% 15.9%",
             ring: "240 4.9% 83.9%",
+            radius: "0.5rem",
         },
     },
     Slate: {
@@ -267,6 +272,7 @@ export const themes = {
             border: "217.2 32.6% 17.5%",
             input: "217.2 32.6% 17.5%",
             ring: "212.7 26.8% 83.9",
+            radius: "0.5rem",
         },
     },
     Stone: {
@@ -322,6 +328,7 @@ export const themes = {
             chart3: "30 80% 55%",
             chart4: "280 65% 60%",
             chart5: "340 75% 55%",
+            radius: "0.5rem",
         },
     },
     Gray: {
@@ -377,6 +384,7 @@ export const themes = {
             chart3: "30 80% 55%",
             chart4: "280 65% 60%",
             chart5: "340 75% 55%",
+            radius: "0.5rem",
         },
     },
     Neutral: {
@@ -432,6 +440,7 @@ export const themes = {
             chart3: "30 80% 55%",
             chart4: "280 65% 60%",
             chart5: "340 75% 55%",
+            radius: "0.5rem",
         },
     },
     Red: {
@@ -487,6 +496,7 @@ export const themes = {
             chart3: "30 80% 55%",
             chart4: "280 65% 60%",
             chart5: "340 75% 55%",
+            radius: "0.5rem",
         },
     },
     Yellow: {
@@ -542,6 +552,7 @@ export const themes = {
             chart3: "30 80% 55%",
             chart4: "280 65% 60%",
             chart5: "340 75% 55%",
+            radius: "0.5rem",
         },
     },
     Violet: {
@@ -642,6 +653,7 @@ export const themes = {
             border: "217.2 32.6% 17.5%",
             input: "217.2 32.6% 17.5%",
             ring: "206, 91%, 67%",
+            radius: "0.5rem",
         },
     },
 }
