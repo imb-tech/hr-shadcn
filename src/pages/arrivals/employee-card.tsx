@@ -1,9 +1,8 @@
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { formatMoney } from "@/lib/format-money";
+import { formatPhoneNumber } from "@/lib/format-phone-number";
 import formatPassportNumber from "@/lib/formatter-pasport";
-import formatPhoneNumber from "@/lib/formatter-phone";
-import { Avatar } from "@heroui/avatar";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { cn } from "@heroui/theme";
+import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { format } from "date-fns";
 import { Clock, MapPin, Phone, User } from "lucide-react";
@@ -21,17 +20,16 @@ const EmployeeCard = ({
     <Link params={{ id: item.id.toString() }} to="/hr-view/$id">
       <Card>
         <CardHeader className="flex flex-row items-center gap-4 pb-2">
-          <Avatar
-            showFallback
+          {/* <Avatar
             className="h-14 w-14"
             src="https://images.unsplash.com/broken"
-          />
+          /> */}
           <div>
             <h3 className="font-semibold">{item.full_name}</h3>
             <p className="text-sm text-muted-foreground">{item.role_name}</p>
           </div>
         </CardHeader>
-        <CardBody>
+        <CardContent>
           <div className="flex flex-wrap gap-2 mb-4">
             <div
               className={cn(
@@ -53,7 +51,7 @@ const EmployeeCard = ({
               </div>
               <div>
                 <p className="text-xs text-gray-400">Tel</p>
-                <p>{formatPhoneNumber(Number(item.phone))}</p>
+                <p>{formatPhoneNumber(String(item.phone))}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -109,7 +107,7 @@ const EmployeeCard = ({
               </div>
             </div>
           ) : null}
-        </CardBody>
+        </CardContent>
       </Card>
     </Link>
   );

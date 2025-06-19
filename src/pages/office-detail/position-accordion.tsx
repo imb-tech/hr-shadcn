@@ -1,10 +1,6 @@
-import Accordion from "@/components/ui/accordion";
-import DataTable from "@/components/ui/table";
 import { USER_STATISTIC } from "@/constants/api-endpoints";
 import useCheckPermission from "@/hooks/use-check-permission";
 import { useGet } from "@/hooks/useGet";
-import { Skeleton } from "@heroui/skeleton";
-import { Selection } from "@react-types/shared";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 import { useWorkerInfoCols } from "./cols";

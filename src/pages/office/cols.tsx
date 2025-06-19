@@ -1,4 +1,4 @@
-import { ColumnDef } from "@/components/ui/table";
+import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 
 export const usOfficeCols = () => {
@@ -8,33 +8,33 @@ export const usOfficeCols = () => {
       {
         header: "Nomi",
         accessorKey: "id",
-        cell: (_, item) => (
+        cell: ({row}) => (
           <span className="whitespace-nowrap lg:break-all">
-            {item.properties.name}
+            {row.original.properties.name}
           </span>
         ),
       },
       {
         header: "Manzil",
         accessorKey: "id",
-        cell: (_, item) => (
+        cell: ({row}) => (
           <span className="whitespace-nowrap lg:break-all">
-            {item.properties.address}
+            {row.original.properties.address}
           </span>
         ),
       },
       {
         header: "Hodimlar soni",
         accessorKey: "id",
-        cell: (_, itm) => <span>{itm.properties.employee_count}</span>,
+        cell: ({row}) => <span>{row.original.properties.employee_count}</span>,
       },
       {
         header: "Tushlik vaqti",
         accessorKey: "id",
-        cell: (_, itm) => (
+        cell: ({row}) => (
           <span className="whitespace-nowrap lg:break-all">
-            {itm.properties.lunch_start_time?.slice(0, 5)} -{" "}
-            {itm.properties.lunch_end_time?.slice(0, 5)}
+            {row.original.properties.lunch_start_time?.slice(0, 5)} -{" "}
+            {row.original.properties.lunch_end_time?.slice(0, 5)}
           </span>
         ),
       },
