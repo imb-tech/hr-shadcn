@@ -23,6 +23,7 @@ import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
 import { Route as MainPlansIndexImport } from './routes/_main/plans/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
 import { Route as MainPositionHrViewIdImport } from './routes/_main/position-hr-view/$id'
+import { Route as MainPlansCheckoutImport } from './routes/_main/plans/checkout'
 import { Route as MainOfficeCreateImport } from './routes/_main/office/create'
 import { Route as MainOfficeIdImport } from './routes/_main/office/$id'
 import { Route as MainOfficeEditIdImport } from './routes/_main/office-edit/$id'
@@ -94,6 +95,12 @@ const MainMapIndexRoute = MainMapIndexImport.update({
 const MainPositionHrViewIdRoute = MainPositionHrViewIdImport.update({
   id: '/position-hr-view/$id',
   path: '/position-hr-view/$id',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainPlansCheckoutRoute = MainPlansCheckoutImport.update({
+  id: '/plans/checkout',
+  path: '/plans/checkout',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -189,6 +196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainOfficeCreateImport
       parentRoute: typeof MainImport
     }
+    '/_main/plans/checkout': {
+      id: '/_main/plans/checkout'
+      path: '/plans/checkout'
+      fullPath: '/plans/checkout'
+      preLoaderRoute: typeof MainPlansCheckoutImport
+      parentRoute: typeof MainImport
+    }
     '/_main/position-hr-view/$id': {
       id: '/_main/position-hr-view/$id'
       path: '/position-hr-view/$id'
@@ -240,6 +254,7 @@ interface MainRouteChildren {
   MainOfficeEditIdRoute: typeof MainOfficeEditIdRoute
   MainOfficeIdRoute: typeof MainOfficeIdRoute
   MainOfficeCreateRoute: typeof MainOfficeCreateRoute
+  MainPlansCheckoutRoute: typeof MainPlansCheckoutRoute
   MainPositionHrViewIdRoute: typeof MainPositionHrViewIdRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
   MainPlansIndexRoute: typeof MainPlansIndexRoute
@@ -254,6 +269,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainOfficeEditIdRoute: MainOfficeEditIdRoute,
   MainOfficeIdRoute: MainOfficeIdRoute,
   MainOfficeCreateRoute: MainOfficeCreateRoute,
+  MainPlansCheckoutRoute: MainPlansCheckoutRoute,
   MainPositionHrViewIdRoute: MainPositionHrViewIdRoute,
   MainMapIndexRoute: MainMapIndexRoute,
   MainPlansIndexRoute: MainPlansIndexRoute,
@@ -272,6 +288,7 @@ export interface FileRoutesByFullPath {
   '/office-edit/$id': typeof MainOfficeEditIdRoute
   '/office/$id': typeof MainOfficeIdRoute
   '/office/create': typeof MainOfficeCreateRoute
+  '/plans/checkout': typeof MainPlansCheckoutRoute
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/map': typeof MainMapIndexRoute
   '/plans': typeof MainPlansIndexRoute
@@ -288,6 +305,7 @@ export interface FileRoutesByTo {
   '/office-edit/$id': typeof MainOfficeEditIdRoute
   '/office/$id': typeof MainOfficeIdRoute
   '/office/create': typeof MainOfficeCreateRoute
+  '/plans/checkout': typeof MainPlansCheckoutRoute
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/map': typeof MainMapIndexRoute
   '/plans': typeof MainPlansIndexRoute
@@ -306,6 +324,7 @@ export interface FileRoutesById {
   '/_main/office-edit/$id': typeof MainOfficeEditIdRoute
   '/_main/office/$id': typeof MainOfficeIdRoute
   '/_main/office/create': typeof MainOfficeCreateRoute
+  '/_main/plans/checkout': typeof MainPlansCheckoutRoute
   '/_main/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/_main/map/': typeof MainMapIndexRoute
   '/_main/plans/': typeof MainPlansIndexRoute
@@ -324,6 +343,7 @@ export interface FileRouteTypes {
     | '/office-edit/$id'
     | '/office/$id'
     | '/office/create'
+    | '/plans/checkout'
     | '/position-hr-view/$id'
     | '/map'
     | '/plans'
@@ -339,6 +359,7 @@ export interface FileRouteTypes {
     | '/office-edit/$id'
     | '/office/$id'
     | '/office/create'
+    | '/plans/checkout'
     | '/position-hr-view/$id'
     | '/map'
     | '/plans'
@@ -355,6 +376,7 @@ export interface FileRouteTypes {
     | '/_main/office-edit/$id'
     | '/_main/office/$id'
     | '/_main/office/create'
+    | '/_main/plans/checkout'
     | '/_main/position-hr-view/$id'
     | '/_main/map/'
     | '/_main/plans/'
@@ -404,6 +426,7 @@ export const routeTree = rootRoute
         "/_main/office-edit/$id",
         "/_main/office/$id",
         "/_main/office/create",
+        "/_main/plans/checkout",
         "/_main/position-hr-view/$id",
         "/_main/map/",
         "/_main/plans/",
@@ -440,6 +463,10 @@ export const routeTree = rootRoute
     },
     "/_main/office/create": {
       "filePath": "_main/office/create.tsx",
+      "parent": "/_main"
+    },
+    "/_main/plans/checkout": {
+      "filePath": "_main/plans/checkout.tsx",
       "parent": "/_main"
     },
     "/_main/position-hr-view/$id": {
