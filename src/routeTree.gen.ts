@@ -20,6 +20,7 @@ import { Route as MainArrivalsImport } from './routes/_main/arrivals'
 import { Route as MainAllEmployeesImport } from './routes/_main/all-employees'
 import { Route as MainAbsentImport } from './routes/_main/absent'
 import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
+import { Route as MainRequestsIndexImport } from './routes/_main/requests/index'
 import { Route as MainPlansIndexImport } from './routes/_main/plans/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
 import { Route as MainPositionHrViewIdImport } from './routes/_main/position-hr-view/$id'
@@ -77,6 +78,12 @@ const MainAbsentRoute = MainAbsentImport.update({
 const MainRolesIndexRoute = MainRolesIndexImport.update({
   id: '/roles/',
   path: '/roles/',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainRequestsIndexRoute = MainRequestsIndexImport.update({
+  id: '/requests/',
+  path: '/requests/',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -224,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainPlansIndexImport
       parentRoute: typeof MainImport
     }
+    '/_main/requests/': {
+      id: '/_main/requests/'
+      path: '/requests'
+      fullPath: '/requests'
+      preLoaderRoute: typeof MainRequestsIndexImport
+      parentRoute: typeof MainImport
+    }
     '/_main/roles/': {
       id: '/_main/roles/'
       path: '/roles'
@@ -258,6 +272,7 @@ interface MainRouteChildren {
   MainPositionHrViewIdRoute: typeof MainPositionHrViewIdRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
   MainPlansIndexRoute: typeof MainPlansIndexRoute
+  MainRequestsIndexRoute: typeof MainRequestsIndexRoute
   MainRolesIndexRoute: typeof MainRolesIndexRoute
 }
 
@@ -273,6 +288,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainPositionHrViewIdRoute: MainPositionHrViewIdRoute,
   MainMapIndexRoute: MainMapIndexRoute,
   MainPlansIndexRoute: MainPlansIndexRoute,
+  MainRequestsIndexRoute: MainRequestsIndexRoute,
   MainRolesIndexRoute: MainRolesIndexRoute,
 }
 
@@ -292,6 +308,7 @@ export interface FileRoutesByFullPath {
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/map': typeof MainMapIndexRoute
   '/plans': typeof MainPlansIndexRoute
+  '/requests': typeof MainRequestsIndexRoute
   '/roles': typeof MainRolesIndexRoute
 }
 
@@ -309,6 +326,7 @@ export interface FileRoutesByTo {
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/map': typeof MainMapIndexRoute
   '/plans': typeof MainPlansIndexRoute
+  '/requests': typeof MainRequestsIndexRoute
   '/roles': typeof MainRolesIndexRoute
 }
 
@@ -328,6 +346,7 @@ export interface FileRoutesById {
   '/_main/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/_main/map/': typeof MainMapIndexRoute
   '/_main/plans/': typeof MainPlansIndexRoute
+  '/_main/requests/': typeof MainRequestsIndexRoute
   '/_main/roles/': typeof MainRolesIndexRoute
 }
 
@@ -347,6 +366,7 @@ export interface FileRouteTypes {
     | '/position-hr-view/$id'
     | '/map'
     | '/plans'
+    | '/requests'
     | '/roles'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -363,6 +383,7 @@ export interface FileRouteTypes {
     | '/position-hr-view/$id'
     | '/map'
     | '/plans'
+    | '/requests'
     | '/roles'
   id:
     | '__root__'
@@ -380,6 +401,7 @@ export interface FileRouteTypes {
     | '/_main/position-hr-view/$id'
     | '/_main/map/'
     | '/_main/plans/'
+    | '/_main/requests/'
     | '/_main/roles/'
   fileRoutesById: FileRoutesById
 }
@@ -430,6 +452,7 @@ export const routeTree = rootRoute
         "/_main/position-hr-view/$id",
         "/_main/map/",
         "/_main/plans/",
+        "/_main/requests/",
         "/_main/roles/"
       ]
     },
@@ -479,6 +502,10 @@ export const routeTree = rootRoute
     },
     "/_main/plans/": {
       "filePath": "_main/plans/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/requests/": {
+      "filePath": "_main/requests/index.tsx",
       "parent": "/_main"
     },
     "/_main/roles/": {

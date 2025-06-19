@@ -51,8 +51,6 @@ const DrawPolygonMap = forwardRef<MapRef, Props>(
         },
         ref,
     ) {
-        console.log(defaultCenter)
-
         const mapRef = useRef<MapRef | null>(null)
         const drawRef = useRef<MapboxDraw | null>(null)
         const [isLoaded, setIsLoaded] = useState<boolean>(false)
