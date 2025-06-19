@@ -30,6 +30,7 @@ export default function PostionsPage() {
     return (
         <div className="w-full">
             <DataTable
+                numeration
                 columns={usPostionsCols()}
                 data={(isSuccess && data) || []}
                 loading={isLoading}
