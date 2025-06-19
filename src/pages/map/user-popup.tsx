@@ -30,15 +30,16 @@ const UserPopup = () => {
             {isLoading || !item ?
                 ""
             :   <>
-                    <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                    <CardHeader className="flex flex-row items-start gap-4 p-4 pb-2 ">
                         <img
-                            className="h-14 w-14"
+                            className="h-14 w-14 rounded-full"
+                            alt={item.full_name}
                             src={
                                 (item.face as string) ??
                                 "https://images.unsplash.com/broken"
                             }
                         />
-                        <div className="pt-2">
+                        <div>
                             <h3 className="font-semibold">
                                 {item.first_name} {item.last_name}
                             </h3>

@@ -1,5 +1,4 @@
 import FormInput from "@/components/form/input"
-import DrawPolygonMap from "@/components/map/draw-polygon-map"
 import { Button } from "@/components/ui/button"
 import { COMPANIES } from "@/constants/api-endpoints"
 import useCheckPermission from "@/hooks/use-check-permission"
@@ -11,10 +10,11 @@ import { useNavigate, useParams } from "@tanstack/react-router"
 import { useEffect } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { toast } from "sonner"
+import DrawPolygonMap from "../map/test-map/draw-polygon-map"
 
 export default function CreateOfficeForm() {
     const queryClient = useQueryClient()
-    const { id } = useParams({ strict: false })
+    const { id } = useParams({ from: "__root__" })
     const navigate = useNavigate()
 
     const { checkAllow } = useCheckPermission()
@@ -46,13 +46,14 @@ export default function CreateOfficeForm() {
     })
 
     const form = useForm<Properties>({
-        defaultValues: store?.properties
-            ? {
-                  ...store.properties,
-                  users: "1",
-                  locations: [],
-              }
-            : undefined,
+        defaultValues:
+            store?.properties ?
+                {
+                    ...store.properties,
+                    users: "1",
+                    locations: [],
+                }
+            :   undefined,
     })
 
     const onSubmit = (data: Properties) => {

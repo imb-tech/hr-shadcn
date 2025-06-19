@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MainImport } from './routes/_main'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
+import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
 import { Route as MainOfficeCreateImport } from './routes/_main/office/create'
 import { Route as MainOfficeIdImport } from './routes/_main/office/$id'
@@ -48,6 +49,12 @@ const AuthAuthLazyRoute = AuthAuthLazyImport.update({
   path: '/auth',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/auth.lazy').then((d) => d.Route))
+
+const MainRolesIndexRoute = MainRolesIndexImport.update({
+  id: '/roles/',
+  path: '/roles/',
+  getParentRoute: () => MainRoute,
+} as any)
 
 const MainMapIndexRoute = MainMapIndexImport.update({
   id: '/map/',
@@ -133,6 +140,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainMapIndexImport
       parentRoute: typeof MainImport
     }
+    '/_main/roles/': {
+      id: '/_main/roles/'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof MainRolesIndexImport
+      parentRoute: typeof MainImport
+    }
   }
 }
 
@@ -154,6 +168,7 @@ interface MainRouteChildren {
   MainOfficeIdRoute: typeof MainOfficeIdRoute
   MainOfficeCreateRoute: typeof MainOfficeCreateRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
+  MainRolesIndexRoute: typeof MainRolesIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
@@ -162,6 +177,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainOfficeIdRoute: MainOfficeIdRoute,
   MainOfficeCreateRoute: MainOfficeCreateRoute,
   MainMapIndexRoute: MainMapIndexRoute,
+  MainRolesIndexRoute: MainRolesIndexRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
@@ -174,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/office/$id': typeof MainOfficeIdRoute
   '/office/create': typeof MainOfficeCreateRoute
   '/map': typeof MainMapIndexRoute
+  '/roles': typeof MainRolesIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -184,6 +201,7 @@ export interface FileRoutesByTo {
   '/office/$id': typeof MainOfficeIdRoute
   '/office/create': typeof MainOfficeCreateRoute
   '/map': typeof MainMapIndexRoute
+  '/roles': typeof MainRolesIndexRoute
 }
 
 export interface FileRoutesById {
@@ -196,27 +214,14 @@ export interface FileRoutesById {
   '/_main/office/$id': typeof MainOfficeIdRoute
   '/_main/office/create': typeof MainOfficeCreateRoute
   '/_main/map/': typeof MainMapIndexRoute
+  '/_main/roles/': typeof MainRolesIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/auth'
-    | '/'
-    | '/office-edit/$id'
-    | '/office/$id'
-    | '/office/create'
-    | '/map'
+  fullPaths: '' | '/auth' | '/' | '/map' | '/roles'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | ''
-    | '/auth'
-    | '/'
-    | '/office-edit/$id'
-    | '/office/$id'
-    | '/office/create'
-    | '/map'
+  to: '' | '/auth' | '/' | '/map' | '/roles'
   id:
     | '__root__'
     | '/_auth'
@@ -227,6 +232,7 @@ export interface FileRouteTypes {
     | '/_main/office/$id'
     | '/_main/office/create'
     | '/_main/map/'
+    | '/_main/roles/'
   fileRoutesById: FileRoutesById
 }
 
@@ -266,10 +272,8 @@ export const routeTree = rootRoute
       "filePath": "_main.tsx",
       "children": [
         "/_main/",
-        "/_main/office-edit/$id",
-        "/_main/office/$id",
-        "/_main/office/create",
-        "/_main/map/"
+        "/_main/map/",
+        "/_main/roles/"
       ]
     },
     "/_auth/auth": {
@@ -294,6 +298,10 @@ export const routeTree = rootRoute
     },
     "/_main/map/": {
       "filePath": "_main/map/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/roles/": {
+      "filePath": "_main/roles/index.tsx",
       "parent": "/_main"
     }
   }
