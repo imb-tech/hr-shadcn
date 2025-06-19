@@ -1,70 +1,70 @@
-import { UsersIcon } from "@/components/icons/nav-icons";
-import useCheckPermission from "@/hooks/use-check-permission";
-import { linkOptions } from "@tanstack/react-router";
+import { UsersIcon } from "@/components/icons/nav-icons"
+import useCheckPermission from "@/hooks/use-check-permission"
+import { linkOptions } from "@tanstack/react-router"
 import {
-  Building2,
-  MapPinned,
-  NotebookText,
-  ScrollText,
-  SquareUser,
-  WalletMinimal,
-} from "lucide-react";
-import { useMemo } from "react";
+    Building2,
+    MapPinned,
+    NotebookText,
+    ScrollText,
+    SquareUser,
+    WalletMinimal,
+} from "lucide-react"
+import { useMemo } from "react"
 
 export default function usePath() {
-  const { checkAllow } = useCheckPermission();
+    const { checkAllow } = useCheckPermission()
 
-  const links = useMemo(
-    () => [
-      linkOptions({
-        to: "/",
-        icon: <Building2 />,
-        enabled: checkAllow("office_view"),
-        title: "Ofis",
-      }),
-      linkOptions({
-        to: "/map",
-        icon: <MapPinned />,
-        enabled: checkAllow("map_view"),
-        title: "Xarita",
-      }),
-      linkOptions({
-        to: "/map",
-        icon: <SquareUser />,
-        enabled: checkAllow("roles_view"),
-        title: "Lavozimlar",
-      }),
-      linkOptions({
-        to: "/map",
-        icon: <UsersIcon />,
-        enabled: checkAllow("employee_view"),
-        title: "Hodimlar",
-      }),
-      linkOptions({
-        to: "/map",
-        icon: <NotebookText />,
-        enabled: true,
-        title: "Qo'llanma",
-      }),
-      linkOptions({
-        to: "/map",
-        icon: <ScrollText />,
-        enabled: checkAllow("excuse_view"),
-        title: "So'rov",
-      }),
-      linkOptions({
-        to: "/map",
-        icon: <WalletMinimal />,
-        enabled: checkAllow(
-          "balance_view",
-          "balance_history",
-          "balance_top_up",
-        ),
-        title: "Balans",
-      }),
-    ],
-    [checkAllow],
-  );
+    const links = useMemo(
+        () => [
+            linkOptions({
+                to: "/",
+                icon: <Building2 />,
+                enabled: checkAllow("office_view"),
+                title: "Ofis",
+            }),
+            linkOptions({
+                to: "/map",
+                icon: <MapPinned />,
+                enabled: checkAllow("map_view"),
+                title: "Xarita",
+            }),
+            linkOptions({
+                to: "/roles",
+                icon: <SquareUser />,
+                enabled: checkAllow("roles_view"),
+                title: "Lavozimlar",
+            }),
+            linkOptions({
+                to: "/map",
+                icon: <UsersIcon />,
+                enabled: checkAllow("employee_view"),
+                title: "Hodimlar",
+            }),
+            linkOptions({
+                to: "/map",
+                icon: <NotebookText />,
+                enabled: true,
+                title: "Qo'llanma",
+            }),
+            linkOptions({
+                to: "/map",
+                icon: <ScrollText />,
+                enabled: checkAllow("excuse_view"),
+                title: "So'rov",
+            }),
+            linkOptions({
+                to: "/plans",
+                icon: <WalletMinimal />,
+                enabled: checkAllow(
+                    "balance_view",
+                    "balance_history",
+                    "balance_top_up",
+                ),
+                title: "Balans",
+            }),
+        ],
+        [checkAllow],
+    )
 
-  return { links: links?.filter((lnk) => lnk.enabled) };
+    return { links: links?.filter((lnk) => lnk.enabled) }
 }

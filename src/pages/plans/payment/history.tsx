@@ -1,18 +1,17 @@
-import DataTable from "@/components/ui/table";
-import { useGet } from "@/hooks/useGet";
-import { usHistoryCols } from "./history-cols";
+import { useGet } from "@/hooks/useGet"
+import { usHistoryCols } from "./history-cols"
+import { DataTable } from "@/components/ui/datatable"
 
 export default function HistoryPage() {
-  const { data, isLoading } = useGet<ListResponse<Payment>>("common/orders");
-  console.log(data);
+    const { data, isLoading } = useGet<ListResponse<Payment>>("common/orders")
+    console.log(data)
 
-  return (
-    <DataTable
-      isLoading={isLoading}
-      indexing
-      columns={usHistoryCols()}
-      data={data?.results ?? []}
-      skeletonRows={3}
-    />
-  );
+    return (
+        <DataTable
+            loading={isLoading}
+            columns={usHistoryCols()}
+            data={data?.results ?? []}
+            skeletonRowCount={3}
+        />
+    )
 }

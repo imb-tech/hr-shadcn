@@ -1,9 +1,9 @@
 import { GET_ME } from "@/constants/api-endpoints"
 import { useGet } from "@/hooks/useGet"
 import { CircleCheckBig, Clock } from "lucide-react"
-import { months } from "./payment/payment-summary"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { months } from "./utils"
 
 export default function PlanGraph() {
     const curr = new Date().getMonth() + 1

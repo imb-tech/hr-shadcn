@@ -5,19 +5,18 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import Spinner from "./spinner"
 
- const buttonVariants = cva(
+const buttonVariants = cva(
     "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 gap-1",
     {
         variants: {
             variant: {
                 default:
-                    "bg-muted text-primary-foreground hover:bg-muted/90",
+                    "bg-muted text-primary-foreground text-primary hover:bg-muted/90",
                 destructive:
                     "bg-destructive text-destructive-foreground hover:bg-destructive/90",
                 outline:
                     "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-                secondary:
-                    "!bg-primary/10 !text-primary hover:!bg-primary/5",
+                secondary: "!bg-primary/10 !text-primary hover:!bg-primary/5",
                 ghost: "hover:bg-accent hover:text-accent-foreground",
                 link: "text-primary underline-offset-4 hover:underline",
             },
@@ -37,7 +36,7 @@ import Spinner from "./spinner"
 
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+        VariantProps<typeof buttonVariants> {
     asChild?: boolean
     loading?: boolean
     disabled?: boolean
@@ -66,8 +65,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                         variant,
                         size:
                             size ? size
-                                : props.children ? "default"
-                                    : "icon",
+                            : props.children ? "default"
+                            : "icon",
                         className,
                     }),
                 )}
@@ -78,10 +77,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 {loading && (
                     <Spinner
                         color={
-                            (variant === "destructive") ? "secondary" : (
-                                variant === 'secondary' ? 'primary' :
-                                    "primary-foreground"
-                            )
+                            variant === "destructive" ? "secondary"
+                            : variant === "secondary" ?
+                                "primary"
+                            :   "primary-foreground"
                         }
                         size="sm"
                     />

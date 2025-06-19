@@ -11,7 +11,7 @@ export default function Component({ persentage }: { persentage: number }) {
                         cy="50"
                         r="40"
                         fill="transparent"
-                        stroke="#e5e7eb"
+                        stroke="#222"
                         strokeWidth="8"
                     />
                     <circle
@@ -32,8 +32,8 @@ export default function Component({ persentage }: { persentage: number }) {
                             x2="100%"
                             y2="0%"
                         >
-                            <stop offset="0%" stopColor="#6366f1" />
-                            <stop offset="100%" stopColor="#3b82f6" />
+                            <stop offset="0%" stopColor="#059212" />
+                            <stop offset="100%" stopColor="#059212" />
                         </linearGradient>
                     </defs>
                 </svg>
