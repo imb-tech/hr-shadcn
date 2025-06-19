@@ -28,23 +28,32 @@ export default function PostionsPage() {
     }
 
     return (
-        <div>
+        <div className="w-full">
             <DataTable
                 columns={usPostionsCols()}
                 data={(isSuccess && data) || []}
                 loading={isLoading}
                 onDelete={({ original }) => handleDelete(original)}
-                onEdit={({ original }) => handleItem(original)}
+                onEdit={({ original }) =>
+                    handleItem({
+                        ...original,
+                        work_shift_start: original.work_shift_start?.slice(
+                            0,
+                            5,
+                        ),
+                        work_shift_end: original.work_shift_end?.slice(0, 5),
+                    })
+                }
                 actionPermissions={["roles_control"]}
             />
 
             <DeleteModal id={store?.id} path={POSITION} />
 
             <Modal
-                size="max-w-3xl"
+                size="max-w-2xl"
                 title={store?.id ? "Lavozim tahrirlash" : "Lavozim qo'shish"}
             >
-                {/* <CreatePositionsForm dataItem={store} /> */}
+                <CreatePositionsForm dataItem={store} />
             </Modal>
         </div>
     )

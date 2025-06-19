@@ -33,7 +33,8 @@ import TableActions from "../custom/table-actions"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Checkbox } from "./checkbox"
 import { ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react"
-
+import usePermissions from "@/hooks/use-permissions"
+import useCheckPermission from "@/hooks/use-check-permission"
 
 interface DataTableProps<TData> {
     data: TData[] | undefined
@@ -78,6 +79,7 @@ interface DataTableProps<TData> {
     tableWrapperClassName?: string
     skeletonRowCount?: number
     onSelectedRowsChange?: (rows: TData[]) => void
+    actionPermissions?: Action[]
 }
 
 export function DataTable<TData>({
@@ -108,6 +110,7 @@ export function DataTable<TData>({
     tableWrapperClassName,
     onSelectedRowsChange,
     skeletonRowCount = 15,
+    actionPermissions,
 }: DataTableProps<TData>) {
     const {
         paramName = PAGE_KEY,
@@ -121,8 +124,12 @@ export function DataTable<TData>({
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const search: any = useSearch({ from: "/_main" })
+    const { checkAllow } = useCheckPermission()
 
     const orderedColumns = React.useMemo(() => {
+        if (!checkAllow(...(actionPermissions ?? []))) {
+            return columns
+        }
         if (onDelete || onEdit || onUndo || onView) {
             return [
                 ...columns,
@@ -144,7 +151,7 @@ export function DataTable<TData>({
                 },
             ]
         } else return columns
-    }, [actionMenuMode, columns, onDelete, onEdit, onUndo, onView])
+    }, [actionMenuMode, columns, onDelete, onEdit, onUndo, onView, checkAllow])
 
     const table = useReactTable({
         data: data || [],
@@ -166,9 +173,8 @@ export function DataTable<TData>({
             rowSelection: selecteds,
             pagination: {
                 pageIndex: search[paramName] ? +search[paramName] - 1 : 0,
-                pageSize: search[pageSizeParamName]
-                    ? +search[pageSizeParamName]
-                    : 25,
+                pageSize:
+                    search[pageSizeParamName] ? +search[pageSizeParamName] : 25,
             },
         },
         manualPagination:
@@ -205,12 +211,7 @@ export function DataTable<TData>({
                 </div>
             )}
 
-            <div
-                className={cn(
-                    "relative  rounded-md ",
-                    tableWrapperClassName,
-                )}
-            >
+            <div className={cn("relative  rounded-md ", tableWrapperClassName)}>
                 {loading && (
                     <Table className="flex flex-col gap-1">
                         {Array.from({ length: skeletonRowCount })?.map(
@@ -252,7 +253,7 @@ export function DataTable<TData>({
                         )}
                     </Table>
                 )}
-                {data?.length ? (
+                {data?.length ?
                     <Table
                         className={`${className} select-text min-w-[1100px]  bg-card rounded-md`}
                     >
@@ -260,7 +261,10 @@ export function DataTable<TData>({
                             {table
                                 .getHeaderGroups()
                                 .map((headerGroup, index) => (
-                                    <TableRow key={index} className="border-none ">
+                                    <TableRow
+                                        key={index}
+                                        className="border-none "
+                                    >
                                         {numeration && (
                                             <TableHead
                                                 key={index}
@@ -273,10 +277,7 @@ export function DataTable<TData>({
                                             </TableHead>
                                         )}
                                         {selecteds_row && (
-                                            <TableHead
-                                                key={index}
-                                                className=""
-                                            >
+                                            <TableHead key={index} className="">
                                                 <Checkbox
                                                     checked={
                                                         table.getIsAllPageRowsSelected() ||
@@ -304,11 +305,13 @@ export function DataTable<TData>({
                                                                 "w-8",
                                                         )}
                                                         onClick={
-                                                            header.column
-                                                                .columnDef
-                                                                .enableSorting
-                                                                ? header.column.getToggleSortingHandler()
-                                                                : undefined
+                                                            (
+                                                                header.column
+                                                                    .columnDef
+                                                                    .enableSorting
+                                                            ) ?
+                                                                header.column.getToggleSortingHandler()
+                                                            :   undefined
                                                         }
                                                     >
                                                         <div className="cursor-pointer flex items-center gap-1 select-none w-max">
@@ -319,37 +322,39 @@ export function DataTable<TData>({
                                                                 header.getContext(),
                                                             )}
 
-                                                            {header.column
-                                                                .columnDef
-                                                                .enableSorting
-                                                                ? {
-                                                                      asc: (
-                                                                          <ChevronUp
-                                                                          className="text-muted-foreground"
-                                                                              width={
-                                                                                  16
-                                                                              }
-                                                                          />
-                                                                      ),
-                                                                      desc: (
-                                                                          <ChevronDown
-                                                                          className="text-muted-foreground"
-                                                                              width={
-                                                                                  16
-                                                                              }
-                                                                          />
-                                                                      ),
-                                                                  }[
-                                                                      header.column.getIsSorted() as string
-                                                                  ] ?? (
-                                                                      <ChevronsUpDown
-                                                                      className="text-muted-foreground"
-                                                                          width={
-                                                                              16
-                                                                          }
-                                                                      />
-                                                                  )
-                                                                : null}
+                                                            {(
+                                                                header.column
+                                                                    .columnDef
+                                                                    .enableSorting
+                                                            ) ?
+                                                                ({
+                                                                    asc: (
+                                                                        <ChevronUp
+                                                                            className="text-muted-foreground"
+                                                                            width={
+                                                                                16
+                                                                            }
+                                                                        />
+                                                                    ),
+                                                                    desc: (
+                                                                        <ChevronDown
+                                                                            className="text-muted-foreground"
+                                                                            width={
+                                                                                16
+                                                                            }
+                                                                        />
+                                                                    ),
+                                                                }[
+                                                                    header.column.getIsSorted() as string
+                                                                ] ?? (
+                                                                    <ChevronsUpDown
+                                                                        className="text-muted-foreground"
+                                                                        width={
+                                                                            16
+                                                                        }
+                                                                    />
+                                                                ))
+                                                            :   null}
                                                         </div>
                                                     </TableHead>
                                                 )
@@ -360,7 +365,7 @@ export function DataTable<TData>({
                         </TableHeader>
 
                         <TableBody>
-                            {table.getRowModel().rows?.length > 0 ? (
+                            {table.getRowModel().rows?.length > 0 ?
                                 table.getRowModel().rows?.map((row, index) => (
                                     <TableRow
                                         key={index}
@@ -434,8 +439,7 @@ export function DataTable<TData>({
                                             ))}
                                     </TableRow>
                                 ))
-                            ) : (
-                                <TableRow>
+                            :   <TableRow>
                                     <TableCell
                                         colSpan={columns?.length}
                                         className="h-24 text-center"
@@ -443,51 +447,50 @@ export function DataTable<TData>({
                                         Mavjud emas
                                     </TableCell>
                                 </TableRow>
-                            )}
+                            }
                         </TableBody>
                         <TableFooter></TableFooter>
                     </Table>
-                ) : null}
-                {data?.length === 0 ? <EmptyBox /> : null}
+                :   null}
+                {data?.length === 0 ?
+                    <EmptyBox />
+                :   null}
             </div>
-            {!viewAll && data?.length ? (
+            {!viewAll && data?.length ?
                 <div className="pt-4 mx-auto w-full relative flex justify-center">
                     {!!viewCount && !!table.getRowModel().rows?.length && (
                         <p className="absolute top-6 left-2">
                             Soni:{" "}
-                            {typeof viewCount === "number"
-                                ? viewCount
-                                : table.getRowModel().rows?.length}{" "}
+                            {typeof viewCount === "number" ?
+                                viewCount
+                            :   table.getRowModel().rows?.length}{" "}
                             ta
                         </p>
                     )}
-                    {totalPages ? (
+                    {totalPages ?
                         <ParamPagination
                             disabled={disabled || loading}
                             {...paginationProps}
                         />
-                    ) : cursorPagination ? (
+                    : cursorPagination ?
                         <CursorPagination
                             {...cursorPagination}
                             disabled={disabled || loading}
                         />
-                    ) : limitOffsetPagination ? (
+                    : limitOffsetPagination ?
                         <LimitOffsetPagination
                             {...limitOffsetPagination}
                             disabled={disabled || loading}
                         />
-                    ) : (
-                        <ParamPagination
+                    :   <ParamPagination
                             disabled={disabled || loading}
                             {...paginationProps}
                             totalPages={table.getPageCount() || 1}
                             PageSize={table.getState().pagination.pageSize}
                         />
-                    )}
+                    }
                 </div>
-            ) : (
-                ""
-            )}
+            :   ""}
         </main>
     )
 }
