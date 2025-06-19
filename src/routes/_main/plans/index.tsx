@@ -7,5 +7,9 @@ export const Route = createFileRoute("/_main/plans/")({
 })
 
 function RouteComponent() {
-    return <PageLayout>{/* <PlansPage /> */}d</PageLayout>
+    return (
+        <PageLayout>
+            <PlansPage />
+        </PageLayout>
+    )
 }

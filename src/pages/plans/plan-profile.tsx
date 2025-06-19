@@ -32,7 +32,7 @@ export default function PlanProfile() {
                     </div>
                     <PButton
                         allow={["balance_top_up"]}
-                        onClick={() => navigate({ to: "/plans" })}
+                        onClick={() => navigate({ to: "/plans/checkout" })}
                         color="primary"
                         variant="secondary"
                     >

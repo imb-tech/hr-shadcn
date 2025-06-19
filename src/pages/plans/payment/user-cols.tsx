@@ -1,34 +1,37 @@
-import { ColumnDef } from "@/components/ui/table";
-import { cn } from "@heroui/theme";
-import { useMemo } from "react";
-import { UsersType } from ".";
+import { cn } from "@/lib/utils"
+import { ColumnDef } from "@tanstack/react-table"
+import { useMemo } from "react"
 
 export const usUsersCols = (price: number) => {
-  return useMemo<ColumnDef<UsersType>[]>(
-    () => [
-      {
-        header: "Lavozim",
-        accessorKey: "position",
-      },
-      {
-        header: "FIO",
-        accessorKey: "full_name",
-      },
-      {
-        header: "Ta'rif holati",
-        accessorKey: "status",
-        cell: (_, itm) => (
-          <div
-            className={cn(
-              "whitespace-nowrap text-center",
-              !itm.status ? "text-green-500" : "text-red-500",
-            )}
-          >
-            {itm.status ? "Ta'rif mavjud " : `+ ${price.toLocaleString()}`}
-          </div>
-        ),
-      },
-    ],
-    [price],
-  );
-};
+    return useMemo<ColumnDef<Record<string, string>>[]>(
+        () => [
+            {
+                header: "Lavozim",
+                accessorKey: "position",
+            },
+            {
+                header: "FIO",
+                accessorKey: "full_name",
+            },
+            {
+                header: "Ta'rif holati",
+                accessorKey: "status",
+                cell: ({ row: { original } }) => (
+                    <div
+                        className={cn(
+                            "whitespace-nowrap text-center",
+                            !original.status ? "text-green-500" : (
+                                "text-red-500"
+                            ),
+                        )}
+                    >
+                        {original.status ?
+                            "Ta'rif mavjud "
+                        :   `+ ${price.toLocaleString()}`}
+                    </div>
+                ),
+            },
+        ],
+        [price],
+    )
+}

@@ -1,7 +1,7 @@
 import { formatMoney } from "@/lib/format-money"
 import { useMemo } from "react"
-import { monthKeys } from "../hr-details/month-accordion"
 import { ColumnDef } from "@tanstack/react-table"
+import { monthKeys } from "./utils"
 
 export const useHistoryCols = () => {
     return useMemo<ColumnDef<PlanHistory>[]>(
