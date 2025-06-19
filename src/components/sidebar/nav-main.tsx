@@ -19,7 +19,7 @@ export function NavMain() {
                         <div className="flex gap-3 items-center min-w-[180px]">
                             <SidebarTrigger className="text-gray-500 dark:text-white" />
                             <span className="text-2xl text-primary font-bold">
-                                IMB TECH
+                                IMB HR
                             </span>
                         </div>
                     </SidebarMenuItem>
@@ -31,7 +31,7 @@ export function NavMain() {
                                     key={title}
                                     activeProps={{
                                         className:
-                                            "[&_button]:bg-primary hover:[&_button]:bg-primary hover:[&_button]:text-primary-foreground text-primary-foreground",
+                                            "[&_button]:bg-card hover:[&_button]:bg-card hover:[&_button]:text-primary-foreground text-primary-foreground",
                                     }}
                                     className="rounded-lg"
                                 >

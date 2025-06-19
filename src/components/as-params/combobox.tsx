@@ -71,9 +71,9 @@ export function ParamCombobox<T extends Record<string, any>>({
             search: {
                 ...search,
                 [paramName]:
-                    String(returnValue) === currentValue ? undefined : (
-                        String(returnValue)
-                    ),
+                    String(returnValue) === currentValue
+                        ? undefined
+                        : String(returnValue),
             },
         })
         setOpen(false)
@@ -95,18 +95,14 @@ export function ParamCombobox<T extends Record<string, any>>({
     const sortedOptions = options?.sort((a, b) => {
         const isASelected = a[valueKey] == currentValue
         const isBSelected = b[valueKey] == currentValue
-        return (
-            isASelected === isBSelected ? 0
-            : isASelected ? -1
-            : 1
-        )
+        return isASelected === isBSelected ? 0 : isASelected ? -1 : 1
     })
 
     return (
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant="outline"
+                    variant="default"
                     role="combobox"
                     aria-expanded={open}
                     className={cn(
@@ -154,12 +150,10 @@ export function ParamCombobox<T extends Record<string, any>>({
                                         <CheckIcon
                                             className={cn(
                                                 "ml-auto h-4 w-4",
-                                                (
-                                                    String(currentValue) ===
-                                                        String(optionValue)
-                                                ) ?
-                                                    "opacity-100"
-                                                :   "opacity-0",
+                                                String(currentValue) ===
+                                                    String(optionValue)
+                                                    ? "opacity-100"
+                                                    : "opacity-0",
                                             )}
                                         />
                                     </CommandItem>
