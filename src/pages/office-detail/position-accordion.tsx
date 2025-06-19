@@ -6,6 +6,9 @@ import { useCallback, useState } from "react";
 import { useWorkerInfoCols } from "./cols";
 import OfficeInfoRow from "./office-info-row";
 import OfficeDetailTableHeader from "./table-header";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Accordion } from "@/components/ui/accordion";
+import { DataTable } from "@/components/ui/datatable";
 type Props = {
   info: CompanyStats[] | undefined;
 };
@@ -77,14 +80,10 @@ function PositionAccordion({ info }: Props) {
                 title: <OfficeInfoRow data={c} />,
                 content: (
                   <DataTable
-                    indexing
-                    isHeaderSticky
+                    numeration
                     columns={columns}
                     data={isSuccess && data.length > 0 ? data : []}
-                    isLoading={isLoading}
-                    shadow="none"
-                    skeletonClassName="h-6 !p-0"
-                    skeletonRows={c.total > 15 ? 10 : c.total}
+                    loading={isLoading}
                     onRowClick={(item) =>
                       navigate({
                         to: "/hr-view/$id",

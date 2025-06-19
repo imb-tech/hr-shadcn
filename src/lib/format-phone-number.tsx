@@ -1,7 +1,10 @@
-export const formatPhoneNumber = (phoneNumberString: string | null) => {
-    if (phoneNumberString) {
-        return `${phoneNumberString.slice(0, 4)} ${phoneNumberString.slice(4, 6)} ${phoneNumberString.slice(6, 9)} ${phoneNumberString.slice(9, 11)} ${phoneNumberString.slice(11)}`
-    } else {
-        return ""
-    }
+export const formatPhoneNumber = (phoneNumberString: string | null) =>{
+    const phoneStr = String(phoneNumberString);
+
+    const cleanedPhone = phoneStr.replace(/\D/g, '');
+
+    const formattedPhone = `+998 ${cleanedPhone.slice(3, 5)} ${cleanedPhone.slice(5, 8)} ${cleanedPhone.slice(8, 10)} ${cleanedPhone.slice(10, 12)}`;
+
+    return formattedPhone;
 }
+

@@ -4,11 +4,17 @@ import { ReactNode } from "@tanstack/react-router"
 
 type Props = {
     children: ReactNode
-    rigthChildren?: ReactNode
-    leftChildren?: ReactNode
+    breadcrumb?: string[]
+    rightComponent?: ReactNode
+    leftComponent?: ReactNode
 }
 
-const PageLayout = ({ children, rigthChildren, leftChildren }: Props) => {
+const PageLayout = ({
+    children,
+    breadcrumb,
+    rightComponent,
+    leftComponent,
+}: Props) => {
     return (
         <div className="w-full h-full overflow-y-auto">
             <div
@@ -17,11 +23,12 @@ const PageLayout = ({ children, rigthChildren, leftChildren }: Props) => {
                 )}
             >
                 <Header
-                    rigthChildren={rigthChildren}
-                    leftChildren={leftChildren}
+                    items={breadcrumb}
+                    rightComponent={rightComponent}
+                    leftComponent={leftComponent}
                 />
             </div>
-            <main className="flex xl:gap-2 px-3 md:px-4 pt-20 pb-4  relative h-full">
+            <main className=" mx-auto p-4 h-full overflow-y-auto pt-20">
                 {children}
             </main>
         </div>

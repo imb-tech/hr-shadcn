@@ -82,9 +82,9 @@ export default function ArrivalsPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 w-full mb-3">
-                <ParamInput />
+                <ParamInput fullWidth className="bg-card" />
                 <ParamCombobox
-                    className="max-w-full"
+                    className="max-w-full w-full  bg-card sm:w-1/3"
                     labelKey="name"
                     valueKey="id"
                     options={dataPosition || []}
@@ -101,6 +101,7 @@ export default function ArrivalsPage() {
                             {data?.total_pages > 1 && (
                                 <ParamPagination
                                     totalPages={data?.total_pages}
+                                    PageSize={50}
                                 />
                             )}
                         </div>
@@ -120,6 +121,10 @@ export default function ArrivalsPage() {
                             columns={columns}
                             data={data?.results ?? []}
                             loading={isLoading}
+                            paginationProps={{
+                                totalPages: data?.total_pages,
+                                PageSize: 50,
+                            }}
                             onRowClick={(item) =>
                                 navigate({
                                     to: "/hr-view/$id",
@@ -127,9 +132,6 @@ export default function ArrivalsPage() {
                                 })
                             }
                         />
-                        {isSuccess && data?.total_pages > 1 ? (
-                            <ParamPagination totalPages={data?.total_pages} />
-                        ) : null}
                     </div>
                     <div className="lg:hidden">{renderCardView()}</div>
                 </>

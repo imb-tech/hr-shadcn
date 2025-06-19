@@ -11,8 +11,6 @@ import ParamInput from "@/components/as-params/input"
 import { ParamCombobox } from "@/components/as-params/combobox"
 import { tabsParam } from "../absent"
 
-
-
 export default function AllEmployeesPage() {
     const navigate = useNavigate()
     const search: SearchParams = useSearch({ from: "__root__" })
@@ -94,9 +92,9 @@ export default function AllEmployeesPage() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 w-full mb-3">
-                <ParamInput />
+                <ParamInput fullWidth className="bg-card" />
                 <ParamCombobox
-                    className="max-w-full"
+                    className="max-w-full w-full  bg-card sm:w-1/3"
                     labelKey="name"
                     valueKey="id"
                     options={dataPosition || []}
@@ -113,6 +111,7 @@ export default function AllEmployeesPage() {
                             {data?.total_pages > 1 && (
                                 <ParamPagination
                                     totalPages={data?.total_pages}
+                                    PageSize={50}
                                 />
                             )}
                         </>
@@ -138,10 +137,11 @@ export default function AllEmployeesPage() {
                                     params: { id: item?.id.toString() },
                                 })
                             }
+                            paginationProps={{
+                                totalPages: data?.total_pages,
+                                PageSize: 50,
+                            }}
                         />
-                        {isSuccess && data?.total_pages > 1 ? (
-                            <ParamPagination totalPages={data?.total_pages} />
-                        ) : null}
                     </div>
                     <div className="lg:hidden">{renderCardView()}</div>
                 </>

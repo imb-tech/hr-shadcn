@@ -52,7 +52,7 @@ function OfficeList() {
     <div className="w-full">
       <div
         ref={scrollbarRef}
-        className="flex flex-nowrap gap-3 overflow-x-auto py-1 my-3 scrollbar-hide"
+        className="flex flex-nowrap gap-3 overflow-x-auto py-1 my-3 no-scrollbar-x"
       >
         {isSuccess && !!companies
           ? companies?.features?.map((item) => (
@@ -144,10 +144,10 @@ function OfficeList() {
           <Link to="/office/create">
             <Card
               className={cn(
-                "min-w-[300px] max-w-[300px] cursor-pointer dark:border-zinc-800 h-[148px] border",
+                "min-w-[300px] max-w-[300px]  cursor-pointer dark:border-zinc-800 h-[148px] border",
               )}
             >
-              <CardContent className={cn("font-semibold py-4")}>
+              <CardContent className={cn("font-semibold py-4 h-full ")}>
                 <div className="flex items-center justify-center gap-2 h-full">
                   <p className="dark:text-gray-300 line-clamp-2 text-lg">
                     Ofis qo'shish
@@ -174,7 +174,7 @@ function OfficeList() {
             <div
               className={cn(
                 "h-1 w-full transition-all duration-300 rounded-full cursor-pointer",
-                String(item.id) === id ? "bg-blue-400" : "bg-default",
+                String(item.id) === id ? "bg-blue-400" : "bg-secondary",
               )}
             />
           </button>
@@ -183,7 +183,7 @@ function OfficeList() {
           <Link className="w-full py-1" to="/office/create">
             <div
               className={cn(
-                "h-1 w-full transition-all duration-300 rounded-full bg-default",
+                "h-1 w-full transition-all duration-300 rounded-full bg-secondary",
               )}
             />
           </Link>

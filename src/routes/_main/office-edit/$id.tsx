@@ -23,7 +23,7 @@ function RouteComponent() {
 
   return (
     <PageLayout
-      leftChildren={
+      leftComponent={
         <Button
           className="min-w-4"
           onClick={() => navigate({ to: "/" })}

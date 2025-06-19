@@ -1,3 +1,4 @@
+import SeeInView from "@/components/ui/see-in-view"
 import { formatMoney } from "@/lib/format-money"
 import { formatPhoneNumber } from "@/lib/format-phone-number"
 import formatPassportNumber from "@/lib/formatter-pasport"
@@ -12,25 +13,29 @@ export const useArrivalsListCols = () => {
             {
                 header: "Rasm",
                 accessorKey: "face",
-                cell: (value) => {
+                cell: ({ row }) => {
                     return (
-                        <div className="max-w-8">
-                            {/* <PopoverImage image={value} /> */}
-                        </div>
+                        <SeeInView
+                            url={String(row.original.face)}
+                            className={"object-cover h-9 w-9 rounded-md"}
+                        />
                     )
                 },
             },
             {
                 header: "FIO",
                 accessorKey: "full_name",
+                enableSorting: true,
             },
             {
                 header: "Telefon",
                 accessorKey: "phone",
-                cell: (value) => {
+                enableSorting: true,
+                cell: ({ row }) => {
+                    const { phone } = row.original
                     return (
                         <span className="whitespace-nowrap lg:break-all">
-                            {formatPhoneNumber(String(value))}
+                            {formatPhoneNumber(String(phone))}
                         </span>
                     )
                 },
@@ -38,10 +43,12 @@ export const useArrivalsListCols = () => {
             {
                 header: "Lavozim",
                 accessorKey: "role_name",
+                enableSorting: true,
             },
             {
                 header: "Kelish va Ketish",
                 accessorKey: "id",
+                enableSorting: true,
                 cell: ({ row }) => {
                     const { attendance_json } = row.original
                     return (
@@ -62,6 +69,7 @@ export const useArrivalsListCols = () => {
             },
             {
                 header: "Ish vaqti",
+                enableSorting: true,
                 accessorKey: "work_shift_start",
                 cell: ({ row }) => {
                     const { work_shift_start, work_shift_end } = row.original
@@ -73,14 +81,18 @@ export const useArrivalsListCols = () => {
                     )
                 },
             },
-            { header: "Manzil", accessorKey: "address" },
+            { header: "Manzil", accessorKey: "address",enableSorting: true, },
             {
                 header: "Pasport",
                 accessorKey: "id_number",
-                cell: (value) => {
+                enableSorting: true,
+                cell: ({ row }) => {
+                    const { id_number } = row.original
                     return (
                         <span className="whitespace-nowrap">
-                            {value ? formatPassportNumber(String(value)) : "-"}
+                            {id_number
+                                ? formatPassportNumber(String(id_number))
+                                : "-"}
                         </span>
                     )
                 },
@@ -88,6 +100,7 @@ export const useArrivalsListCols = () => {
             {
                 header: "Maosh",
                 accessorKey: "salary",
+                enableSorting: true,
                 cell: (salary) => {
                     return formatMoney(Number(salary))
                 },
@@ -95,6 +108,7 @@ export const useArrivalsListCols = () => {
             {
                 header: "Status",
                 accessorKey: "attendance_status",
+                enableSorting: true,
                 cell: ({ row }) => {
                     const { attendance_status } = row.original
                     return (
@@ -107,7 +121,9 @@ export const useArrivalsListCols = () => {
                                         : "text-orange-300 ",
                                 )}
                             >
-                                {attendance_status == 1 ? "Vaqtida kelgan" : "Kech qolgan"}
+                                {attendance_status == 1
+                                    ? "Vaqtida kelgan"
+                                    : "Kech qolgan"}
                             </span>
                         </div>
                     )
