@@ -1,6 +1,6 @@
 import { useModal } from "@/hooks/useModal"
 import { useQueryClient } from "@tanstack/react-query"
-import { ReactNode } from "@tanstack/react-router"
+import { ReactNode, useNavigate } from "@tanstack/react-router"
 import { toast } from "sonner"
 import { Button } from "../ui/button"
 import {
@@ -15,6 +15,7 @@ import { useDelete } from "@/hooks/useDelete"
 interface IProps {
     path: string
     id: string | number | undefined
+    url?: string
     name?: ReactNode
     onSuccessAction?: () => void
     modalKey?: string
@@ -26,6 +27,7 @@ interface IProps {
 export default function DeleteModal({
     path,
     id,
+    url,
     name = "",
     onSuccessAction,
     modalKey = "delete",
@@ -34,6 +36,7 @@ export default function DeleteModal({
 }: IProps) {
     const { closeModal } = useModal(modalKey)
     const queryClient = useQueryClient()
+    const navigate = useNavigate();
 
     const { mutate, isPending } = useDelete({
         onSuccess: () => {
@@ -54,6 +57,9 @@ export default function DeleteModal({
                 })
             }
             closeModal()
+            if (url) {
+                navigate({ to: url })
+            }
         },
     })
 

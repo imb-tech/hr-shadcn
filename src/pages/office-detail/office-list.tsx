@@ -1,9 +1,9 @@
 import Private from "@/components/private";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { COMPANIES } from "@/constants/api-endpoints";
 import { useGet } from "@/hooks/useGet";
-import { Card, CardBody } from "@heroui/card";
-import { Skeleton } from "@heroui/skeleton";
-import { cn } from "@heroui/theme";
+import { cn } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "@tanstack/react-router";
 import { Building2, CirclePlus, MapPin, Pencil } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -70,7 +70,7 @@ function OfficeList() {
                       : "border dark:border-zinc-800",
                   )}
                 >
-                  <CardBody
+                  <CardContent
                     className={cn(
                       "font-semibold py-4",
                       String(item.id) === id && "text-blue-400",
@@ -112,7 +112,7 @@ function OfficeList() {
                         </p>
                       </div>
                     </div>
-                  </CardBody>
+                  </CardContent>
                 </Card>
               </Link>
             ))
@@ -120,7 +120,6 @@ function OfficeList() {
               <Card
                 key={index}
                 className="max-w-[300px] min-w-[300px] h-[148px] space-y-5 p-4"
-                radius="lg"
               >
                 <div className="flex items-center gap-2">
                   <Skeleton className="rounded-lg w-12 flex">
@@ -148,14 +147,14 @@ function OfficeList() {
                 "min-w-[300px] max-w-[300px] cursor-pointer dark:border-zinc-800 h-[148px] border",
               )}
             >
-              <CardBody className={cn("font-semibold py-4")}>
+              <CardContent className={cn("font-semibold py-4")}>
                 <div className="flex items-center justify-center gap-2 h-full">
                   <p className="dark:text-gray-300 line-clamp-2 text-lg">
                     Ofis qo'shish
                   </p>
                   <CirclePlus />
                 </div>
-              </CardBody>
+              </CardContent>
             </Card>
           </Link>
         </Private>

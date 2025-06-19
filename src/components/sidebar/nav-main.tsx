@@ -6,10 +6,11 @@ import {
     SidebarMenuItem,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { menuItems } from "@/constants/menu"
+import usePath from "@/hooks/usePath"
 import { Link } from "@tanstack/react-router"
 
 export function NavMain() {
+    const { links } = usePath()
     return (
         <SidebarGroup className="lg:pt-[70px]">
             <SidebarGroupContent className="flex flex-col gap-2 ">
@@ -22,7 +23,7 @@ export function NavMain() {
                             </span>
                         </div>
                     </SidebarMenuItem>
-                    {menuItems.map(
+                    {links.map(
                         ({ enabled, title, ...item }) =>
                             enabled && (
                                 <Link

@@ -18,6 +18,9 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
 import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
+import { Route as MainOfficeCreateImport } from './routes/_main/office/create'
+import { Route as MainOfficeIdImport } from './routes/_main/office/$id'
+import { Route as MainOfficeEditIdImport } from './routes/_main/office-edit/$id'
 
 // Create Virtual Routes
 
@@ -59,6 +62,24 @@ const MainMapIndexRoute = MainMapIndexImport.update({
   getParentRoute: () => MainRoute,
 } as any)
 
+const MainOfficeCreateRoute = MainOfficeCreateImport.update({
+  id: '/office/create',
+  path: '/office/create',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainOfficeIdRoute = MainOfficeIdImport.update({
+  id: '/office/$id',
+  path: '/office/$id',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainOfficeEditIdRoute = MainOfficeEditIdImport.update({
+  id: '/office-edit/$id',
+  path: '/office-edit/$id',
+  getParentRoute: () => MainRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -89,6 +110,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof MainIndexImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/office-edit/$id': {
+      id: '/_main/office-edit/$id'
+      path: '/office-edit/$id'
+      fullPath: '/office-edit/$id'
+      preLoaderRoute: typeof MainOfficeEditIdImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/office/$id': {
+      id: '/_main/office/$id'
+      path: '/office/$id'
+      fullPath: '/office/$id'
+      preLoaderRoute: typeof MainOfficeIdImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/office/create': {
+      id: '/_main/office/create'
+      path: '/office/create'
+      fullPath: '/office/create'
+      preLoaderRoute: typeof MainOfficeCreateImport
       parentRoute: typeof MainImport
     }
     '/_main/map/': {
@@ -122,12 +164,18 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface MainRouteChildren {
   MainIndexRoute: typeof MainIndexRoute
+  MainOfficeEditIdRoute: typeof MainOfficeEditIdRoute
+  MainOfficeIdRoute: typeof MainOfficeIdRoute
+  MainOfficeCreateRoute: typeof MainOfficeCreateRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
   MainRolesIndexRoute: typeof MainRolesIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainIndexRoute: MainIndexRoute,
+  MainOfficeEditIdRoute: MainOfficeEditIdRoute,
+  MainOfficeIdRoute: MainOfficeIdRoute,
+  MainOfficeCreateRoute: MainOfficeCreateRoute,
   MainMapIndexRoute: MainMapIndexRoute,
   MainRolesIndexRoute: MainRolesIndexRoute,
 }
@@ -138,6 +186,9 @@ export interface FileRoutesByFullPath {
   '': typeof MainRouteWithChildren
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
+  '/office-edit/$id': typeof MainOfficeEditIdRoute
+  '/office/$id': typeof MainOfficeIdRoute
+  '/office/create': typeof MainOfficeCreateRoute
   '/map': typeof MainMapIndexRoute
   '/roles': typeof MainRolesIndexRoute
 }
@@ -146,6 +197,9 @@ export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
+  '/office-edit/$id': typeof MainOfficeEditIdRoute
+  '/office/$id': typeof MainOfficeIdRoute
+  '/office/create': typeof MainOfficeCreateRoute
   '/map': typeof MainMapIndexRoute
   '/roles': typeof MainRolesIndexRoute
 }
@@ -156,6 +210,9 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren
   '/_auth/auth': typeof AuthAuthLazyRoute
   '/_main/': typeof MainIndexRoute
+  '/_main/office-edit/$id': typeof MainOfficeEditIdRoute
+  '/_main/office/$id': typeof MainOfficeIdRoute
+  '/_main/office/create': typeof MainOfficeCreateRoute
   '/_main/map/': typeof MainMapIndexRoute
   '/_main/roles/': typeof MainRolesIndexRoute
 }
@@ -171,6 +228,9 @@ export interface FileRouteTypes {
     | '/_main'
     | '/_auth/auth'
     | '/_main/'
+    | '/_main/office-edit/$id'
+    | '/_main/office/$id'
+    | '/_main/office/create'
     | '/_main/map/'
     | '/_main/roles/'
   fileRoutesById: FileRoutesById
@@ -222,6 +282,18 @@ export const routeTree = rootRoute
     },
     "/_main/": {
       "filePath": "_main/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/office-edit/$id": {
+      "filePath": "_main/office-edit/$id.tsx",
+      "parent": "/_main"
+    },
+    "/_main/office/$id": {
+      "filePath": "_main/office/$id.tsx",
+      "parent": "/_main"
+    },
+    "/_main/office/create": {
+      "filePath": "_main/office/create.tsx",
       "parent": "/_main"
     },
     "/_main/map/": {

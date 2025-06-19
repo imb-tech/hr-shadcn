@@ -1,10 +1,11 @@
-import { menuItems } from "@/constants/menu"
 import { useLocation, useNavigate } from "@tanstack/react-router"
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
+import usePath from "@/hooks/usePath"
 
 export default function HeaderLinks() {
+    const { links } = usePath()
     const { pathname } = useLocation()
-    const items = findChildPaths(menuItems, pathname)
+    const items = findChildPaths(links, pathname)
     const navigate = useNavigate()
 
     const isSomeActive = (path: string) => {
@@ -16,7 +17,7 @@ export default function HeaderLinks() {
     }
 
     return (
-        <div> 
+        <div>
             {!!items.length && (
                 <Tabs
                     value={pathname}
@@ -44,7 +45,7 @@ export default function HeaderLinks() {
     )
 }
 
-const findChildPaths = (filteredItems: typeof menuItems, pathname: string) => {
+const findChildPaths = (filteredItems: typeof any, pathname: string) => {
     const currentSection = pathname?.split("/")?.[1]
 
     return (
