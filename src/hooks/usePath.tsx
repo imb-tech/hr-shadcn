@@ -47,7 +47,7 @@ export default function usePath() {
                 title: "Qo'llanma",
             }),
             linkOptions({
-                to: "/map",
+                to: "/requests",
                 icon: <ScrollText />,
                 enabled: checkAllow("excuse_view"),
                 title: "So'rov",

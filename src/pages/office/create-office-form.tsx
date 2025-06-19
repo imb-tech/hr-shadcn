@@ -14,7 +14,7 @@ import DrawPolygonMap from "../map/test-map/draw-polygon-map"
 
 export default function CreateOfficeForm() {
     const queryClient = useQueryClient()
-    const { id } = useParams({ from: "__root__" })
+    const { id } = useParams({ strict: false })
     const navigate = useNavigate()
 
     const { checkAllow } = useCheckPermission()
@@ -123,12 +123,23 @@ export default function CreateOfficeForm() {
                         name="lunch_end_time"
                     />
                 </div>
-
-                <DrawPolygonMap
-                    defaultValues={store}
-                    defaultZoom={16}
-                    name="polygon"
-                />
+                {!!id ?
+                    store?.properties ?
+                        <DrawPolygonMap
+                            defaultValues={store}
+                            defaultCenter={{
+                                latitude:
+                                    store?.properties.polygon
+                                        .coordinates[0][0][1],
+                                longitude:
+                                    store?.properties.polygon
+                                        .coordinates[0][0][0],
+                            }}
+                            defaultZoom={16}
+                            name="polygon"
+                        />
+                    :   null
+                :   <DrawPolygonMap defaultZoom={16} name="polygon" />}
 
                 {/* <OfficeLocationSelect
         required
