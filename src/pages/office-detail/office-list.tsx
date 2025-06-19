@@ -174,7 +174,7 @@ function OfficeList() {
             <div
               className={cn(
                 "h-1 w-full transition-all duration-300 rounded-full cursor-pointer",
-                String(item.id) === id ? "bg-blue-400" : "bg-secondary",
+                String(item.id) === id ? "bg-blue-400" : "dark:bg-accent bg-zinc-300",
               )}
             />
           </button>
@@ -183,7 +183,7 @@ function OfficeList() {
           <Link className="w-full py-1" to="/office/create">
             <div
               className={cn(
-                "h-1 w-full transition-all duration-300 rounded-full bg-secondary",
+                "h-1 w-full transition-all duration-300 rounded-full dark:bg-accent bg-zinc-300",
               )}
             />
           </Link>

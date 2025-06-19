@@ -377,10 +377,10 @@ export function DataTable<TData>({
                                             onRightClick?.(row.original)
                                         }}
                                         className={cn(
-                                            "hover:bg-gray-200 dark:hover:bg-secondary border-none ",
+                                            "hover:bg-gray-200 dark:hover:bg-muted border-none ",
                                             rowColor?.(row.original),
                                             index % 2 !== 0 &&
-                                                "bg-secondary/70",
+                                                "bg-secondary",
                                         )}
                                     >
                                         {selecteds_row && (

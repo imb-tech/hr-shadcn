@@ -36,7 +36,7 @@ const Header = ({
     }
 
     return (
-        <header className="py-3 pr-3 pl-2 gap-4 dark:border-b  flex items-center justify-between bg-card max-w-full box-border">
+        <header className="py-3 pr-3 pl-2 gap-4 dark:border-b  flex items-center justify-between bg-background  max-w-full box-border">
             <div className="flex gap-6 items-center  max-w-full  custom-scrollbar">
                 <div className="flex gap-3 items-center sm:min-w-[180px]">
                     <SidebarTrigger className="text-gray-500 dark:text-white" />
