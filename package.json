@@ -1,5 +1,5 @@
 {
-    "name": "lorry2",
+    "name": "IMB HR",
     "version": "0.0.0",
     "private": true,
     "type": "module",
@@ -84,6 +84,7 @@
         "sonner": "^1.5.0",
         "tailwind-merge": "^2.5.2",
         "tailwindcss-animate": "^1.0.7",
+        "vite-tsconfig-paths": "^5.1.4",
         "wavesurfer.js": "^7.8.7",
         "zod": "^3.23.8",
         "zustand": "^5.0.3"

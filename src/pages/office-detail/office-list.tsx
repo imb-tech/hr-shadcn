@@ -66,14 +66,14 @@ function OfficeList() {
                   className={cn(
                     "min-w-[300px] relative max-w-[300px] transition-all cursor-pointer h-[148px] shadow-none",
                     String(item.id) === id
-                      ? "border border-blue-400"
+                      ? "border border-primary"
                       : "border dark:border-zinc-800",
                   )}
                 >
                   <CardContent
                     className={cn(
                       "font-semibold py-4",
-                      String(item.id) === id && "text-blue-400",
+                      String(item.id) === id && "text-primary",
                     )}
                   >
                     <Link
@@ -85,7 +85,7 @@ function OfficeList() {
                       <Pencil size={14} />
                     </Link>
                     <div className="flex items-center mb-4">
-                      <Building2 className="h-10 w-10 text-blue-400 mr-3" />
+                      <Building2 className="h-10 w-10 text-primary mr-3" />
                       <h2
                         className="text-lg font-bold line-clamp-1 uppercase"
                         title={item.properties.name}
@@ -99,7 +99,7 @@ function OfficeList() {
                         className={cn(
                           "h-5 w-5 mr-2 mt-0.5 flex-shrink-0",
                           String(item.id) === id
-                            ? "text-blue-400"
+                            ? "text-primary"
                             : "dark:text-gray-400",
                         )}
                       />
@@ -174,7 +174,7 @@ function OfficeList() {
             <div
               className={cn(
                 "h-1 w-full transition-all duration-300 rounded-full cursor-pointer",
-                String(item.id) === id ? "bg-blue-400" : "dark:bg-accent bg-zinc-300",
+                String(item.id) === id ? "bg-primary" : "dark:bg-accent bg-zinc-300",
               )}
             />
           </button>
