@@ -5,10 +5,10 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import { useNavigate } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
 import { LogOut, User } from "lucide-react"
 import { ThemeColorToggle } from "./color-toggle"
-import { SidebarTrigger } from "../ui/sidebar"
+import { SidebarTrigger, useSidebar } from "../ui/sidebar"
 import { ReactNode } from "react"
 import HeaderLinks from "./header-links"
 import { useGet } from "@/hooks/useGet"
@@ -17,6 +17,7 @@ import getPlan from "@/lib/get-plan"
 import Spinner from "../ui/spinner"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import { Button } from "../ui/button"
+import { cn } from "@/lib/utils"
 
 const Header = ({
     items,
@@ -27,6 +28,7 @@ const Header = ({
     rightComponent?: ReactNode
     leftComponent?: ReactNode
 }) => {
+    const { open } = useSidebar()
     const { data, isLoading } = useGet<Profile>(GET_ME)
     const navigate = useNavigate()
 
@@ -36,13 +38,22 @@ const Header = ({
     }
 
     return (
-        <header className="py-3 pr-3 pl-2 gap-4 dark:border-b  flex items-center justify-between bg-background  max-w-full box-border">
+        <header className="py-1.5 pr-3 pl-2 gap-4 dark:border-b  flex items-center justify-between bg-background  max-w-full box-border">
             <div className="flex gap-6 items-center  max-w-full  custom-scrollbar">
-                <div className="flex gap-3 items-center sm:min-w-[180px]">
-                    <SidebarTrigger className="text-gray-500 dark:text-white" />
-                    <span className="text-2xl text-primary font-bold sm:block hidden">
-                        IMB HR
-                    </span>
+                <div
+                    className={cn(
+                        "flex gap-3 items-center",
+                    )}
+                >
+                    <div><SidebarTrigger className="text-gray-500 dark:text-white" /></div>
+                    <Link
+                        className="flex justify-start  items-center gap-1"
+                        color="foreground"
+                        to="/"
+                    >
+                        <img alt="logo" src="/images/logo.png" width={50} />
+                        <p className="font-bold text-inherit whitespace-nowrap">IMB HR</p>
+                    </Link>
                 </div>
 
                 <div className="w-full ">
@@ -60,7 +71,7 @@ const Header = ({
 
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button variant="secondary">
+                        <Button>
                             <p>{getPlan(data?.employees_count)}</p>
                         </Button>
                     </TooltipTrigger>
@@ -75,7 +86,7 @@ const Header = ({
                         <DropdownMenuTrigger className="!outline-none">
                             <Avatar className="relative overflow-hidden">
                                 {isLoading && (
-                                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black/80">
+                                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-primary/15">
                                         <Spinner size="sm" />
                                     </div>
                                 )}
@@ -84,7 +95,7 @@ const Header = ({
                                     alt="user img"
                                     className="object-cover"
                                 />
-                                <AvatarFallback className="!bg-primary/10 !text-primary hover:!bg-primary/5">
+                                <AvatarFallback className="!bg-primary/10 !text-primary hover:!bg-primary/20">
                                     {data?.first_name?.slice(0, 1)}
                                     {data?.last_name?.slice(0, 1)}
                                 </AvatarFallback>

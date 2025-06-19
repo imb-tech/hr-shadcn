@@ -86,7 +86,7 @@ const ParamTabs: React.FC<ParamTabsProps> = ({
                                                 "rounded-full absolute -top-3.5 -right-3.5 border-2 border-background",
                                                 search[paramName] ==
                                                     option.value &&
-                                                    "!bg-primary !text-primary-foreground",
+                                                    "!bg-primary/10 !text-primary",
                                             )}
                                         >
                                             {option.badge}

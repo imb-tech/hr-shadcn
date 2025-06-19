@@ -11,16 +11,28 @@ import { Link } from "@tanstack/react-router"
 
 export function NavMain() {
     const { links } = usePath()
+
     return (
-        <SidebarGroup className="lg:pt-[70px]">
+        <SidebarGroup className={"lg:pt-[74px]"}>
             <SidebarGroupContent className="flex flex-col gap-2 ">
                 <SidebarMenu>
                     <SidebarMenuItem className="mb-3 lg:hidden">
                         <div className="flex gap-3 items-center min-w-[180px]">
                             <SidebarTrigger className="text-gray-500 dark:text-white" />
-                            <span className="text-2xl text-primary font-bold">
-                                IMB HR
-                            </span>
+                            <Link
+                                className="flex justify-start  items-center gap-1"
+                                color="foreground"
+                                to="/"
+                            >
+                                <img
+                                    alt="logo"
+                                    src="/images/logo.png"
+                                    width={50}
+                                />
+                                <p className="font-bold text-inherit whitespace-nowrap">
+                                    IMB HR
+                                </p>
+                            </Link>
                         </div>
                     </SidebarMenuItem>
                     {links.map(
@@ -31,13 +43,16 @@ export function NavMain() {
                                     key={title}
                                     activeProps={{
                                         className:
-                                            "[&_button]:bg-primary hover:[&_button]:bg-primary hover:[&_button]:text-primary-foreground text-primary-foreground",
+                                            "[&_button]:bg-primary/10 hover:[&_button]:bg-primary/15 hover:[&_button]:text-primary text-primary",
                                     }}
                                     className="rounded-lg"
                                 >
                                     <SidebarMenuItem>
-                                        <SidebarMenuButton tooltip={title}>
-                                            {item.icon}
+                                        <SidebarMenuButton
+                                            className="flex items-center gap-4"
+                                            tooltip={title}
+                                        >
+                                            <span>{item.icon}</span>
                                             <span>{title}</span>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>

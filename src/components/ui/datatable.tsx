@@ -193,7 +193,7 @@ export function DataTable<TData>({
     }, [selecteds])
 
     return (
-        <main className={cn("w-full   pb-4 overflow-x-auto", wrapperClassName)}>
+        <main className={cn("w-full   p-4 bg-card rounded-md overflow-x-auto no-scollbar-x", wrapperClassName)}>
             {!!head && <div>{head}</div>}
             {selecteds_count && (
                 <div className="flex flex-col gap-2 sm:flex-row items-end sm:items-center sm:justify-between pb-2">
@@ -380,7 +380,7 @@ export function DataTable<TData>({
                                             "hover:bg-gray-200 dark:hover:bg-secondary border-none ",
                                             rowColor?.(row.original),
                                             index % 2 !== 0 &&
-                                                "bg-secondary/70",
+                                                "bg-secondary/70 rounded-xl ",
                                         )}
                                     >
                                         {selecteds_row && (
@@ -397,7 +397,7 @@ export function DataTable<TData>({
                                             </TableCell>
                                         )}
                                         {numeration && (
-                                            <TableCell className="w-8">
+                                            <TableCell className="w-8 ">
                                                 {((search[paramName] || 1) -
                                                     1) *
                                                     (search[
@@ -422,7 +422,7 @@ export function DataTable<TData>({
                                                         )
                                                     }
                                                     className={cn(
-                                                        `cursor-pointer border-r border-secondary last:border-none  ${
+                                                        `cursor-pointer border-r   dark:border-secondary/50 border-secondary last:border-none  ${
                                                             notClick(
                                                                 cell.column.id,
                                                             ) &&

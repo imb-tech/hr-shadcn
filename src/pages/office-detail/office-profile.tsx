@@ -55,8 +55,8 @@ export default function AttendanceDashboard() {
                         to={checkAllow("roles_view") ? "/all-employees" : "/"}
                     >
                         <div className="flex items-center gap-3 flex-1">
-                            <div className="bg-primary-500/20 p-2 rounded-lg">
-                                <Users className="h-6 w-6 text-primary-500" />
+                            <div className="bg-primary/10 p-2 rounded-lg">
+                                <Users className="h-6 w-6 text-primary" />
                             </div>
                             <h1 className="text-2xl font-bold dark:text-primary-500">
                                 Hodimlar soni

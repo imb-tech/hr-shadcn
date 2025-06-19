@@ -72,7 +72,7 @@ function OfficeList() {
                 >
                   <CardContent
                     className={cn(
-                      "font-semibold py-4",
+                      "font-semibold py-4  h-full flex flex-col justify-between",
                       String(item.id) === id && "text-primary",
                     )}
                   >
