@@ -1,5 +1,5 @@
-import { ParamDatePicker } from "@/components/param/date-picker";
-import ParamTabs from "@/components/param/tabs";
+import { ParamDatePicker } from "@/ccomponents/param/date-picker";
+import ParamTabs from "@/ccomponents/param/tabs";
 import Modal from "@/components/ui/modal";
 import DataTable from "@/components/ui/table";
 import { EXCUSE, EXCUSE_COUNT } from "@/constants/api-endpoints";

@@ -1,70 +1,74 @@
-import { HR_API } from "@/constants/api-endpoints";
-import { useGet } from "@/hooks/useGet";
-import formatPhoneNumber from "@/lib/formatter-phone";
-import { Avatar } from "@heroui/avatar";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { cn } from "@heroui/theme";
-import { useNavigate, useSearch } from "@tanstack/react-router";
-import { format } from "date-fns";
-import { Clock, Phone, X } from "lucide-react";
+import { Avatar } from "@/components/ui/avatar"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { HR_API } from "@/constants/api-endpoints"
+import { useGet } from "@/hooks/useGet"
+import { formatPhoneNumber } from "@/lib/format-phone-number"
+import { cn } from "@/lib/utils"
+import { useNavigate, useSearch } from "@tanstack/react-router"
+import { format } from "date-fns"
+import { Clock, Phone, X } from "lucide-react"
 
 const UserPopup = () => {
-  const navigate = useNavigate();
-  const search = useSearch({ from: "__root__" });
-  const { data: item, isLoading } = useGet<Human>(`${HR_API}/${search?.id}`, {
-    options: { enabled: Boolean(search?.id) },
-  });
+    const navigate = useNavigate()
+    const search = useSearch({ from: "__root__" })
+    const { data: item, isLoading } = useGet<Human>(`${HR_API}/${search?.id}`, {
+        options: { enabled: Boolean(search?.id) },
+    })
 
-  // function handleHistory() {
-  //   navigate({
-  //     to: "/map",
-  //     search: {
-  //       ...search,
-  //       route_id: item?.id,
-  //     },
-  //   });
-  // }
+    // function handleHistory() {
+    //   navigate({
+    //     to: "/map",
+    //     search: {
+    //       ...search,
+    //       route_id: item?.id,
+    //     },
+    //   });
+    // }
 
-  return (
-    <Card className="min-w-[320px]">
-      {isLoading || !item ? (
-        ""
-      ) : (
-        <>
-          <CardHeader className="flex flex-row items-start gap-4 pb-2">
-            <Avatar
-              showFallback
-              className="h-14 w-14"
-              src={
-                (item.face as string) ?? "https://images.unsplash.com/broken"
-              }
-            />
-            <div className="pt-2">
-              <h3 className="font-semibold">
-                {item.first_name} {item.last_name}
-              </h3>
-              <p className="text-sm text-muted-foreground">{item.role_name}</p>
-            </div>
-            {/* // eslint-disable-next-file */}
-            <button
-              className="ml-auto text-rose-500 cursor-pointer"
-              onClick={() =>
-                navigate({ to: "/map", search: { ...search, id: undefined } })
-              }
-            >
-              <X />
-            </button>
-          </CardHeader>
-          <CardBody>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <div
-                className={cn(
-                  "text-sm rounded-full px-3 py-[2px]  dark:bg-zinc-800 border dark:border-zinc-700 text-green-500 border-green-500",
-                )}
-              >
-                online
-              </div>
-              {/* <button
+    return (
+        <Card className="min-w-[320px]">
+            {isLoading || !item ?
+                ""
+            :   <>
+                    <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                        <img
+                            className="h-14 w-14"
+                            src={
+                                (item.face as string) ??
+                                "https://images.unsplash.com/broken"
+                            }
+                        />
+                        <div className="pt-2">
+                            <h3 className="font-semibold">
+                                {item.first_name} {item.last_name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                                {item.role_name}
+                            </p>
+                        </div>
+                        {/* // eslint-disable-next-file */}
+                        <button
+                            className="ml-auto text-rose-500 cursor-pointer"
+                            onClick={() =>
+                                navigate({
+                                    to: "/map",
+                                    search: { ...search, id: undefined },
+                                })
+                            }
+                        >
+                            <X />
+                        </button>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                            <div
+                                className={cn(
+                                    "text-sm rounded-full px-3 py-[2px]  dark:bg-zinc-800 border dark:border-zinc-700 text-green-500 border-green-500",
+                                )}
+                            >
+                                online
+                            </div>
+                            {/* <button
                 className="flex gap-1 text-sm rounded-full px-3 py-[2px]  dark:bg-zinc-800 border dark:border-zinc-700 text-green-500 border-green-500 items-center cursor-pointer"
                 onClick={handleHistory}
               >
@@ -89,61 +93,88 @@ const UserPopup = () => {
                 </svg>
                 <span>Tarix</span>
               </button> */}
-            </div>
+                        </div>
 
-            <div className="space-y-4  h-full">
-              <div className="flex items-center gap-3">
-                <div className="dark:bg-zinc-800 bg-zinc-100 p-2 rounded-full">
-                  <Phone className="h-4 w-4 text-gray-400" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-400">Tel</p>
-                  <p>{formatPhoneNumber(Number(item.profile?.phone_number))}</p>
-                </div>
-              </div>
+                        <div className="space-y-4  h-full">
+                            <div className="flex items-center gap-3">
+                                <div className="dark:bg-zinc-800 bg-zinc-100 p-2 rounded-full">
+                                    <Phone className="h-4 w-4 text-gray-400" />
+                                </div>
+                                <div>
+                                    <p className="text-xs text-gray-400">Tel</p>
+                                    <p>
+                                        {formatPhoneNumber(
+                                            String(item.profile?.phone_number),
+                                        )}
+                                    </p>
+                                </div>
+                            </div>
 
-              <div className="flex items-center gap-3">
-                <div className="dark:bg-zinc-800 bg-zinc-100 p-2 rounded-full">
-                  <Clock className="h-4 w-4 text-gray-400" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-400">Ish vaqti</p>
-                  <p>
-                    <span className="whitespace-nowrap lg:break-all">
-                      {item?.work_shift_start?.slice(0, 5)} -{" "}
-                      {item?.work_shift_end?.slice(0, 5)}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="dark:bg-zinc-800 bg-zinc-100 p-2 rounded-full">
+                                    <Clock className="h-4 w-4 text-gray-400" />
+                                </div>
+                                <div>
+                                    <p className="text-xs text-gray-400">
+                                        Ish vaqti
+                                    </p>
+                                    <p>
+                                        <span className="whitespace-nowrap lg:break-all">
+                                            {item?.work_shift_start?.slice(
+                                                0,
+                                                5,
+                                            )}{" "}
+                                            -{" "}
+                                            {item?.work_shift_end?.slice(0, 5)}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-            {item?.attendance_json?.attendance_time ||
-            item?.attendance_json?.left_time ? (
-              <div className="mt-6 dark:bg-zinc-800 bg-zinc-100 rounded-lg p-4 grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs text-gray-400 mb-1">Kelish</p>
-                  <p className="font-medium text-green-400">
-                    {item?.attendance_json?.attendance_time
-                      ? format(item?.attendance_json?.attendance_time, "HH:mm")
-                      : "-"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-400 mb-1">Ketish</p>
-                  <p className="font-medium text-red-400">
-                    {item?.attendance_json?.left_time
-                      ? format(item?.attendance_json?.left_time, "HH:mm")
-                      : "-"}
-                  </p>
-                </div>
-              </div>
-            ) : null}
-          </CardBody>
-        </>
-      )}
-    </Card>
-  );
-};
+                        {(
+                            item?.attendance_json?.attendance_time ||
+                            item?.attendance_json?.left_time
+                        ) ?
+                            <div className="mt-6 dark:bg-zinc-800 bg-zinc-100 rounded-lg p-4 grid grid-cols-2 gap-4">
+                                <div>
+                                    <p className="text-xs text-gray-400 mb-1">
+                                        Kelish
+                                    </p>
+                                    <p className="font-medium text-green-400">
+                                        {(
+                                            item?.attendance_json
+                                                ?.attendance_time
+                                        ) ?
+                                            format(
+                                                item?.attendance_json
+                                                    ?.attendance_time,
+                                                "HH:mm",
+                                            )
+                                        :   "-"}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-gray-400 mb-1">
+                                        Ketish
+                                    </p>
+                                    <p className="font-medium text-red-400">
+                                        {item?.attendance_json?.left_time ?
+                                            format(
+                                                item?.attendance_json
+                                                    ?.left_time,
+                                                "HH:mm",
+                                            )
+                                        :   "-"}
+                                    </p>
+                                </div>
+                            </div>
+                        :   null}
+                    </CardContent>
+                </>
+            }
+        </Card>
+    )
+}
 
-export default UserPopup;
+export default UserPopup

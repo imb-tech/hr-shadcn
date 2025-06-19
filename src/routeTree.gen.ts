@@ -16,29 +16,11 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MainImport } from './routes/_main'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
-import { Route as MainSettingsImport } from './routes/_main/settings'
-import { Route as MainPositionImport } from './routes/_main/position'
-import { Route as MainLandingImport } from './routes/_main/landing'
-import { Route as MainHrCreateImport } from './routes/_main/hr-create'
-import { Route as MainHrImport } from './routes/_main/hr'
-import { Route as MainArrivalsImport } from './routes/_main/arrivals'
-import { Route as MainAllEmployeesImport } from './routes/_main/all-employees'
-import { Route as MainAbsentImport } from './routes/_main/absent'
-import { Route as MainPlansIndexImport } from './routes/_main/plans/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
-import { Route as MainPositionHrViewIdImport } from './routes/_main/position-hr-view/$id'
-import { Route as MainPlansPaymentImport } from './routes/_main/plans/payment'
-import { Route as MainPlansCheckoutImport } from './routes/_main/plans/checkout'
-import { Route as MainPlansIdImport } from './routes/_main/plans/$id'
-import { Route as MainOfficeCreateImport } from './routes/_main/office/create'
-import { Route as MainOfficeIdImport } from './routes/_main/office/$id'
-import { Route as MainOfficeEditIdImport } from './routes/_main/office-edit/$id'
-import { Route as MainHrViewIdImport } from './routes/_main/hr-view/$id'
 
 // Create Virtual Routes
 
 const AuthAuthLazyImport = createFileRoute('/_auth/auth')()
-const MainHrEditHrEditLazyImport = createFileRoute('/_main/hr-edit/$hr-edit')()
 
 // Create/Update Routes
 
@@ -64,119 +46,9 @@ const AuthAuthLazyRoute = AuthAuthLazyImport.update({
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/auth.lazy').then((d) => d.Route))
 
-const MainSettingsRoute = MainSettingsImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainPositionRoute = MainPositionImport.update({
-  id: '/position',
-  path: '/position',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainLandingRoute = MainLandingImport.update({
-  id: '/landing',
-  path: '/landing',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainHrCreateRoute = MainHrCreateImport.update({
-  id: '/hr-create',
-  path: '/hr-create',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainHrRoute = MainHrImport.update({
-  id: '/hr',
-  path: '/hr',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainArrivalsRoute = MainArrivalsImport.update({
-  id: '/arrivals',
-  path: '/arrivals',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainAllEmployeesRoute = MainAllEmployeesImport.update({
-  id: '/all-employees',
-  path: '/all-employees',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainAbsentRoute = MainAbsentImport.update({
-  id: '/absent',
-  path: '/absent',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainPlansIndexRoute = MainPlansIndexImport.update({
-  id: '/plans/',
-  path: '/plans/',
-  getParentRoute: () => MainRoute,
-} as any)
-
 const MainMapIndexRoute = MainMapIndexImport.update({
   id: '/map/',
   path: '/map/',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainHrEditHrEditLazyRoute = MainHrEditHrEditLazyImport.update({
-  id: '/hr-edit/$hr-edit',
-  path: '/hr-edit/$hr-edit',
-  getParentRoute: () => MainRoute,
-} as any).lazy(() =>
-  import('./routes/_main/hr-edit/$hr-edit.lazy').then((d) => d.Route),
-)
-
-const MainPositionHrViewIdRoute = MainPositionHrViewIdImport.update({
-  id: '/position-hr-view/$id',
-  path: '/position-hr-view/$id',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainPlansPaymentRoute = MainPlansPaymentImport.update({
-  id: '/plans/payment',
-  path: '/plans/payment',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainPlansCheckoutRoute = MainPlansCheckoutImport.update({
-  id: '/plans/checkout',
-  path: '/plans/checkout',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainPlansIdRoute = MainPlansIdImport.update({
-  id: '/plans/$id',
-  path: '/plans/$id',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainOfficeCreateRoute = MainOfficeCreateImport.update({
-  id: '/office/create',
-  path: '/office/create',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainOfficeIdRoute = MainOfficeIdImport.update({
-  id: '/office/$id',
-  path: '/office/$id',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainOfficeEditIdRoute = MainOfficeEditIdImport.update({
-  id: '/office-edit/$id',
-  path: '/office-edit/$id',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainHrViewIdRoute = MainHrViewIdImport.update({
-  id: '/hr-view/$id',
-  path: '/hr-view/$id',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -198,62 +70,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainImport
       parentRoute: typeof rootRoute
     }
-    '/_main/absent': {
-      id: '/_main/absent'
-      path: '/absent'
-      fullPath: '/absent'
-      preLoaderRoute: typeof MainAbsentImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/all-employees': {
-      id: '/_main/all-employees'
-      path: '/all-employees'
-      fullPath: '/all-employees'
-      preLoaderRoute: typeof MainAllEmployeesImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/arrivals': {
-      id: '/_main/arrivals'
-      path: '/arrivals'
-      fullPath: '/arrivals'
-      preLoaderRoute: typeof MainArrivalsImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/hr': {
-      id: '/_main/hr'
-      path: '/hr'
-      fullPath: '/hr'
-      preLoaderRoute: typeof MainHrImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/hr-create': {
-      id: '/_main/hr-create'
-      path: '/hr-create'
-      fullPath: '/hr-create'
-      preLoaderRoute: typeof MainHrCreateImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/landing': {
-      id: '/_main/landing'
-      path: '/landing'
-      fullPath: '/landing'
-      preLoaderRoute: typeof MainLandingImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/position': {
-      id: '/_main/position'
-      path: '/position'
-      fullPath: '/position'
-      preLoaderRoute: typeof MainPositionImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/settings': {
-      id: '/_main/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof MainSettingsImport
-      parentRoute: typeof MainImport
-    }
     '/_auth/auth': {
       id: '/_auth/auth'
       path: '/auth'
@@ -268,81 +84,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainIndexImport
       parentRoute: typeof MainImport
     }
-    '/_main/hr-view/$id': {
-      id: '/_main/hr-view/$id'
-      path: '/hr-view/$id'
-      fullPath: '/hr-view/$id'
-      preLoaderRoute: typeof MainHrViewIdImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/office-edit/$id': {
-      id: '/_main/office-edit/$id'
-      path: '/office-edit/$id'
-      fullPath: '/office-edit/$id'
-      preLoaderRoute: typeof MainOfficeEditIdImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/office/$id': {
-      id: '/_main/office/$id'
-      path: '/office/$id'
-      fullPath: '/office/$id'
-      preLoaderRoute: typeof MainOfficeIdImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/office/create': {
-      id: '/_main/office/create'
-      path: '/office/create'
-      fullPath: '/office/create'
-      preLoaderRoute: typeof MainOfficeCreateImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/plans/$id': {
-      id: '/_main/plans/$id'
-      path: '/plans/$id'
-      fullPath: '/plans/$id'
-      preLoaderRoute: typeof MainPlansIdImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/plans/checkout': {
-      id: '/_main/plans/checkout'
-      path: '/plans/checkout'
-      fullPath: '/plans/checkout'
-      preLoaderRoute: typeof MainPlansCheckoutImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/plans/payment': {
-      id: '/_main/plans/payment'
-      path: '/plans/payment'
-      fullPath: '/plans/payment'
-      preLoaderRoute: typeof MainPlansPaymentImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/position-hr-view/$id': {
-      id: '/_main/position-hr-view/$id'
-      path: '/position-hr-view/$id'
-      fullPath: '/position-hr-view/$id'
-      preLoaderRoute: typeof MainPositionHrViewIdImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/hr-edit/$hr-edit': {
-      id: '/_main/hr-edit/$hr-edit'
-      path: '/hr-edit/$hr-edit'
-      fullPath: '/hr-edit/$hr-edit'
-      preLoaderRoute: typeof MainHrEditHrEditLazyImport
-      parentRoute: typeof MainImport
-    }
     '/_main/map/': {
       id: '/_main/map/'
       path: '/map'
       fullPath: '/map'
       preLoaderRoute: typeof MainMapIndexImport
-      parentRoute: typeof MainImport
-    }
-    '/_main/plans/': {
-      id: '/_main/plans/'
-      path: '/plans'
-      fullPath: '/plans'
-      preLoaderRoute: typeof MainPlansIndexImport
       parentRoute: typeof MainImport
     }
   }
@@ -361,204 +107,52 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface MainRouteChildren {
-  MainAbsentRoute: typeof MainAbsentRoute
-  MainAllEmployeesRoute: typeof MainAllEmployeesRoute
-  MainArrivalsRoute: typeof MainArrivalsRoute
-  MainHrRoute: typeof MainHrRoute
-  MainHrCreateRoute: typeof MainHrCreateRoute
-  MainLandingRoute: typeof MainLandingRoute
-  MainPositionRoute: typeof MainPositionRoute
-  MainSettingsRoute: typeof MainSettingsRoute
   MainIndexRoute: typeof MainIndexRoute
-  MainHrViewIdRoute: typeof MainHrViewIdRoute
-  MainOfficeEditIdRoute: typeof MainOfficeEditIdRoute
-  MainOfficeIdRoute: typeof MainOfficeIdRoute
-  MainOfficeCreateRoute: typeof MainOfficeCreateRoute
-  MainPlansIdRoute: typeof MainPlansIdRoute
-  MainPlansCheckoutRoute: typeof MainPlansCheckoutRoute
-  MainPlansPaymentRoute: typeof MainPlansPaymentRoute
-  MainPositionHrViewIdRoute: typeof MainPositionHrViewIdRoute
-  MainHrEditHrEditLazyRoute: typeof MainHrEditHrEditLazyRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
-  MainPlansIndexRoute: typeof MainPlansIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
-  MainAbsentRoute: MainAbsentRoute,
-  MainAllEmployeesRoute: MainAllEmployeesRoute,
-  MainArrivalsRoute: MainArrivalsRoute,
-  MainHrRoute: MainHrRoute,
-  MainHrCreateRoute: MainHrCreateRoute,
-  MainLandingRoute: MainLandingRoute,
-  MainPositionRoute: MainPositionRoute,
-  MainSettingsRoute: MainSettingsRoute,
   MainIndexRoute: MainIndexRoute,
-  MainHrViewIdRoute: MainHrViewIdRoute,
-  MainOfficeEditIdRoute: MainOfficeEditIdRoute,
-  MainOfficeIdRoute: MainOfficeIdRoute,
-  MainOfficeCreateRoute: MainOfficeCreateRoute,
-  MainPlansIdRoute: MainPlansIdRoute,
-  MainPlansCheckoutRoute: MainPlansCheckoutRoute,
-  MainPlansPaymentRoute: MainPlansPaymentRoute,
-  MainPositionHrViewIdRoute: MainPositionHrViewIdRoute,
-  MainHrEditHrEditLazyRoute: MainHrEditHrEditLazyRoute,
   MainMapIndexRoute: MainMapIndexRoute,
-  MainPlansIndexRoute: MainPlansIndexRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof MainRouteWithChildren
-  '/absent': typeof MainAbsentRoute
-  '/all-employees': typeof MainAllEmployeesRoute
-  '/arrivals': typeof MainArrivalsRoute
-  '/hr': typeof MainHrRoute
-  '/hr-create': typeof MainHrCreateRoute
-  '/landing': typeof MainLandingRoute
-  '/position': typeof MainPositionRoute
-  '/settings': typeof MainSettingsRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
-  '/hr-view/$id': typeof MainHrViewIdRoute
-  '/office-edit/$id': typeof MainOfficeEditIdRoute
-  '/office/$id': typeof MainOfficeIdRoute
-  '/office/create': typeof MainOfficeCreateRoute
-  '/plans/$id': typeof MainPlansIdRoute
-  '/plans/checkout': typeof MainPlansCheckoutRoute
-  '/plans/payment': typeof MainPlansPaymentRoute
-  '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
-  '/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/map': typeof MainMapIndexRoute
-  '/plans': typeof MainPlansIndexRoute
 }
 
 export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
-  '/absent': typeof MainAbsentRoute
-  '/all-employees': typeof MainAllEmployeesRoute
-  '/arrivals': typeof MainArrivalsRoute
-  '/hr': typeof MainHrRoute
-  '/hr-create': typeof MainHrCreateRoute
-  '/landing': typeof MainLandingRoute
-  '/position': typeof MainPositionRoute
-  '/settings': typeof MainSettingsRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
-  '/hr-view/$id': typeof MainHrViewIdRoute
-  '/office-edit/$id': typeof MainOfficeEditIdRoute
-  '/office/$id': typeof MainOfficeIdRoute
-  '/office/create': typeof MainOfficeCreateRoute
-  '/plans/$id': typeof MainPlansIdRoute
-  '/plans/checkout': typeof MainPlansCheckoutRoute
-  '/plans/payment': typeof MainPlansPaymentRoute
-  '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
-  '/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/map': typeof MainMapIndexRoute
-  '/plans': typeof MainPlansIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_auth': typeof AuthRouteWithChildren
   '/_main': typeof MainRouteWithChildren
-  '/_main/absent': typeof MainAbsentRoute
-  '/_main/all-employees': typeof MainAllEmployeesRoute
-  '/_main/arrivals': typeof MainArrivalsRoute
-  '/_main/hr': typeof MainHrRoute
-  '/_main/hr-create': typeof MainHrCreateRoute
-  '/_main/landing': typeof MainLandingRoute
-  '/_main/position': typeof MainPositionRoute
-  '/_main/settings': typeof MainSettingsRoute
   '/_auth/auth': typeof AuthAuthLazyRoute
   '/_main/': typeof MainIndexRoute
-  '/_main/hr-view/$id': typeof MainHrViewIdRoute
-  '/_main/office-edit/$id': typeof MainOfficeEditIdRoute
-  '/_main/office/$id': typeof MainOfficeIdRoute
-  '/_main/office/create': typeof MainOfficeCreateRoute
-  '/_main/plans/$id': typeof MainPlansIdRoute
-  '/_main/plans/checkout': typeof MainPlansCheckoutRoute
-  '/_main/plans/payment': typeof MainPlansPaymentRoute
-  '/_main/position-hr-view/$id': typeof MainPositionHrViewIdRoute
-  '/_main/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/_main/map/': typeof MainMapIndexRoute
-  '/_main/plans/': typeof MainPlansIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/absent'
-    | '/all-employees'
-    | '/arrivals'
-    | '/hr'
-    | '/hr-create'
-    | '/landing'
-    | '/position'
-    | '/settings'
-    | '/auth'
-    | '/'
-    | '/hr-view/$id'
-    | '/office-edit/$id'
-    | '/office/$id'
-    | '/office/create'
-    | '/plans/$id'
-    | '/plans/checkout'
-    | '/plans/payment'
-    | '/position-hr-view/$id'
-    | '/hr-edit/$hr-edit'
-    | '/map'
-    | '/plans'
+  fullPaths: '' | '/auth' | '/' | '/map'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | ''
-    | '/absent'
-    | '/all-employees'
-    | '/arrivals'
-    | '/hr'
-    | '/hr-create'
-    | '/landing'
-    | '/position'
-    | '/settings'
-    | '/auth'
-    | '/'
-    | '/hr-view/$id'
-    | '/office-edit/$id'
-    | '/office/$id'
-    | '/office/create'
-    | '/plans/$id'
-    | '/plans/checkout'
-    | '/plans/payment'
-    | '/position-hr-view/$id'
-    | '/hr-edit/$hr-edit'
-    | '/map'
-    | '/plans'
+  to: '' | '/auth' | '/' | '/map'
   id:
     | '__root__'
     | '/_auth'
     | '/_main'
-    | '/_main/absent'
-    | '/_main/all-employees'
-    | '/_main/arrivals'
-    | '/_main/hr'
-    | '/_main/hr-create'
-    | '/_main/landing'
-    | '/_main/position'
-    | '/_main/settings'
     | '/_auth/auth'
     | '/_main/'
-    | '/_main/hr-view/$id'
-    | '/_main/office-edit/$id'
-    | '/_main/office/$id'
-    | '/_main/office/create'
-    | '/_main/plans/$id'
-    | '/_main/plans/checkout'
-    | '/_main/plans/payment'
-    | '/_main/position-hr-view/$id'
-    | '/_main/hr-edit/$hr-edit'
     | '/_main/map/'
-    | '/_main/plans/'
   fileRoutesById: FileRoutesById
 }
 
@@ -597,59 +191,9 @@ export const routeTree = rootRoute
     "/_main": {
       "filePath": "_main.tsx",
       "children": [
-        "/_main/absent",
-        "/_main/all-employees",
-        "/_main/arrivals",
-        "/_main/hr",
-        "/_main/hr-create",
-        "/_main/landing",
-        "/_main/position",
-        "/_main/settings",
         "/_main/",
-        "/_main/hr-view/$id",
-        "/_main/office-edit/$id",
-        "/_main/office/$id",
-        "/_main/office/create",
-        "/_main/plans/$id",
-        "/_main/plans/checkout",
-        "/_main/plans/payment",
-        "/_main/position-hr-view/$id",
-        "/_main/hr-edit/$hr-edit",
-        "/_main/map/",
-        "/_main/plans/"
+        "/_main/map/"
       ]
-    },
-    "/_main/absent": {
-      "filePath": "_main/absent.tsx",
-      "parent": "/_main"
-    },
-    "/_main/all-employees": {
-      "filePath": "_main/all-employees.tsx",
-      "parent": "/_main"
-    },
-    "/_main/arrivals": {
-      "filePath": "_main/arrivals.tsx",
-      "parent": "/_main"
-    },
-    "/_main/hr": {
-      "filePath": "_main/hr.tsx",
-      "parent": "/_main"
-    },
-    "/_main/hr-create": {
-      "filePath": "_main/hr-create.tsx",
-      "parent": "/_main"
-    },
-    "/_main/landing": {
-      "filePath": "_main/landing.tsx",
-      "parent": "/_main"
-    },
-    "/_main/position": {
-      "filePath": "_main/position.tsx",
-      "parent": "/_main"
-    },
-    "/_main/settings": {
-      "filePath": "_main/settings.tsx",
-      "parent": "/_main"
     },
     "/_auth/auth": {
       "filePath": "_auth/auth.lazy.tsx",
@@ -659,48 +203,8 @@ export const routeTree = rootRoute
       "filePath": "_main/index.tsx",
       "parent": "/_main"
     },
-    "/_main/hr-view/$id": {
-      "filePath": "_main/hr-view/$id.tsx",
-      "parent": "/_main"
-    },
-    "/_main/office-edit/$id": {
-      "filePath": "_main/office-edit/$id.tsx",
-      "parent": "/_main"
-    },
-    "/_main/office/$id": {
-      "filePath": "_main/office/$id.tsx",
-      "parent": "/_main"
-    },
-    "/_main/office/create": {
-      "filePath": "_main/office/create.tsx",
-      "parent": "/_main"
-    },
-    "/_main/plans/$id": {
-      "filePath": "_main/plans/$id.tsx",
-      "parent": "/_main"
-    },
-    "/_main/plans/checkout": {
-      "filePath": "_main/plans/checkout.tsx",
-      "parent": "/_main"
-    },
-    "/_main/plans/payment": {
-      "filePath": "_main/plans/payment.tsx",
-      "parent": "/_main"
-    },
-    "/_main/position-hr-view/$id": {
-      "filePath": "_main/position-hr-view/$id.tsx",
-      "parent": "/_main"
-    },
-    "/_main/hr-edit/$hr-edit": {
-      "filePath": "_main/hr-edit/$hr-edit.lazy.tsx",
-      "parent": "/_main"
-    },
     "/_main/map/": {
       "filePath": "_main/map/index.tsx",
-      "parent": "/_main"
-    },
-    "/_main/plans/": {
-      "filePath": "_main/plans/index.tsx",
       "parent": "/_main"
     }
   }

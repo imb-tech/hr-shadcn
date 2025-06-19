@@ -19,6 +19,10 @@ type Properties = {
   users: string;
   locations: string[];
   employee_count?: number
+  exists_count: number,
+  total_count: number,
+  absend_count: number
+  persentage: number
 }
 
 
