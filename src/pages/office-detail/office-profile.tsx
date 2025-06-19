@@ -1,11 +1,9 @@
-"use client";
-
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { OFFICE_DETAILS } from "@/constants/api-endpoints";
 import useCheckPermission from "@/hooks/use-check-permission";
 import { useGet } from "@/hooks/useGet";
 import { formatMoney } from "@/lib/format-money";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Progress } from "@heroui/progress";
 import { Link, useParams, useSearch } from "@tanstack/react-router";
 import {
   AlertCircle,
@@ -106,12 +104,12 @@ export default function AttendanceDashboard() {
                 </span>
               </Link>
             </CardHeader>
-            <CardBody>
+            <CardContent>
               <Progress
                 className="h-2"
-                classNames={{
-                  indicator: "bg-[#10B981]",
-                }}
+                // classNames={{
+                //   indicator: "bg-[#10B981]",
+                // }}
                 value={(usersInCompany / total) * 100}
               />
 
@@ -142,9 +140,9 @@ export default function AttendanceDashboard() {
                 </Link>
                 <Progress
                   className="h-1.5"
-                  classNames={{
-                    indicator: "bg-[#34D399]",
-                  }}
+                  // classNames={{
+                  //   indicator: "bg-[#34D399]",
+                  // }}
                   value={(arrivedOnTime / total) * 100}
                 />
 
@@ -174,13 +172,13 @@ export default function AttendanceDashboard() {
                 </Link>
                 <Progress
                   className="h-1.5"
-                  classNames={{
-                    indicator: "bg-[#FDBA74]",
-                  }}
+                  // classNames={{
+                  //   indicator: "bg-[#FDBA74]",
+                  // }}
                   value={(lateUsers / total) * 100}
                 />
               </div>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
 
@@ -215,12 +213,12 @@ export default function AttendanceDashboard() {
                 </span>
               </Link>
             </CardHeader>
-            <CardBody>
+            <CardContent>
               <Progress
                 className="h-2"
-                classNames={{
-                  indicator: "bg-[#DC2626]/60",
-                }}
+                // classNames={{
+                //   indicator: "bg-[#DC2626]/60",
+                // }}
                 value={(absentUsers / total) * 100}
               />
 
@@ -249,9 +247,9 @@ export default function AttendanceDashboard() {
 
                 <Progress
                   className="h-1.5"
-                  classNames={{
-                    indicator: "bg-[#FBBF24]",
-                  }}
+                  // classNames={{
+                  //   indicator: "bg-[#FBBF24]",
+                  // }}
                   value={(absentWithReason / total) * 100}
                 />
 
@@ -278,13 +276,13 @@ export default function AttendanceDashboard() {
                 </Link>
                 <Progress
                   className="h-1.5"
-                  classNames={{
-                    indicator: "bg-[#e75a5a]",
-                  }}
+                  // classNames={{
+                  //   indicator: "bg-[#e75a5a]",
+                  // }}
                   value={(absentWithoutReason / total) * 100}
                 />
               </div>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
       </div>

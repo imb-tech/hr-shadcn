@@ -1,9 +1,8 @@
-import PopoverImage from "@/components/elements/popover-image";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { formatDateTime } from "@/lib/format-date";
-import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Link } from "@tanstack/react-router";
 import { Clock, LogIn, LogOut } from "lucide-react";
-import { calculateTimeDifference } from "../cols";
+import { getTimeDifference } from "../cols";
 
 type Props = {
   data: WorkerAttendance;
@@ -17,7 +16,7 @@ function PositionHrCard({ data }: Props) {
           <div className="flex justify-between items-center w-full gap-3">
             <div className="flex items-center gap-2">
               <div>
-                <PopoverImage image={data.face} />
+                {/* <PopoverImage image={data.face} /> */}
               </div>
               <h3 className="font-semibold text-[16px]">{data.full_name}</h3>
             </div>
@@ -26,7 +25,7 @@ function PositionHrCard({ data }: Props) {
             </span>
           </div>
         </CardHeader>
-        <CardBody className="p-4">
+        <CardContent className="p-4">
           <div className="grid grid-cols-2 gap-2">
             <div className="dark:bg-zinc-800 bg-zinc-100 rounded-lg p-3 shadow-sm">
               <div className="flex gap-2 items-center  mb-1">
@@ -55,7 +54,7 @@ function PositionHrCard({ data }: Props) {
               </div>
               <p className="font-semibold">
                 {data?.attendance && data?.attendance.status === 0
-                  ? calculateTimeDifference(
+                  ? getTimeDifference(
                       data?.work_shift_start,
                       data?.attendance.attendance_time,
                     )
@@ -72,7 +71,7 @@ function PositionHrCard({ data }: Props) {
               </p>
             </div>
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
     </Link>
   );

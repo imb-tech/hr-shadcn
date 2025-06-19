@@ -71,10 +71,11 @@ type WorkerInfo = {
 interface WorkerAttendance {
   id: number
   full_name: string
-  face:string
+  face: string
   entry_log_status: number
   work_shift_start: string
-  role_id?:number
+  work_shift_end: string
+  role_id?: number
   attendance: {
     status: 0 | 1
     duration: string
