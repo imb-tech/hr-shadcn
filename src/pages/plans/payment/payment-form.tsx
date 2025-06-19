@@ -22,7 +22,7 @@ export default function PaymentForm() {
     return (
         <Tabs aria-label="payment types" defaultValue="click">
             <TabsList className="min-h-20 sm:min-h-24">
-                <TabsTrigger value="click" className="px-3 sm:px-8">
+                <TabsTrigger value="click" className="px-3 sm:px-8 data-[state=active]:bg-primary/10">
                     <div className="w-16 sm:w-24 flex justify-center">
                         <img
                             src={`/images/click${theme === "dark" ? "-dark.svg" : ".png"}`}
@@ -30,7 +30,7 @@ export default function PaymentForm() {
                         />
                     </div>
                 </TabsTrigger>
-                <TabsTrigger value="payme" className="px-3 sm:px-8">
+                <TabsTrigger value="payme" className="px-3 sm:px-8 data-[state=active]:bg-primary/10">
                     <div className="w-16 sm:w-24 flex justify-center">
                         <img
                             src={`/images/payme${theme === "dark" ? "-dark.svg" : ".png"}`}
@@ -38,7 +38,7 @@ export default function PaymentForm() {
                         />
                     </div>
                 </TabsTrigger>
-                <TabsTrigger value="bonus" className="px-3 sm:px-8">
+                <TabsTrigger value="bonus" className="px-3 sm:px-8 data-[state=active]:bg-primary/10">
                     <div className="flex items-center gap-3 w-[180px]">
                         <span className="flex items-center justify-center bg-success-500/15 p-2 rounded-xl">
                             <WalletMinimal
