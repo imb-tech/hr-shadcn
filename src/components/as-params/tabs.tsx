@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 interface ParamTabsProps {
     options: Array<{
         value: string | number
-        label: string | number
+        label: string | number | React.ReactNode
         content?: React.ReactNode
         badge?: number
         className?: ClassNameValue

@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Link, useParams } from "@tanstack/react-router";
 
 type Props = {
@@ -20,7 +20,7 @@ function PositonCard({ item }: Props) {
             {item?.role || "Ma'lumot topilmadi"}
           </h3>
         </CardHeader>
-        <CardBody>
+        <CardContent>
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-gray-100 dark:bg-zinc-800 p-3 rounded col-span-2 flex items-center justify-between">
               <p className="text-sm text-gray-400">Jami ishchilar</p>
@@ -42,7 +42,7 @@ function PositonCard({ item }: Props) {
               <p className="font-medium">{item.late_users_count || 0}</p>
             </div> */}
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
     </Link>
   );
