@@ -12,7 +12,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/datatable"
 import { ParamCombobox } from "@/components/as-params/combobox"
 
-
 export const tabsParam = [
     { value: "table", label: <Table /> },
     { value: "card", label: <Grid2x2 /> },
@@ -20,7 +19,7 @@ export const tabsParam = [
 
 export default function AbsentPage() {
     const navigate = useNavigate()
-    const search:SearchParams = useSearch({ strict: false })
+    const search: SearchParams = useSearch({ strict: false })
     const { id, tabs, ...otherParams } = search as {
         id: string
         [key: string]: any
@@ -84,9 +83,9 @@ export default function AbsentPage() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 w-full mb-3">
-                <ParamInput />
+                <ParamInput fullWidth className="bg-card" />
                 <ParamCombobox
-                    className="max-w-full"
+                    className="max-w-full w-full  bg-card sm:w-1/3"
                     labelKey="name"
                     valueKey="id"
                     options={dataPosition || []}
@@ -101,7 +100,10 @@ export default function AbsentPage() {
                         <>
                             {renderCardView()}
                             {data?.total_pages > 1 && (
-                                <ParamPagination totalPages={data?.total_pages} />
+                                <ParamPagination
+                                    totalPages={data?.total_pages}
+                                    PageSize={50}
+                                />
                             )}
                         </>
                     ) : (
@@ -125,11 +127,12 @@ export default function AbsentPage() {
                                     params: { id: item?.id.toString() },
                                 })
                             }
+                            paginationProps={{
+                                totalPages: data?.total_pages,
+                                PageSize: 50,
+                            }}
                             numeration
                         />
-                        {isSuccess && data?.total_pages > 1 ? (
-                            <ParamPagination totalPages={data?.total_pages} />
-                        ) : null}
                     </div>
                     <div className="lg:hidden">{renderCardView()}</div>
                 </>

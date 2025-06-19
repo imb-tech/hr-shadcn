@@ -21,7 +21,7 @@ function RouteComponent() {
 
     return (
         <PageLayout
-            rigthChildren={
+            rightComponent={
                 <PButton
                     allow={["roles_control"]}
                     className="flex gap-1"

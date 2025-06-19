@@ -1,18 +1,19 @@
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/layouts/page-layout";
-import CreateOfficeForm from "@/pages/office/create-office-form";
+import AllEmployeesPage from "@/pages/all-employees";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
-export const Route = createFileRoute("/_main/office/create")({
+export const Route = createFileRoute("/_main/all-employees")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const navigate = useNavigate();
+
   return (
     <PageLayout
-      breadcrumb={["Ofis qo'shish"]}
+      breadcrumb={["Hodimlar ro'yxati"]}
       leftComponent={
         <Button
           className="min-w-4"
@@ -22,7 +23,7 @@ function RouteComponent() {
         </Button>
       }
     >
-      <CreateOfficeForm />
+      <AllEmployeesPage />
     </PageLayout>
   );
 }

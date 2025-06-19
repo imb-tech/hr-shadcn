@@ -10,7 +10,7 @@ export const useHrListCols = (query?: string) => {
     () => [
       {
         header: "Rasm",
-        accessorKey: "face",
+        dataKey: "face",
         cell: (value: string) => {
           return (
             <div className="max-w-8">
@@ -21,7 +21,7 @@ export const useHrListCols = (query?: string) => {
       },
       {
         header: "FIO",
-        accessorKey: "middle_name",
+        dataKey: "middle_name",
         cell: (_, item) => {
           return (
             <span className="whitespace-nowrap lg:break-all">
@@ -37,7 +37,7 @@ export const useHrListCols = (query?: string) => {
       },
       {
         header: "Telefon",
-        accessorKey: "phone_number",
+        dataKey: "phone_number",
         cell: (value) => {
           return (
             <span className="whitespace-nowrap lg:break-all">
@@ -48,16 +48,16 @@ export const useHrListCols = (query?: string) => {
       },
       {
         header: "Lavozim",
-        accessorKey: "role_name",
+        dataKey: "role_name",
       },
       {
         header: "Maosh",
-        accessorKey: "salary",
+        dataKey: "salary",
         cell: (salary) => {
           return formatMoney(Number(salary));
         },
       },
-      { header: "Amallar", accessorKey: "actions" },
+      { header: "Amallar", dataKey: "actions" },
     ],
     [query],
   );

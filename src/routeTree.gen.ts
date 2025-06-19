@@ -16,6 +16,9 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MainImport } from './routes/_main'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
+import { Route as MainArrivalsImport } from './routes/_main/arrivals'
+import { Route as MainAllEmployeesImport } from './routes/_main/all-employees'
+import { Route as MainAbsentImport } from './routes/_main/absent'
 import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
 import { Route as MainOfficeCreateImport } from './routes/_main/office/create'
@@ -49,6 +52,24 @@ const AuthAuthLazyRoute = AuthAuthLazyImport.update({
   path: '/auth',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/auth.lazy').then((d) => d.Route))
+
+const MainArrivalsRoute = MainArrivalsImport.update({
+  id: '/arrivals',
+  path: '/arrivals',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainAllEmployeesRoute = MainAllEmployeesImport.update({
+  id: '/all-employees',
+  path: '/all-employees',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainAbsentRoute = MainAbsentImport.update({
+  id: '/absent',
+  path: '/absent',
+  getParentRoute: () => MainRoute,
+} as any)
 
 const MainRolesIndexRoute = MainRolesIndexImport.update({
   id: '/roles/',
@@ -97,6 +118,27 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof MainImport
       parentRoute: typeof rootRoute
+    }
+    '/_main/absent': {
+      id: '/_main/absent'
+      path: '/absent'
+      fullPath: '/absent'
+      preLoaderRoute: typeof MainAbsentImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/all-employees': {
+      id: '/_main/all-employees'
+      path: '/all-employees'
+      fullPath: '/all-employees'
+      preLoaderRoute: typeof MainAllEmployeesImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/arrivals': {
+      id: '/_main/arrivals'
+      path: '/arrivals'
+      fullPath: '/arrivals'
+      preLoaderRoute: typeof MainArrivalsImport
+      parentRoute: typeof MainImport
     }
     '/_auth/auth': {
       id: '/_auth/auth'
@@ -163,6 +205,9 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface MainRouteChildren {
+  MainAbsentRoute: typeof MainAbsentRoute
+  MainAllEmployeesRoute: typeof MainAllEmployeesRoute
+  MainArrivalsRoute: typeof MainArrivalsRoute
   MainIndexRoute: typeof MainIndexRoute
   MainOfficeEditIdRoute: typeof MainOfficeEditIdRoute
   MainOfficeIdRoute: typeof MainOfficeIdRoute
@@ -172,6 +217,9 @@ interface MainRouteChildren {
 }
 
 const MainRouteChildren: MainRouteChildren = {
+  MainAbsentRoute: MainAbsentRoute,
+  MainAllEmployeesRoute: MainAllEmployeesRoute,
+  MainArrivalsRoute: MainArrivalsRoute,
   MainIndexRoute: MainIndexRoute,
   MainOfficeEditIdRoute: MainOfficeEditIdRoute,
   MainOfficeIdRoute: MainOfficeIdRoute,
@@ -184,6 +232,9 @@ const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof MainRouteWithChildren
+  '/absent': typeof MainAbsentRoute
+  '/all-employees': typeof MainAllEmployeesRoute
+  '/arrivals': typeof MainArrivalsRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/office-edit/$id': typeof MainOfficeEditIdRoute
@@ -195,6 +246,9 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
+  '/absent': typeof MainAbsentRoute
+  '/all-employees': typeof MainAllEmployeesRoute
+  '/arrivals': typeof MainArrivalsRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/office-edit/$id': typeof MainOfficeEditIdRoute
@@ -208,6 +262,9 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_auth': typeof AuthRouteWithChildren
   '/_main': typeof MainRouteWithChildren
+  '/_main/absent': typeof MainAbsentRoute
+  '/_main/all-employees': typeof MainAllEmployeesRoute
+  '/_main/arrivals': typeof MainArrivalsRoute
   '/_auth/auth': typeof AuthAuthLazyRoute
   '/_main/': typeof MainIndexRoute
   '/_main/office-edit/$id': typeof MainOfficeEditIdRoute
@@ -219,13 +276,38 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/auth' | '/' | '/map' | '/roles'
+  fullPaths:
+    | ''
+    | '/absent'
+    | '/all-employees'
+    | '/arrivals'
+    | '/auth'
+    | '/'
+    | '/office-edit/$id'
+    | '/office/$id'
+    | '/office/create'
+    | '/map'
+    | '/roles'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/auth' | '/' | '/map' | '/roles'
+  to:
+    | ''
+    | '/absent'
+    | '/all-employees'
+    | '/arrivals'
+    | '/auth'
+    | '/'
+    | '/office-edit/$id'
+    | '/office/$id'
+    | '/office/create'
+    | '/map'
+    | '/roles'
   id:
     | '__root__'
     | '/_auth'
     | '/_main'
+    | '/_main/absent'
+    | '/_main/all-employees'
+    | '/_main/arrivals'
     | '/_auth/auth'
     | '/_main/'
     | '/_main/office-edit/$id'
@@ -271,10 +353,28 @@ export const routeTree = rootRoute
     "/_main": {
       "filePath": "_main.tsx",
       "children": [
+        "/_main/absent",
+        "/_main/all-employees",
+        "/_main/arrivals",
         "/_main/",
+        "/_main/office-edit/$id",
+        "/_main/office/$id",
+        "/_main/office/create",
         "/_main/map/",
         "/_main/roles/"
       ]
+    },
+    "/_main/absent": {
+      "filePath": "_main/absent.tsx",
+      "parent": "/_main"
+    },
+    "/_main/all-employees": {
+      "filePath": "_main/all-employees.tsx",
+      "parent": "/_main"
+    },
+    "/_main/arrivals": {
+      "filePath": "_main/arrivals.tsx",
+      "parent": "/_main"
     },
     "/_auth/auth": {
       "filePath": "_auth/auth.lazy.tsx",

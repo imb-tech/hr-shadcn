@@ -35,7 +35,7 @@ export default function OfficeDetail() {
     )
 
     return (
-        <div>
+        <div className=" w-full">
             <OfficeList />
             <OfficeProfile />
             <div className="flex justify-between items-center gap-3 mt-4">
