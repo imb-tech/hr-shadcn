@@ -1,4 +1,4 @@
-import { ColumnDef } from "@/components/ui/table";
+import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 
 export const usPostionsCols = () => {

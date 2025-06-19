@@ -7,6 +7,7 @@ export const REFRESH_TOKEN = "refresh_token"
 export const REGISTER = "register"
 export const LOGIN = USERS + "login/admin"
 export const COMPANIES = HR + 'companies'
+export const MAP_POLYGONS = HR + 'map-statistics'
 export const HR_API = 'users'
 export const HR_ATTENDED = HR + "attended-users"
 export const HR_ABSENTS = HR + "absent-users"

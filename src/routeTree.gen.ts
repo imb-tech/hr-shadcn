@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MainImport } from './routes/_main'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
+import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
 
 // Create Virtual Routes
@@ -45,6 +46,12 @@ const AuthAuthLazyRoute = AuthAuthLazyImport.update({
   path: '/auth',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/auth.lazy').then((d) => d.Route))
+
+const MainRolesIndexRoute = MainRolesIndexImport.update({
+  id: '/roles/',
+  path: '/roles/',
+  getParentRoute: () => MainRoute,
+} as any)
 
 const MainMapIndexRoute = MainMapIndexImport.update({
   id: '/map/',
@@ -91,6 +98,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainMapIndexImport
       parentRoute: typeof MainImport
     }
+    '/_main/roles/': {
+      id: '/_main/roles/'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof MainRolesIndexImport
+      parentRoute: typeof MainImport
+    }
   }
 }
 
@@ -109,11 +123,13 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 interface MainRouteChildren {
   MainIndexRoute: typeof MainIndexRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
+  MainRolesIndexRoute: typeof MainRolesIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainIndexRoute: MainIndexRoute,
   MainMapIndexRoute: MainMapIndexRoute,
+  MainRolesIndexRoute: MainRolesIndexRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
@@ -123,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/map': typeof MainMapIndexRoute
+  '/roles': typeof MainRolesIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -130,6 +147,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/map': typeof MainMapIndexRoute
+  '/roles': typeof MainRolesIndexRoute
 }
 
 export interface FileRoutesById {
@@ -139,13 +157,14 @@ export interface FileRoutesById {
   '/_auth/auth': typeof AuthAuthLazyRoute
   '/_main/': typeof MainIndexRoute
   '/_main/map/': typeof MainMapIndexRoute
+  '/_main/roles/': typeof MainRolesIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/auth' | '/' | '/map'
+  fullPaths: '' | '/auth' | '/' | '/map' | '/roles'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/auth' | '/' | '/map'
+  to: '' | '/auth' | '/' | '/map' | '/roles'
   id:
     | '__root__'
     | '/_auth'
@@ -153,6 +172,7 @@ export interface FileRouteTypes {
     | '/_auth/auth'
     | '/_main/'
     | '/_main/map/'
+    | '/_main/roles/'
   fileRoutesById: FileRoutesById
 }
 
@@ -192,7 +212,8 @@ export const routeTree = rootRoute
       "filePath": "_main.tsx",
       "children": [
         "/_main/",
-        "/_main/map/"
+        "/_main/map/",
+        "/_main/roles/"
       ]
     },
     "/_auth/auth": {
@@ -205,6 +226,10 @@ export const routeTree = rootRoute
     },
     "/_main/map/": {
       "filePath": "_main/map/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/roles/": {
+      "filePath": "_main/roles/index.tsx",
       "parent": "/_main"
     }
   }
