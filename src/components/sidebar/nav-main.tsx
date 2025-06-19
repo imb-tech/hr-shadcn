@@ -31,7 +31,7 @@ export function NavMain() {
                                     key={title}
                                     activeProps={{
                                         className:
-                                            "[&_button]:bg-card hover:[&_button]:bg-card hover:[&_button]:text-primary-foreground text-primary-foreground",
+                                            "[&_button]:bg-primary hover:[&_button]:bg-primary hover:[&_button]:text-primary-foreground text-primary-foreground",
                                     }}
                                     className="rounded-lg"
                                 >

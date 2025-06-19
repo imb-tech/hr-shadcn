@@ -82,7 +82,7 @@ export default function WeekdaysFields<T extends FieldValues>({
                             "cursor-pointer bg-default-100 py-1 rounded-md select-none w-10 sm:w-12 text-center capitalize",
                             v === 7 ? "text-red-400 bg-red-400/10" : "",
                             currentValue?.includes(v) ?
-                                "bg-blue-400 text-white"
+                                "bg-primary text-white"
                             :   "",
                             itemClassName,
                         )}

@@ -1,3 +1,4 @@
+import SeeInView from "@/components/ui/see-in-view"
 import { cn } from "@/lib/utils"
 import { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
@@ -8,11 +9,12 @@ export const useWorkerInfoCols = () => {
             {
                 header: "Rasm",
                 accessorKey: "face",
-                cell: () => {
+                cell: ({row}) => {
                     return (
-                        <div className="max-w-8">
-                            {/* <PopoverImage image={item.face} /> */}
-                        </div>
+                        <SeeInView
+                            url={String(row.original.face)}
+                            className={"object-cover h-9 w-9 rounded-md"}
+                        />
                     )
                 },
             },
@@ -62,7 +64,7 @@ export const useWorkerInfoCols = () => {
                 header: "Kechikish",
                 accessorKey: "id",
                 cell({ row }) {
-                    const { attendance,work_shift_start } = row.original
+                    const { attendance, work_shift_start } = row.original
                     return attendance && attendance.status === 0
                         ? getTimeDifference(
                               work_shift_start,
@@ -74,8 +76,8 @@ export const useWorkerInfoCols = () => {
             {
                 header: "Erta ketish vaqti",
                 accessorKey: "id",
-                cell({row}) {
-                  const {attendance,work_shift_end}=row.original
+                cell({ row }) {
+                    const { attendance, work_shift_end } = row.original
                     return attendance &&
                         attendance.status === 0 &&
                         attendance?.left_time
@@ -89,14 +91,16 @@ export const useWorkerInfoCols = () => {
             {
                 header: "Ishlagan soati",
                 accessorKey: "id",
-                cell({row}) {
-                    return <span>{row.original.attendance?.duration || "-"}</span>
+                cell({ row }) {
+                    return (
+                        <span>{row.original.attendance?.duration || "-"}</span>
+                    )
                 },
             },
             {
                 header: "Status",
                 accessorKey: "entry_log_status",
-                cell({row}) {
+                cell({ row }) {
                     return (
                         <div className="flex items-center gap-4 justify-center">
                             <span
