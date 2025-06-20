@@ -15,6 +15,7 @@ import {
     PhoneCall,
 } from "lucide-react"
 import { useMemo } from "react"
+import YearsAccordion from "./years/years-accordion"
 
 export const useHrListCols = () => {
     return useMemo<ColumnDef<any>[]>(
@@ -159,7 +160,10 @@ function ViewPage() {
                 </div>
             </div>
             <div className="mt-8 overflow-x-auto ">
-                <div className="min-w-[1024px]">{/* <YearsAccordion /> */}</div>
+                <div className="min-w-[1024px]">
+                    <YearsAccordion />
+
+                </div>
             </div>
         </div>
     )

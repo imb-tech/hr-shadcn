@@ -106,7 +106,6 @@ const DrawPolygonMap = forwardRef<MapRef, Props>(
             [drawRef.current, polygonMode],
         )
 
-        console.log(mode)
 
         const startDrawPolygon = useCallback(() => {
             if (!drawRef.current) {
@@ -244,7 +243,7 @@ const DrawPolygonMap = forwardRef<MapRef, Props>(
                     onClick={startDrawPolygon}
                     className={cn(
                         "h-7 w-7 flex items-center justify-center rounded absolute bg-white text-black right-[10px] top-[124px] !cursor-pointer",
-                        polygonMode ? "bg-primary-500 text-white" : "",
+                        polygonMode ? "bg-blue-500 text-white" : "",
                     )}
                     type="button"
                 >

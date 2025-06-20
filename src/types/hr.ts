@@ -54,6 +54,7 @@ type HumanYear = {
   late_count: number;
   early_checkout: string
   fine: string;
+  date?:string;
   late_duraction: string
   month: string
   late_duration: string
@@ -61,8 +62,8 @@ type HumanYear = {
   salary: number
   left_time: string
   attendance_time: string
-  shift_end_time: string
-  shift_start_time: string
+  work_shift_start: string
+  work_shift_end: string
   status: string
   id: number
 }

@@ -102,3 +102,8 @@
     -ms-overflow-style: none; /* IE va Edge */
     scrollbar-width: none; /* Firefox */
 }
+
+.no-time-icon::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
