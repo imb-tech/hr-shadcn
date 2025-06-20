@@ -83,9 +83,9 @@ export default function AbsentPage() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 w-full mb-3">
-                <ParamInput fullWidth className="bg-card" />
+                <ParamInput fullWidth  />
                 <ParamCombobox
-                    className="max-w-full w-full  bg-card sm:w-1/3"
+                    className="max-w-full w-full  sm:w-1/3"
                     labelKey="name"
                     valueKey="id"
                     options={dataPosition || []}

@@ -68,7 +68,7 @@ export default function DeleteModal({
     }
 
     return (
-        <Modal size="max-w-md" modalKey={modalKey}>
+        <Modal size="max-w-md" modalKey={modalKey} >
             <DialogHeader>
                 <DialogTitle className="font-normal max-w-sm">
                     Siz haqiqatdan ham {name} o'chirishni xohlaysizmi ?

@@ -73,7 +73,7 @@ export default function TableActions({
                             e.stopPropagation()
                             onDelete()
                         }}
-                        className="!text-destructive"
+                        className="!text-red-500"
                     >
                         <Trash2 width={16} className="mr-1.5" /> O'chirish
                     </DropdownMenuItem>
@@ -84,7 +84,7 @@ export default function TableActions({
                             e.stopPropagation()
                             onUndo()
                         }}
-                        className="!text-destructive"
+                        className="!text-red-500"
                     >
                         <Undo width={16} className="mr-1.5" /> Qaytarish
                     </DropdownMenuItem>
@@ -124,7 +124,7 @@ export default function TableActions({
             )}
             {onDelete && (
                 <Button
-                    icon={<Trash2 className="text-destructive" size={16} />}
+                    icon={<Trash2 className="text-red-500" size={16} />}
                     size="sm"
                     className="p-0 h-3"
                     variant="ghost"
@@ -136,7 +136,7 @@ export default function TableActions({
             )}
             {onUndo && (
                 <Button
-                    icon={<Undo className="text-destructive" size={16} />}
+                    icon={<Undo className="text-red-500" size={16} />}
                     size="sm"
                     className="p-0 h-3"
                     variant="ghost"

@@ -17,12 +17,12 @@ export default function PlanProfile() {
                     <div className="flex items-center gap-3">
                         <div className="flex items-center justify-center p-2 bg-gray-100 dark:bg-gray-800 rounded-full">
                             <DollarSign
-                                className=" text-gray-700 dark:text-gray-300"
+                                className=" text-primary"
                                 size={30}
                             />
                         </div>
                         <div>
-                            <p className="text-lg text-gray-500 dark:text-gray-400">
+                            <p className="text-lg text-primary">
                                 Balans
                             </p>
                             <p className="text-xl font-medium text-gray-900 dark:text-white">
@@ -34,7 +34,7 @@ export default function PlanProfile() {
                         allow={["balance_top_up"]}
                         onClick={() => navigate({ to: "/plans/checkout" })}
                         color="primary"
-                        variant="secondary"
+                        variant="default"
                     >
                         <Wallet size={16} />
                         Balansni toldirish

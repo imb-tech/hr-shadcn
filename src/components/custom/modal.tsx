@@ -8,6 +8,7 @@ import {
     DialogDescription,
     DialogTitle,
 } from "../ui/dialog"
+import { cn } from "@/lib/utils"
 
 type Props = {
     modalKey?: string
@@ -52,7 +53,7 @@ const Modal = ({
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
             {isOpen && (
-                <DialogContent className={size + className}>
+                <DialogContent className={cn(size, className)}>
                     {title && <DialogTitle>{title}</DialogTitle>}
                     {!title && (
                         <VisuallyHidden>

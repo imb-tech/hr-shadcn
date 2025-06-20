@@ -43,17 +43,17 @@ export function NavMain() {
                                     key={title}
                                     activeProps={{
                                         className:
-                                            "[&_button]:bg-primary/10 hover:[&_button]:bg-primary/15 hover:[&_button]:text-primary text-primary",
+                                            "[&_button]:bg-primary/10  hover:[&_button]:bg-primary/15 hover:[&_button]:text-primary text-primary",
                                     }}
-                                    className="rounded-lg"
+                                    className="rounded-lg "
                                 >
                                     <SidebarMenuItem>
                                         <SidebarMenuButton
                                             className="flex items-center gap-4"
                                             tooltip={title}
                                         >
-                                            <span>{item.icon}</span>
-                                            <span>{title}</span>
+                                            {item.icon}
+                                            {title}
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 </Link>

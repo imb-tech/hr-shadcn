@@ -106,7 +106,7 @@ export function ParamCombobox<T extends Record<string, any>>({
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant="outline"
+                    variant="secondary"
                     role="combobox"
                     aria-expanded={open}
                     className={cn(
