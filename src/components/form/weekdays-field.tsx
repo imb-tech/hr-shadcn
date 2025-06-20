@@ -7,7 +7,6 @@ import {
     useController,
     useFormContext,
 } from "react-hook-form"
-import { Button } from "../ui/button"
 
 type Props<IForm extends FieldValues> = {
     name: Path<IForm>
@@ -77,13 +76,13 @@ export default function WeekdaysFields<T extends FieldValues>({
             />
             <div className="flex gap-2" id={name}>
                 {[1, 2, 3, 4, 5, 6, 7]?.map((v) => (
-                    <Button
+                    <button
                         key={v}
                         className={cn(
-                            "cursor-pointer bg-default-100 py-1 rounded-md select-none w-10 sm:w-12 text-center capitalize",
+                            "cursor-pointer bg-card py-1 rounded-md select-none w-10 sm:w-12 text-center capitalize",
                             v === 7 ? "text-red-500 bg-red-500/10" : "",
                             currentValue?.includes(v) ?
-                                "bg-primary text-white"
+                                "bg-blue-500 text-white"
                             :   "",
                             itemClassName,
                         )}
@@ -91,7 +90,7 @@ export default function WeekdaysFields<T extends FieldValues>({
                         onClick={() => handleChange(v)}
                     >
                         {work_days[v - 1]}
-                    </Button>
+                    </button>
                 ))}
             </div>
             {invalid && (

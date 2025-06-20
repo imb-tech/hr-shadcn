@@ -1,7 +1,7 @@
+import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { useGet } from "@/hooks/useGet";
-import { Checkbox } from "@heroui/checkbox";
-import { Switch } from "@heroui/switch";
-import { cn } from "@heroui/theme";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
@@ -65,7 +65,7 @@ export default function PermissionField({
   return (
     <div>
       <div className="flex items-center gap-5">
-        <div className="bg-gray-500/20 rounded-2xl p-3 px-4">
+        {/* <div className="bg-gray-500/20 rounded-2xl p-3 px-4">
           <Switch size="sm" isSelected isDisabled>
             Mobil ilovaga ruxsat
           </Switch>
@@ -74,7 +74,7 @@ export default function PermissionField({
           <Switch size="sm" onValueChange={handleSwitch} isSelected={isSite}>
             Saytga kirishga ruxsat
           </Switch>
-        </div>
+        </div> */}
       </div>
 
       {isSite && (
@@ -82,8 +82,8 @@ export default function PermissionField({
           {data?.map((mod) => (
             <div className="bg-gray-500/20 rounded-xl p-4" key={mod.name}>
               <Checkbox
-                isSelected={isModuleChecked(mod)}
-                onValueChange={(checked) => handleModuleChange(mod, checked)}
+                checked={isModuleChecked(mod)}
+                onChange={(checked) => handleModuleChange(mod, checked)}
               >
                 {mod.name}
               </Checkbox>
@@ -97,8 +97,8 @@ export default function PermissionField({
                 {mod?.actions.map((act) => (
                   <Checkbox
                     key={act.code}
-                    isSelected={isActionChecked(act.code)}
-                    onValueChange={(checked) =>
+                    checked={isActionChecked(act.code)}
+                    onChange={(checked) =>
                       handleActionChange(act.code, checked)
                     }
                   >

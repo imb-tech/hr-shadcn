@@ -24,7 +24,7 @@ export default function Select<T extends Record<string, any>>({
             value={value?.toString()}
             onValueChange={setValue}
         >
-            <SelectTrigger className={`w-full bg-background ${className}`}>
+            <SelectTrigger className={`w-full bg-secondary ${className}`}>
                 <SelectValue className={`${className}`} placeholder={label} />
             </SelectTrigger>
             <SelectContent>

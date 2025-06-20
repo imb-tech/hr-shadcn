@@ -13,7 +13,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { CheckIcon, ChevronDown, Plus } from "lucide-react"
+import { CheckIcon, ChevronDown, Plus, X } from "lucide-react"
 import { useState } from "react"
 import { ClassNameValue } from "tailwind-merge"
 import { Skeleton } from "./skeleton"
@@ -73,7 +73,7 @@ export function MultiCombobox<T extends Record<string, any>>({
                     role="combobox"
                     aria-expanded={open}
                     className={cn(
-                        "w-full justify-between bg-background overflow-hidden px-2 hover:bg-background font-normal text-gray-400 hover:text-gray-400",
+                        "w-full justify-between bg-secondary overflow-hidden px-2 hover:bg-card font-normal text-gray-400 hover:text-gray-400",
                         values && "font-medium text-foreground",
                         isError && " border-destructive",
                         className,
@@ -117,6 +117,15 @@ export function MultiCombobox<T extends Record<string, any>>({
                         placeholder={label}
                         className="h-10"
                     />
+                     {!!values?.length && (
+                        <span className="absolute cursor-pointer text-destructive top-1.5 right-1 p-1">
+                            <X
+                                className="text-red-500"
+                                width={16}
+                                onClick={() => setValues([])}
+                            />
+                        </span>
+                    )}
                     <CommandList>
                         <CommandEmpty>Mavjud emas</CommandEmpty>
                         <CommandGroup className="!overflow-y-scroll">

@@ -35,7 +35,7 @@ export default function usePath() {
                 title: "Lavozimlar",
             }),
             linkOptions({
-                to: "/map",
+                to: "/hr",
                 icon: <UsersIcon />,
                 enabled: checkAllow("employee_view"),
                 title: "Hodimlar",
