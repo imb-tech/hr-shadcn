@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MainImport } from './routes/_main'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
+import { Route as MainLandingImport } from './routes/_main/landing'
 import { Route as MainArrivalsImport } from './routes/_main/arrivals'
 import { Route as MainAllEmployeesImport } from './routes/_main/all-employees'
 import { Route as MainAbsentImport } from './routes/_main/absent'
@@ -56,6 +57,12 @@ const AuthAuthLazyRoute = AuthAuthLazyImport.update({
   path: '/auth',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/auth.lazy').then((d) => d.Route))
+
+const MainLandingRoute = MainLandingImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => MainRoute,
+} as any)
 
 const MainArrivalsRoute = MainArrivalsImport.update({
   id: '/arrivals',
@@ -168,6 +175,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainArrivalsImport
       parentRoute: typeof MainImport
     }
+    '/_main/landing': {
+      id: '/_main/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof MainLandingImport
+      parentRoute: typeof MainImport
+    }
     '/_auth/auth': {
       id: '/_auth/auth'
       path: '/auth'
@@ -264,6 +278,7 @@ interface MainRouteChildren {
   MainAbsentRoute: typeof MainAbsentRoute
   MainAllEmployeesRoute: typeof MainAllEmployeesRoute
   MainArrivalsRoute: typeof MainArrivalsRoute
+  MainLandingRoute: typeof MainLandingRoute
   MainIndexRoute: typeof MainIndexRoute
   MainOfficeEditIdRoute: typeof MainOfficeEditIdRoute
   MainOfficeIdRoute: typeof MainOfficeIdRoute
@@ -280,6 +295,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainAbsentRoute: MainAbsentRoute,
   MainAllEmployeesRoute: MainAllEmployeesRoute,
   MainArrivalsRoute: MainArrivalsRoute,
+  MainLandingRoute: MainLandingRoute,
   MainIndexRoute: MainIndexRoute,
   MainOfficeEditIdRoute: MainOfficeEditIdRoute,
   MainOfficeIdRoute: MainOfficeIdRoute,
@@ -299,6 +315,7 @@ export interface FileRoutesByFullPath {
   '/absent': typeof MainAbsentRoute
   '/all-employees': typeof MainAllEmployeesRoute
   '/arrivals': typeof MainArrivalsRoute
+  '/landing': typeof MainLandingRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/office-edit/$id': typeof MainOfficeEditIdRoute
@@ -317,6 +334,7 @@ export interface FileRoutesByTo {
   '/absent': typeof MainAbsentRoute
   '/all-employees': typeof MainAllEmployeesRoute
   '/arrivals': typeof MainArrivalsRoute
+  '/landing': typeof MainLandingRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/office-edit/$id': typeof MainOfficeEditIdRoute
@@ -337,6 +355,7 @@ export interface FileRoutesById {
   '/_main/absent': typeof MainAbsentRoute
   '/_main/all-employees': typeof MainAllEmployeesRoute
   '/_main/arrivals': typeof MainArrivalsRoute
+  '/_main/landing': typeof MainLandingRoute
   '/_auth/auth': typeof AuthAuthLazyRoute
   '/_main/': typeof MainIndexRoute
   '/_main/office-edit/$id': typeof MainOfficeEditIdRoute
@@ -357,6 +376,7 @@ export interface FileRouteTypes {
     | '/absent'
     | '/all-employees'
     | '/arrivals'
+    | '/landing'
     | '/auth'
     | '/'
     | '/office-edit/$id'
@@ -374,6 +394,7 @@ export interface FileRouteTypes {
     | '/absent'
     | '/all-employees'
     | '/arrivals'
+    | '/landing'
     | '/auth'
     | '/'
     | '/office-edit/$id'
@@ -392,6 +413,7 @@ export interface FileRouteTypes {
     | '/_main/absent'
     | '/_main/all-employees'
     | '/_main/arrivals'
+    | '/_main/landing'
     | '/_auth/auth'
     | '/_main/'
     | '/_main/office-edit/$id'
@@ -444,6 +466,7 @@ export const routeTree = rootRoute
         "/_main/absent",
         "/_main/all-employees",
         "/_main/arrivals",
+        "/_main/landing",
         "/_main/",
         "/_main/office-edit/$id",
         "/_main/office/$id",
@@ -466,6 +489,10 @@ export const routeTree = rootRoute
     },
     "/_main/arrivals": {
       "filePath": "_main/arrivals.tsx",
+      "parent": "/_main"
+    },
+    "/_main/landing": {
+      "filePath": "_main/landing.tsx",
       "parent": "/_main"
     },
     "/_auth/auth": {

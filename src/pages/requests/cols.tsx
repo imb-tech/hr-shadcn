@@ -4,6 +4,7 @@ import SeeInView from "@/components/ui/see-in-view"
 import { useStore } from "@/hooks/use-store"
 import { useModal } from "@/hooks/useModal"
 import { formatDateTime } from "@/lib/format-date"
+import { cn } from "@/lib/utils"
 import { ColumnDef } from "@tanstack/react-table"
 import { Check, X } from "lucide-react"
 import { useMemo } from "react"
@@ -74,8 +75,7 @@ export const useRequestsCols = () => {
                             <Private allow={["excuse_confirmed"]}>
                                 <div className="flex items-center justify-end">
                                     <Button
-                                        className="min-w-4 "
-                                        color="danger"
+                                        className="min-w-4 text-red-500 hover:text-red-600 hover:bg-destructive/20"
                                         size="sm"
                                         variant="ghost"
                                         onClick={() => {
@@ -86,8 +86,7 @@ export const useRequestsCols = () => {
                                         <X size={20} />
                                     </Button>
                                     <Button
-                                        className="min-w-4 "
-                                        color="success"
+                                        className="min-w-4 text-green-500 hover:text-green-600 hover:bg-green-500/10"
                                         size="sm"
                                         variant="ghost"
                                         onClick={() => {
@@ -101,12 +100,9 @@ export const useRequestsCols = () => {
                             </Private>
                         :   <div className={"flex w-full justify-end"}>
                                 <Button
-                                    className={`flex  ${original.status === 2 ? "justify-end" : "justify-start"}`}
-                                    color={
-                                        original.status === 2 ?
-                                            "danger"
-                                        :   "success"
-                                    }
+                                    className={cn(`flex`,
+                                        original.status === 2 ? "justify-end text-red-500 hover:text-red-600 hover:bg-destructive/20" : "justify-start hover:text-green-600 hover:bg-green-500/10 text-green-500"
+                                    )}
                                     variant="ghost"
                                 >
                                     {original.status === 2 ?

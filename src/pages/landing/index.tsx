@@ -1,8 +1,8 @@
-import Modal from "@/components/ui/modal";
-import { useModal } from "@/hooks/use-modal";
 import { ChevronRight, Expand } from "lucide-react";
 import { useState } from "react";
 import Tabbar from "./tabbar";
+import { useModal } from "@/hooks/useModal";
+import Modal from "@/components/custom/modal";
 
 export default function LandingMain() {
   const { openModal } = useModal();
@@ -19,7 +19,7 @@ export default function LandingMain() {
         <Tabbar />
       </div>
       <div className="rounded-lg flex flex-col gap-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div
             className="relative [&_span]:hover:flex cursor-pointer"
             onClick={() => handleSelect("/images/o1.png")}
@@ -65,7 +65,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div className="flex justify-center items-center">
             <div className="text-lg font-extralight max-w-lg">
               <div className="flex items-start gap-2">
@@ -102,7 +102,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div
             className="relative [&_span]:hover:flex cursor-pointer"
             onClick={() => handleSelect("/images/co1.png")}
@@ -150,7 +150,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div className="flex justify-center items-center">
             <div className="text-lg font-extralight max-w-lg">
               <div className="flex items-start gap-2">
@@ -211,7 +211,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div
             className="relative [&_span]:hover:flex cursor-pointer"
             onClick={() => handleSelect("/images/ed1.png")}
@@ -238,7 +238,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div className="flex justify-center items-center">
             <div className="text-lg font-extralight max-w-lg">
               <div className="flex items-start gap-2">
@@ -298,7 +298,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div
             className="relative [&_span]:hover:flex cursor-pointer"
             onClick={() => handleSelect("/images/rt2.png")}
@@ -325,7 +325,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div className="flex justify-center items-center">
             <div className="text-lg font-extralight max-w-lg">
               <div className="flex items-start gap-2">
@@ -357,7 +357,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-600/20 p-3 py-5 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-card p-3 py-5 rounded-lg">
           <div
             className="relative [&_span]:hover:flex cursor-pointer"
             onClick={() => handleSelect("/images/r1.png")}
@@ -394,7 +394,7 @@ export default function LandingMain() {
           </div>
         </div>
 
-        <Modal size="full">
+        <Modal size="max-w-full">
           <div className="flex items-center justify-center h-full">
             {item && <img src={item} width={"80%"} />}
           </div>

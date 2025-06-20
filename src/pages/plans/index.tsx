@@ -21,11 +21,16 @@ export default function PlansPage() {
             <PlanProfile />
             <PlanGraph />
             <Private allow={["balance_history"]}>
-                <DataTable
-                    className="mt-5"
-                    columns={useHistoryCols()}
-                    data={data?.results ?? []}
-                />
+                <div className="mt-5">
+                    <DataTable
+                        numeration
+                        columns={useHistoryCols()}
+                        data={data?.results ?? []}
+                        paginationProps={{
+                            totalPages: data?.total_pages,
+                        }}
+                    />
+                </div>
             </Private>
         </div>
     )

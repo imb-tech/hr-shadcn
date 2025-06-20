@@ -50,7 +50,7 @@ export default function AbsentPage() {
         isLoading,
         isSuccess,
     } = useGet<ListResponse<Human>>(`${HR_ABSENTS}/${id}`, {
-        params: { ...otherParams, page_size: 48 },
+        params: { ...otherParams, page_size: 25 },
         options: { enabled: Boolean(id) },
     })
     const columns = useAbsentListCols()
@@ -102,7 +102,6 @@ export default function AbsentPage() {
                             {data?.total_pages > 1 && (
                                 <ParamPagination
                                     totalPages={data?.total_pages}
-                                    PageSize={50}
                                 />
                             )}
                         </>
@@ -129,7 +128,6 @@ export default function AbsentPage() {
                             }
                             paginationProps={{
                                 totalPages: data?.total_pages,
-                                PageSize: 50,
                             }}
                             numeration
                         />

@@ -31,7 +31,7 @@ export default function AllEmployeesPage() {
         isLoading,
         isSuccess,
     } = useGet<ListResponse<Human>>(`${ALL_EMPLOYEES}/${id}`, {
-        params: { ...otherParams, page_size: 48 },
+        params: { ...otherParams, page_size: 25 },
         options: { enabled: Boolean(id) },
     })
     const columns = useAllEmployeesListCols()
@@ -111,7 +111,6 @@ export default function AllEmployeesPage() {
                             {data?.total_pages > 1 && (
                                 <ParamPagination
                                     totalPages={data?.total_pages}
-                                    PageSize={50}
                                 />
                             )}
                         </>
@@ -139,7 +138,6 @@ export default function AllEmployeesPage() {
                             }
                             paginationProps={{
                                 totalPages: data?.total_pages,
-                                PageSize: 50,
                             }}
                         />
                     </div>

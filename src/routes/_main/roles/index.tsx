@@ -11,26 +11,10 @@ export const Route = createFileRoute("/_main/roles/")({
 })
 
 function RouteComponent() {
-    const { openModal } = useModal()
-    const { remove } = useStore<Position>("position-data")
 
-    function handleClick() {
-        remove()
-        openModal()
-    }
 
     return (
         <PageLayout
-            rightComponent={
-                <PButton
-                    allow={["roles_control"]}
-                    className="flex gap-1"
-                    onClick={handleClick}
-                >
-                    <Plus className="w-5 h-5" />
-                    Lavozim qo'shish
-                </PButton>
-            }
         >
             <PostionsPage />
         </PageLayout>

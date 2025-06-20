@@ -43,7 +43,7 @@ export default function ArrivalsPage() {
     const { data, isLoading, isSuccess } = useGet<ListResponse<Human>>(
         `${HR_ATTENDED}/${id}`,
         {
-            params: { ...otherParams, page_size: 48 },
+            params: { ...otherParams, page_size: 25 },
             options: { enabled: Boolean(id) },
         },
     )
@@ -101,7 +101,6 @@ export default function ArrivalsPage() {
                             {data?.total_pages > 1 && (
                                 <ParamPagination
                                     totalPages={data?.total_pages}
-                                    PageSize={50}
                                 />
                             )}
                         </div>
@@ -123,7 +122,6 @@ export default function ArrivalsPage() {
                             loading={isLoading}
                             paginationProps={{
                                 totalPages: data?.total_pages,
-                                PageSize: 50,
                             }}
                             onRowClick={(item) =>
                                 navigate({
