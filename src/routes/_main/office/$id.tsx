@@ -12,7 +12,7 @@ function RouteComponent() {
   return (
     <PageLayout
       breadcrumb={["Ofis", "Ofis ma'lumotlari va hodimlar"]}
-      rightComponent={<ParamDatePicker titleHidden={false}  variant="default" />}
+      rightComponent={<ParamDatePicker titleHidden={false}  className="!text-primary" variant="default" />}
     >
       <OfficeDetail />
     </PageLayout>

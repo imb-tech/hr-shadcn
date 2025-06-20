@@ -47,14 +47,15 @@ export function DatePicker({
                         fullWidth && "w-full",
                         isError && "border-destructive",
                         titleHidden && "w-[280px]",
-                        !titleHidden && date && "w-[150px]"
+                        !titleHidden && date && "w-[150px]",
                     )}
                     disabled={disabled}
                 >
                     <CalendarIcon
                         className={cn(
-                            "text-muted-foreground h-4 w-4",
-                            titleHidden && "mr-1",
+                            "text-muted-foreground h-4 w-4 ",
+                            date && "mr-1 ",
+                            !titleHidden && "text-primary"
                         )}
                     />
                     {date

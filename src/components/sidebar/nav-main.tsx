@@ -10,7 +10,8 @@ import usePath from "@/hooks/usePath"
 import { Link } from "@tanstack/react-router"
 
 export function NavMain() {
-    const { links } = usePath()
+    const { links } = usePath();
+
 
     return (
         <SidebarGroup className={"lg:pt-[74px]"}>

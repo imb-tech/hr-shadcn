@@ -18,6 +18,7 @@ const PageLayout = ({
     leftComponent,
 }: Props) => {
     const { links } = usePath()
+    // const { isLoading } = usePermissions()
 
     return (
         <div className="w-full h-full overflow-y-auto">
@@ -44,6 +45,23 @@ const PageLayout = ({
                         />
                     ))}
                 </nav>
+                {/* {isLoading && (
+                    <div className="flex items-center justify-center h-screen fixed z-[10000] w-full top-0 left-0 bg-background/90">
+                        <div
+                            className="flex justify-start  items-center gap-1  transition-none duration-150"
+                            color="foreground"
+                        >
+                            <img
+                                alt="logo"
+                                src="/images/logo.png"
+                                width={100}
+                            />
+                            <p className="font-bold text-3xl text-inherit">
+                                IMB HR
+                            </p>
+                        </div>
+                    </div>
+                )} */}
             </main>
         </div>
     )
