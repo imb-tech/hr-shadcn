@@ -23,7 +23,13 @@ export default function RequestsPage() {
         data: data,
         isSuccess,
         isLoading,
-    } = useGet<StatusType[]>(EXCUSE, { params: { status: search.status ?? 0 } })
+    } = useGet<ListResponse<StatusType>>(EXCUSE, {
+        params: {
+            ...search,
+            page_size: search?.page_size || 25,
+            status: search.status ?? 0,
+        },
+    })
     const { data: dataCount } = useGet<{ [key: string]: string | undefined }>(
         EXCUSE_COUNT,
     )
@@ -67,19 +73,23 @@ export default function RequestsPage() {
 
     return (
         <div>
-            <div className="mb-3 flex items-center justify-between">
-                <ParamTabs
-                    dontCleanOthers
-                    paramName="status"
-                    options={tabOptions}
-                />
-                <ParamDatePicker className="w-auto" />
+            <div className="mb-3 w-full flex flex-col gap-3 sm:flex-row sm:items-center justify-between">
+                <div className="max-w-[560px] overflow-x-auto no-scrollbar-x">
+                    <ParamTabs
+                        dontCleanOthers
+                        paramName="status"
+                        options={tabOptions}
+                    />
+                </div>
+                <ParamDatePicker />
             </div>
 
             <DataTable
+                numeration
                 columns={useRequestsCols()}
-                data={(isSuccess && data) || []}
+                data={(isSuccess && data?.results) || []}
                 loading={isLoading}
+                paginationProps={{ totalPages: data?.total_pages }}
             />
             <Modal
                 title={

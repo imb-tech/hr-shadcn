@@ -11,8 +11,8 @@ const partURL = import.meta.env.VITE_DEFAULT_PART_URL
 
 const url = import.meta.env.DEV ? "demo.imbtech.uz" : window.location.hostname
 // const url = 'demo.imbtech.uz'
-const baseURLOrigin = 'https://' + url.split('.')[0] + partURL
-// const baseURLOrigin = "http://192.168.1.122/api/v1"
+// const baseURLOrigin = 'https://' + url.split('.')[0] + partURL
+const baseURLOrigin = "http://192.168.1.122:80/api/v1/"
 
 
 const axiosInstance = axios.create({

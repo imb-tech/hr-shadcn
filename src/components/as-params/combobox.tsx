@@ -92,7 +92,7 @@ export function ParamCombobox<T extends Record<string, any>>({
         setOpen(false)
     }
 
-    const selectedOption = options.find(
+    const selectedOption = options?.find(
         (d) => String(d[valueKey]) === currentValue,
     )
 

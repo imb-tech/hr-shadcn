@@ -62,7 +62,7 @@ const ParamTabs: React.FC<ParamTabsProps> = ({
             onValueChange={handleTabChange}
             className={options?.[0]?.content ? "space-y-4 w-full " : ""}
         >
-            <div className="max-w-full overflow-x-auto  flex flex-wrap items-center justify-between gap-4">
+            <div className="max-w-full  flex flex-wrap items-center justify-between gap-4">
                 <TabsList className="h-10 flex gap-3 ">
                     {options.map(
                         (option) =>

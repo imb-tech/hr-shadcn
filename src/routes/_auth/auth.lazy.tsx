@@ -43,7 +43,7 @@ function AuthComponent() {
     return (
         <form
             onSubmit={onSubmit}
-            className="max-w-md m-auto h-screen p-4 rounded-sm flex justify-center flex-col gap-4"
+            className="max-w-md m-auto h-screen p-4  rounded-sm flex justify-center flex-col gap-4"
         >
             <FormInput
                 methods={methods}

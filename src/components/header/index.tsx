@@ -6,11 +6,9 @@ import {
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import { Link, useNavigate } from "@tanstack/react-router"
-import { LogOut, User } from "lucide-react"
-import { ThemeColorToggle } from "./color-toggle"
-import { SidebarTrigger, useSidebar } from "../ui/sidebar"
+import { LogOut, Moon, Sun, User } from "lucide-react"
+import { SidebarTrigger } from "../ui/sidebar"
 import { ReactNode } from "react"
-import HeaderLinks from "./header-links"
 import { useGet } from "@/hooks/useGet"
 import { GET_ME } from "@/constants/api-endpoints"
 import getPlan from "@/lib/get-plan"
@@ -18,6 +16,7 @@ import Spinner from "../ui/spinner"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import { Button } from "../ui/button"
 import { cn } from "@/lib/utils"
+import { useTheme } from "@/layouts/theme"
 
 const Header = ({
     items,
@@ -28,9 +27,9 @@ const Header = ({
     rightComponent?: ReactNode
     leftComponent?: ReactNode
 }) => {
-    const { open } = useSidebar()
     const { data, isLoading } = useGet<Profile>(GET_ME)
     const navigate = useNavigate()
+    const { theme, setTheme } = useTheme()
 
     const logOut = () => {
         localStorage.clear()
@@ -38,27 +37,24 @@ const Header = ({
     }
 
     return (
-        <header className="py-1.5 pr-3 pl-2 gap-4 dark:border-b  flex items-center justify-between bg-background  max-w-full box-border">
+        <header className="py-[10px] pr-3 pl-2 gap-4 border-b  flex items-center justify-between bg-background  max-w-full box-border">
             <div className="flex gap-6 items-center  max-w-full  custom-scrollbar">
-                <div
-                    className={cn(
-                        "flex gap-3 items-center",
-                    )}
-                >
-                    <div><SidebarTrigger className="text-gray-500 dark:text-white" /></div>
+                <div className={cn("flex sm:gap-3  items-center")}>
+                    <div>
+                        <SidebarTrigger className="text-gray-500 dark:text-white" />
+                    </div>
                     <Link
                         className="flex justify-start  items-center gap-1"
                         color="foreground"
                         to="/"
                     >
-                        <img alt="logo" src="/images/logo.png" width={50} />
-                        <p className="font-bold text-inherit whitespace-nowrap">IMB HR</p>
+                        <img alt="logo" src="/images/logo.png" width={40} />
+                        <p className="font-bold text-inherit whitespace-nowrap">
+                            IMB HR
+                        </p>
                     </Link>
                 </div>
 
-                <div className="w-full ">
-                    <HeaderLinks />
-                </div>
                 {!!leftComponent && (
                     <div className="flex gap-2">{leftComponent}</div>
                 )}
@@ -80,7 +76,6 @@ const Header = ({
                         <p>Keyingi oy to'lovingiz 300 000 so'm</p>
                     </TooltipContent>
                 </Tooltip>
-                <ThemeColorToggle />
                 <DropdownMenu>
                     <div className="relative h-10">
                         <DropdownMenuTrigger className="!outline-none">
@@ -120,6 +115,27 @@ const Header = ({
                                 )}
                             </div>
                         </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => {
+                                if (theme === "light") {
+                                    setTheme("dark")
+                                } else {
+                                    setTheme("light")
+                                }
+                            }}
+                            className="cursor-pointer flex items-center gap-2   "
+                        >
+                            {theme === "light" ? (
+                                <span className="flex items-center gap-2">
+                                    <Sun width={18} /> Kun{" "}
+                                </span>
+                            ) : (
+                                <span className="flex items-center gap-2">
+                                    <Moon width={18} /> Tun
+                                </span>
+                            )}
+                        </DropdownMenuItem>
+                        <div className="w-full border-[0.5px] my-1"></div>
                         <DropdownMenuItem
                             className="cursor-pointer flex items-center gap-2 !text-red-500"
                             onClick={logOut}

@@ -17,7 +17,7 @@ export default function PostionsPage() {
     const { openModal: openUpdateModal } = useModal()
     const { data, isSuccess, isLoading } = useGet<Position[]>(POSITION)
     const { store, setStore } = useStore<Position>("position-data")
-    const { openModal:openModalCreate } = useModal()
+    const { openModal: openModalCreate } = useModal()
     const { remove } = useStore<Position>("position-data")
 
     function handleClick() {
@@ -58,13 +58,16 @@ export default function PostionsPage() {
                 }
                 viewAll={true}
                 actionPermissions={["roles_control"]}
+                className="min-w-[600px]"
                 head={
-                    <div className="flex flex-col mb-3 lg:flex-row items-center gap-3 justify-between">
-                         <div className="flex items-center gap-3">
-                            <h1 className="text-xl font-medium">
+                    <div className="flex  mb-3 flex-row items-center gap-3 justify-between">
+                        <div className="flex items-center gap-3">
+                            <h1 className="text-xl font-medium ">
                                 Lavozimlar ro'yxati
                             </h1>
-                            <Badge className="text-sm">{formatMoney(data?.length)}</Badge>
+                            <Badge className="text-sm">
+                                {formatMoney(data?.length)}
+                            </Badge>
                         </div>
                         <PButton
                             allow={["roles_control"]}
@@ -72,7 +75,9 @@ export default function PostionsPage() {
                             onClick={handleClick}
                         >
                             <Plus className="w-5 h-5" />
-                            Lavozim qo'shish
+                            <span className="sm:block hidden">
+                                Lavozim qo'shish
+                            </span>
                         </PButton>
                     </div>
                 }

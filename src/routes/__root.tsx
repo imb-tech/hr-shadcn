@@ -18,7 +18,7 @@ export const Route = createRootRoute({
 function RootComponent() {
     return (
         <ModalProvider>
-            <ThemeProvider defaultTheme="light" storageKey="theme">
+            <ThemeProvider defaultTheme="dark" storageKey="theme">
                 <ConfirmProvider>
                     <PromptProvider>
                         <Outlet />

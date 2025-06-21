@@ -43,7 +43,7 @@ export default function ArrivalsPage() {
     const { data, isLoading, isSuccess } = useGet<ListResponse<Human>>(
         `${HR_ATTENDED}/${id}`,
         {
-            params: { ...otherParams, page_size: 25 },
+            params: { ...otherParams, page_size: search?.page_size || 25 },
             options: { enabled: Boolean(id) },
         },
     )
@@ -73,7 +73,7 @@ export default function ArrivalsPage() {
     return (
         <div>
             <div className="flex justify-between items-center gap-3 w-full mb-3">
-                <div>
+                <div className="max-w-[460px] overflow-x-auto no-scrollbar-x">
                     <ParamTabs paramName="status" options={tabOptions} />
                 </div>
                 <div className="hidden lg:block">

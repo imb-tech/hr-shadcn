@@ -45,9 +45,12 @@ export default function HrPage() {
             },
         },
     )
-    const { data, isLoading, refetch } = useGet<ListResponse<Human>>(HR_API, {
-        params: { ...params, page_size: 25 },
-    })
+    const { data, isLoading,  refetch } = useGet<ListResponse<Human>>(
+        HR_API,
+        {
+            params: { ...params, page_size: params?.page_size || 25 },
+        },
+    )
 
     const { mutate, isPending } = usePost(
         {
@@ -136,12 +139,13 @@ export default function HrPage() {
 
                     navigate({ to: `/hr-edit/${original.id}` })
                 }}
+                className="min-w-[900px]"
                 onRowClick={(item) => navigate({ to: `/hr-view/${item.id}` })}
                 head={
                     <div className="grid lg:grid-cols-3 gap-3 w-full mb-3">
                         <ParamInput fullWidth />
                         <ParamCombobox
-                            className="max-w-full sm:w-80 "
+                            className="max-w-full w-full sm:w-80 "
                             labelKey="name"
                             valueKey="id"
                             options={dataPosition || []}

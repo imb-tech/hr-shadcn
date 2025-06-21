@@ -86,7 +86,7 @@ export function DataTable<TData>({
     data,
     columns,
     loading,
-    className,
+    className="min-w-[1100px]",
     deleteSelecteds,
     onRightClick,
     selecteds_count,
@@ -197,7 +197,7 @@ export function DataTable<TData>({
     return (
         <main
             className={cn(
-                "w-full   p-4 bg-card rounded-md overflow-x-auto no-scollbar-x",
+                "w-full   p-4 bg-card rounded-md ",
                 wrapperClassName,
             )}
         >
@@ -218,7 +218,7 @@ export function DataTable<TData>({
                 </div>
             )}
 
-            <div className={cn("relative  rounded-md ", tableWrapperClassName)}>
+            <div className={cn("relative overflow-x-auto overflow-y-hidden no-scollbar-x   rounded-md ", tableWrapperClassName)}>
                 {loading  && (
                     <Table className="flex flex-col gap-1">
                         {Array.from({ length: skeletonRowCount })?.map(
@@ -262,7 +262,7 @@ export function DataTable<TData>({
                 )}
                 {data?.length ? (
                     <Table
-                        className={`${className} select-text min-w-[1100px]  bg-card rounded-md`}
+                        className={`${className} select-text  bg-card rounded-md`}
                     >
                         <TableHeader>
                             {table
