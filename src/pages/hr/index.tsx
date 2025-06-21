@@ -134,7 +134,6 @@ export default function HrPage() {
                 }}
                 onEdit={({ original }) => {
                     if (!original.id) return
-                    console.log(original)
 
                     navigate({ to: `/hr-edit/${original.id}` })
                 }}

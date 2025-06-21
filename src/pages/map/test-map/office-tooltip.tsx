@@ -5,8 +5,6 @@ import OfficeChart from "./office-chart"
 
 const OfficeTooltip = ({ office: { properties } }: { office: Office }) => {
     const [hover, setHover] = useState(false)
-    console.log(properties);
-    
 
     return (
         <div className="flex justify-start cursor-pointer">

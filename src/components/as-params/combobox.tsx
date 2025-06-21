@@ -92,9 +92,7 @@ export function ParamCombobox<T extends Record<string, any>>({
         setOpen(false)
     }
 
-    const selectedOption = options?.find(
-        (d) => String(d[valueKey]) === currentValue,
-    )
+    const selectedOption = options?.find((d) => d[valueKey] === currentValue)
 
     const sortedOptions = options?.sort((a, b) => {
         const isASelected = a[valueKey] == currentValue
@@ -102,11 +100,12 @@ export function ParamCombobox<T extends Record<string, any>>({
         return isASelected === isBSelected ? 0 : isASelected ? -1 : 1
     })
 
+
     return (
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant="secondary" 
+                    variant="secondary"
                     role="combobox"
                     aria-expanded={open}
                     className={cn(
