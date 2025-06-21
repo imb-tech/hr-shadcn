@@ -72,7 +72,7 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
         currentValues.length > 0
             ? currentValues
                   ?.map((val: string) => {
-                      const found = options.find(
+                      const found = options?.find(
                           (d) => String(d[valueKey]) === val,
                       )
                       return found?.[labelKey] || val

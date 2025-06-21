@@ -39,7 +39,7 @@ const ParamRadioGroup: React.FC<ParamRadioGroupProps> = ({
             .find((option) => option?.[returnVal] === currentParamValue)
             ?.[returnVal]?.toString() || options[0]?.value?.toString()
     const handleValueChange = (value: string) => {
-        const option = options.find(
+        const option = options?.find(
             (option) => option[returnVal]?.toString() === value,
         )
         const paramVal = option?.[returnVal]
@@ -66,7 +66,7 @@ const ParamRadioGroup: React.FC<ParamRadioGroupProps> = ({
             onValueChange={handleValueChange}
             disabled={disabled}
         >
-            {options.map((option) => (
+            {options?.map((option) => (
                 <div
                     className="flex items-center space-x-2 w-auto"
                     key={option.label}

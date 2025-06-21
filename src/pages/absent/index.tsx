@@ -50,7 +50,7 @@ export default function AbsentPage() {
         isLoading,
         isSuccess,
     } = useGet<ListResponse<Human>>(`${HR_ABSENTS}/${id}`, {
-        params: { ...otherParams, page_size: 25 },
+        params: { ...otherParams, page_size: search?.page_size || 25 },
         options: { enabled: Boolean(id) },
     })
     const columns = useAbsentListCols()

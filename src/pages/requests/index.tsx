@@ -28,7 +28,9 @@ export default function RequestsPage() {
         data: data,
         isSuccess,
         isLoading,
-    } = useGet<StatusType[]>(EXCUSE, { params: search })
+    } = useGet<ListResponse<StatusType>>(EXCUSE, {
+        params: { ...search, page_size: search?.page_size || 25 },
+    })
     const { data: dataCount } = useGet<{ [key: string]: string | undefined }>(
         EXCUSE_COUNT,
     )
@@ -73,19 +75,21 @@ export default function RequestsPage() {
         <div>
             <div className="mb-3 w-full flex flex-col gap-3 sm:flex-row sm:items-center justify-between">
                 <div className="max-w-[560px] overflow-x-auto no-scrollbar-x">
-                <ParamTabs
-                    dontCleanOthers
-                    paramName="status"
-                    options={tabOptions}
-                />
+                    <ParamTabs
+                        dontCleanOthers
+                        paramName="status"
+                        options={tabOptions}
+                    />
                 </div>
-                <ParamDatePicker  />
+                <ParamDatePicker />
             </div>
 
             <DataTable
+                numeration
                 columns={useRequestsCols()}
-                data={(isSuccess && data) || []}
+                data={(isSuccess && data?.results) || []}
                 loading={isLoading}
+                paginationProps={{ totalPages: data?.total_pages }}
             />
             <Dialog
                 open={isOpen}

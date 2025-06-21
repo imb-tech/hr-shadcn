@@ -45,10 +45,10 @@ export default function HrPage() {
             },
         },
     )
-    const { data, isLoading, isSuccess, refetch } = useGet<ListResponse<Human>>(
+    const { data, isLoading,  refetch } = useGet<ListResponse<Human>>(
         HR_API,
         {
-            params: { ...params, page_size: 25 },
+            params: { ...params, page_size: params?.page_size || 25 },
         },
     )
 

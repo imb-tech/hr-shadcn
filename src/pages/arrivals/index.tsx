@@ -43,7 +43,7 @@ export default function ArrivalsPage() {
     const { data, isLoading, isSuccess } = useGet<ListResponse<Human>>(
         `${HR_ATTENDED}/${id}`,
         {
-            params: { ...otherParams, page_size: 25 },
+            params: { ...otherParams, page_size: search?.page_size || 25 },
             options: { enabled: Boolean(id) },
         },
     )
