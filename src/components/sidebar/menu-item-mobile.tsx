@@ -14,12 +14,11 @@ export default function MenuItemMobile({ to, icon, badge }: Props) {
     const { pathname } = useLocation()
 
     return (
-        <Button color="default" variant="ghost" className="relative z-50">
+        <Button variant="ghost" className="relative z-50">
             <Link
                 activeProps={{ className: "!opacity-100" }}
                 className={`w-full h-full flex flex-col items-center justify-start opacity-50 ${pathname.startsWith("/office/") && to === "/" ? "!opacity-100" : ""}`}
                 to={to}
-                // activeOptions={{}}
             >
                 <span>{icon}</span>
                 {/* <span className="">{title}</span> */}

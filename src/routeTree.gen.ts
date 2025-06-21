@@ -25,6 +25,7 @@ import { Route as MainAbsentImport } from './routes/_main/absent'
 import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
 import { Route as MainRequestsIndexImport } from './routes/_main/requests/index'
 import { Route as MainPlansIndexImport } from './routes/_main/plans/index'
+import { Route as MainOfficeIndexImport } from './routes/_main/office/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
 import { Route as MainPositionHrViewIdImport } from './routes/_main/position-hr-view/$id'
 import { Route as MainPlansCheckoutImport } from './routes/_main/plans/checkout'
@@ -113,6 +114,12 @@ const MainRequestsIndexRoute = MainRequestsIndexImport.update({
 const MainPlansIndexRoute = MainPlansIndexImport.update({
   id: '/plans/',
   path: '/plans/',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainOfficeIndexRoute = MainOfficeIndexImport.update({
+  id: '/office/',
+  path: '/office/',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -296,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainMapIndexImport
       parentRoute: typeof MainImport
     }
+    '/_main/office/': {
+      id: '/_main/office/'
+      path: '/office'
+      fullPath: '/office'
+      preLoaderRoute: typeof MainOfficeIndexImport
+      parentRoute: typeof MainImport
+    }
     '/_main/plans/': {
       id: '/_main/plans/'
       path: '/plans'
@@ -348,6 +362,7 @@ interface MainRouteChildren {
   MainPositionHrViewIdRoute: typeof MainPositionHrViewIdRoute
   MainHrEditHrEditLazyRoute: typeof MainHrEditHrEditLazyRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
+  MainOfficeIndexRoute: typeof MainOfficeIndexRoute
   MainPlansIndexRoute: typeof MainPlansIndexRoute
   MainRequestsIndexRoute: typeof MainRequestsIndexRoute
   MainRolesIndexRoute: typeof MainRolesIndexRoute
@@ -369,6 +384,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainPositionHrViewIdRoute: MainPositionHrViewIdRoute,
   MainHrEditHrEditLazyRoute: MainHrEditHrEditLazyRoute,
   MainMapIndexRoute: MainMapIndexRoute,
+  MainOfficeIndexRoute: MainOfficeIndexRoute,
   MainPlansIndexRoute: MainPlansIndexRoute,
   MainRequestsIndexRoute: MainRequestsIndexRoute,
   MainRolesIndexRoute: MainRolesIndexRoute,
@@ -394,6 +410,7 @@ export interface FileRoutesByFullPath {
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/map': typeof MainMapIndexRoute
+  '/office': typeof MainOfficeIndexRoute
   '/plans': typeof MainPlansIndexRoute
   '/requests': typeof MainRequestsIndexRoute
   '/roles': typeof MainRolesIndexRoute
@@ -417,6 +434,7 @@ export interface FileRoutesByTo {
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/map': typeof MainMapIndexRoute
+  '/office': typeof MainOfficeIndexRoute
   '/plans': typeof MainPlansIndexRoute
   '/requests': typeof MainRequestsIndexRoute
   '/roles': typeof MainRolesIndexRoute
@@ -442,6 +460,7 @@ export interface FileRoutesById {
   '/_main/position-hr-view/$id': typeof MainPositionHrViewIdRoute
   '/_main/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/_main/map/': typeof MainMapIndexRoute
+  '/_main/office/': typeof MainOfficeIndexRoute
   '/_main/plans/': typeof MainPlansIndexRoute
   '/_main/requests/': typeof MainRequestsIndexRoute
   '/_main/roles/': typeof MainRolesIndexRoute
@@ -467,6 +486,7 @@ export interface FileRouteTypes {
     | '/position-hr-view/$id'
     | '/hr-edit/$hr-edit'
     | '/map'
+    | '/office'
     | '/plans'
     | '/requests'
     | '/roles'
@@ -489,6 +509,7 @@ export interface FileRouteTypes {
     | '/position-hr-view/$id'
     | '/hr-edit/$hr-edit'
     | '/map'
+    | '/office'
     | '/plans'
     | '/requests'
     | '/roles'
@@ -512,6 +533,7 @@ export interface FileRouteTypes {
     | '/_main/position-hr-view/$id'
     | '/_main/hr-edit/$hr-edit'
     | '/_main/map/'
+    | '/_main/office/'
     | '/_main/plans/'
     | '/_main/requests/'
     | '/_main/roles/'
@@ -568,6 +590,7 @@ export const routeTree = rootRoute
         "/_main/position-hr-view/$id",
         "/_main/hr-edit/$hr-edit",
         "/_main/map/",
+        "/_main/office/",
         "/_main/plans/",
         "/_main/requests/",
         "/_main/roles/"
@@ -635,6 +658,10 @@ export const routeTree = rootRoute
     },
     "/_main/map/": {
       "filePath": "_main/map/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/office/": {
+      "filePath": "_main/office/index.tsx",
       "parent": "/_main"
     },
     "/_main/plans/": {

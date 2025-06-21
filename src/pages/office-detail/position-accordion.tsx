@@ -6,7 +6,7 @@ import { useCallback } from "react"
 import { useWorkerInfoCols } from "./cols"
 import OfficeInfoRow from "./office-info-row"
 import OfficeDetailTableHeader from "./table-header"
-import { Skeleton } from "@/components/ui/skeleton"
+import AccordionSkeletion from "@/components/custom/accordion-skeletion"
 import { DataTable } from "@/components/ui/datatable"
 import {
     Accordion,
@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/accordion"
 type Props = {
     info: CompanyStats[] | undefined
+    loading: boolean
 }
 
-function PositionAccordion({ info }: Props) {
-    const { id } = useParams({ strict: false })as { id: string }
+function PositionAccordion({ info, loading }: Props) {
+    const { id } = useParams({ strict: false }) as { id: string }
     const search = useSearch({ strict: false })
     const navigate = useNavigate()
 
@@ -48,64 +49,53 @@ function PositionAccordion({ info }: Props) {
     const columns = useWorkerInfoCols()
 
     return (
-        <div>
-            {!!info ? (
-                <div className="overflow-x-auto hidden lg:block">
-                    <div className="p-3 min-w-[1024px]">
-                        <OfficeDetailTableHeader />
-                        {info?.map((item, index) => (
-                            <Accordion
-                                type="single"
-                                collapsible
-                                className="w-full"
-                                value={search?.tab ?? undefined}
-                                onValueChange={(val) => {
-                                    clickAccordion(val)
-                                }}
-                            >
-                                <AccordionItem value={item.id.toString()}>
-                                    <AccordionTrigger>
-                                        <OfficeInfoRow
-                                            data={item}
-                                            key={index}
-                                        />
-                                    </AccordionTrigger>
-                                    <AccordionContent className="flex  flex-col gap-4 text-balance">
-                                        <DataTable
-                                            numeration
-                                            columns={columns}
-                                            viewAll
-                                            data={
-                                                isSuccess && data.length > 0
-                                                    ? data
-                                                    : []
-                                            }
-                                            loading={isLoading}
-                                            onRowClick={(item) =>
-                                                navigate({
-                                                    to: "/hr-view/$id",
-                                                    params: {
-                                                        id: item.id.toString(),
-                                                    },
-                                                })
-                                            }
-                                            height={"h-[40vh]"}
-                                            skeletonRowCount={5}
-                                        />
-                                    </AccordionContent>
-                                </AccordionItem>
-                            </Accordion>
-                        ))}
-                    </div>
-                </div>
-            ) : (
-                <div className="flex items-center flex-col gap-3 w-full justify-center bg-gray-500/20 rounded-md my-2">
-                    <Skeleton className="h-8 w-full rounded-md" />
-                    <Skeleton className="h-8 w-full rounded-md" />
-                    <Skeleton className="h-8 w-full rounded-md" />
-                    <Skeleton className="h-8 w-full rounded-md" />
-                </div>
-            )}
+        <div className="overflow-x-auto hidden lg:block">
+            <div className="p-3 min-w-[1024px]">
+                <OfficeDetailTableHeader />
+                {loading && (
+                   <div className="mt-3">
+                     <AccordionSkeletion columnCount={6} rowCount={4} />
+                   </div>
+                )}
+                {info?.map((item, index) => (
+                    <Accordion
+                        type="single"
+                        collapsible
+                        className="w-full"
+                        value={search?.tab ?? undefined}
+                        onValueChange={(val) => {
+                            clickAccordion(val)
+                        }}
+                    >
+                        <AccordionItem value={item.id.toString()}>
+                            <AccordionTrigger>
+                                <OfficeInfoRow data={item} key={index} />
+                            </AccordionTrigger>
+                            <AccordionContent className="flex  flex-col gap-4 text-balance">
+                                <DataTable
+                                    numeration
+                                    columns={columns}
+                                    viewAll
+                                    data={
+                                        isSuccess && data.length > 0 ? data : []
+                                    }
+                                    loading={isLoading}
+                                    onRowClick={(item) =>
+                                        navigate({
+                                            to: "/hr-view/$id",
+                                            params: {
+                                                id: item.id.toString(),
+                                            },
+                                        })
+                                    }
+                                    height={"h-[40vh]"}
+                                    skeletonRowCount={5}
+                                />
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                ))}
+            </div>
         </div>
     )
 }

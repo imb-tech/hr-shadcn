@@ -1,10 +1,12 @@
 import Header from "@/components/header"
 import MenuItemMobile from "@/components/sidebar/menu-item-mobile"
-import { SkeletionNav } from "@/components/sidebar/nav-main"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
 import usePermissions from "@/hooks/use-permissions"
 import usePath from "@/hooks/usePath"
 import { cn } from "@/lib/utils"
 import { ReactNode } from "@tanstack/react-router"
+import { memo } from "react"
 
 type Props = {
     children: ReactNode
@@ -12,6 +14,27 @@ type Props = {
     rightComponent?: ReactNode
     leftComponent?: ReactNode
 }
+
+const SkeletionNav = memo(
+    ({ isopen, className }: { isopen?: boolean; className?: string }) => {
+        return (
+            <div className={cn("flex flex-col gap-6 pt-1", className)}>
+                {Array.from({ length: 7 }).map((_, i) => (
+                    <Button
+                        color="default"
+                        variant="ghost"
+                        className="relative z-50"
+                    >
+                        <Skeleton className="min-w-6 h-6 rounded-sm" />
+                        {isopen && (
+                            <Skeleton className="w-full h-6 rounded-sm" />
+                        )}
+                    </Button>
+                ))}
+            </div>
+        )
+    },
+)
 
 const PageLayout = ({
     children,
@@ -38,35 +61,23 @@ const PageLayout = ({
             <main className=" mx-auto p-4 h-full overflow-y-auto pt-20">
                 {children}
 
-                {isLoading ?
-                    <SkeletionNav className="grid grid-cols-7 lg:hidden h-16 items-center border-t border-t-default w-full fixed left-0 ring-0 bottom-0 bg-background z-40 px-3"/>
-                :   <nav className="grid grid-cols-7 lg:hidden h-16 items-center border-t border-t-default w-full fixed left-0 ring-0 bottom-0 bg-background z-40">
+                {isLoading ? (
+                    <SkeletionNav className="grid grid-cols-7 lg:hidden h-16 items-center border-t border-t-default w-full fixed left-0 ring-0 bottom-0 bg-background z-40 px-3" />
+                ) : (
+                    <nav className="grid grid-cols-7 lg:hidden h-16 items-center border-t border-t-default w-full fixed left-0 ring-0 bottom-0 bg-background z-40">
                         {links?.map((link, i) => (
                             <MenuItemMobile
-                                badge={link.to === "/" ? Number(0) : undefined}
+                                badge={
+                                    link.to === "/office"
+                                        ? Number(0)
+                                        : undefined
+                                }
                                 key={i}
                                 {...link}
                             />
                         ))}
                     </nav>
-                }
-                {/* {isLoading && (
-                    <div className="flex items-center justify-center h-screen fixed z-[10000] w-full top-0 left-0 bg-background/90">
-                        <div
-                            className="flex justify-start  items-center gap-1  transition-none duration-150"
-                            color="foreground"
-                        >
-                            <img
-                                alt="logo"
-                                src="/images/logo.png"
-                                width={100}
-                            />
-                            <p className="font-bold text-3xl text-inherit">
-                                IMB HR
-                            </p>
-                        </div>
-                    </div>
-                )} */}
+                )}
             </main>
         </div>
     )

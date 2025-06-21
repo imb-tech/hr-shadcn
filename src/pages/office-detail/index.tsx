@@ -12,7 +12,7 @@ export default function OfficeDetail() {
     const search = useSearch({ from: "__root__" })
 
     const { id } = useParams({ strict:false })
-    const { data: info, isSuccess } = useGet<CompanyStats[]>(
+    const { data: info, isSuccess,isLoading } = useGet<CompanyStats[]>(
         `${ROLES_STATISTIC}/${id}`,
         {
             params: {
@@ -63,7 +63,7 @@ export default function OfficeDetail() {
                 )
             ) : (
                 <div>
-                    <PositionAccordion info={info} />
+                    <PositionAccordion info={info} loading={isLoading} />
                     {isSuccess && !!info ? (
                         <div className="lg:hidden grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 my-4 max-w-full overflow-x-auto">
                             {positionCard()}

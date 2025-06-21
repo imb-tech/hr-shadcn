@@ -17,7 +17,7 @@ export default function usePath() {
     const links = useMemo(
         () => [
             linkOptions({
-                to: "/",
+                to: "/office",
                 icon: <Building2 />,
                 enabled: checkAllow("office_view"),
                 title: "Ofis",
