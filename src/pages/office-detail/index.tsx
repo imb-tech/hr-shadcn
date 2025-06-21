@@ -11,7 +11,7 @@ import { tabsParam } from "../absent"
 export default function OfficeDetail() {
     const search = useSearch({ from: "__root__" })
 
-    const { id } = useParams({ from: "/_main/office/$id" })
+    const { id } = useParams({ strict:false })
     const { data: info, isSuccess } = useGet<CompanyStats[]>(
         `${ROLES_STATISTIC}/${id}`,
         {

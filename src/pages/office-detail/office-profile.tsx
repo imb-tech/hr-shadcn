@@ -17,7 +17,7 @@ import {
 
 export default function AttendanceDashboard() {
     const search = useSearch({ from: "__root__" })
-    const { id } = useParams({ from: "/_main/office/$id" })
+    const { id } = useParams({ strict:false })
     const { data: dataDetails } = useGet<CompanyStats>(
         `${OFFICE_DETAILS}/${id}`,
         { params: { date: search.date }, options: { enabled: Boolean(id) } },

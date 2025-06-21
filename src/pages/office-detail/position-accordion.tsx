@@ -19,8 +19,8 @@ type Props = {
 }
 
 function PositionAccordion({ info }: Props) {
-    const { id } = useParams({ from: "/_main/office/$id" })
-    const search = useSearch({ from: "/_main/office/$id" })
+    const { id } = useParams({ strict: false })as { id: string }
+    const search = useSearch({ strict: false })
     const navigate = useNavigate()
 
     const { checkAllow } = useCheckPermission()
