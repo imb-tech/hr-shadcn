@@ -1,8 +1,9 @@
 import { USER_YEAR_TOTAL_MONTH_DAYS_ONE } from "@/constants/api-endpoints";
 import { useGet } from "@/hooks/useGet";
-import { Skeleton } from "@heroui/skeleton";
 import { useParams, useSearch } from "@tanstack/react-router";
 import { statusData } from "./days-accordion";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 export default function OneDaysAccordion() {
   const { id } = useParams({ from: "/_main/hr-view/$id" });
   const search = useSearch({ strict: false });
@@ -20,19 +21,18 @@ export default function OneDaysAccordion() {
     },
   });
 
-  console.log((search as any)?.day, !isNaN((search as any)?.day));
   
   return (
     <div>
-      <div className="grid grid-cols-2 gap-3 bg-foreground-100 p-3 text-foreground-500 rounded-t-lg">
+      <div className="grid grid-cols-2 gap-3 dark:bg-neutral-900 bg-neutral-200 mt-3 p-3 text-foreground-500 rounded-t-lg">
         <p className="text-sm">Kelish va Ketish vaqti</p>
         <p className="text-sm">Qayerda</p>
       </div>
-      <div className="px-3 dark:bg-zinc-900 bg-zinc-50 rounded-b-lg ">
+      <div className="px-3 dark:bg-neutral-900/50 bg-zinc-200/50 rounded-b-lg ">
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-5 py-3 border-b dark:border-b-zinc-700">
-            <Skeleton className="h-10 rounded-md" />
-            <Skeleton className="h-10 rounded-md" />
+          <div className="grid grid-cols-2 gap-5 py-3  ">
+            <Skeleton className="h-8 rounded-md" />
+            <Skeleton className="h-8 rounded-md" />
           </div>
         ) : isSuccess && info.length === 0 ? (
           <div className="p-3 text-sm text-zinc-500 text-center">
@@ -42,7 +42,9 @@ export default function OneDaysAccordion() {
           info?.map((item, index) => (
             <div
               key={index}
-              className="grid grid-cols-2 gap-5 py-3 border-b dark:border-b-zinc-700"
+              className={cn("grid grid-cols-2 gap-5 py-3 border-b dark:border-b-zinc-700",
+                index === info.length - 1 && "!border-none",
+              )}
             >
               <p className="text-sm">
                 {item.first_time} - {item.second_time}

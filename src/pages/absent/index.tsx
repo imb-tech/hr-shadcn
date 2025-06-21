@@ -50,7 +50,7 @@ export default function AbsentPage() {
         isLoading,
         isSuccess,
     } = useGet<ListResponse<Human>>(`${HR_ABSENTS}/${id}`, {
-        params: { ...otherParams, page_size: 48 },
+        params: { ...otherParams, page_size: 25 },
         options: { enabled: Boolean(id) },
     })
     const columns = useAbsentListCols()
@@ -83,9 +83,9 @@ export default function AbsentPage() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 w-full mb-3">
-                <ParamInput fullWidth className="bg-card" />
+                <ParamInput fullWidth  />
                 <ParamCombobox
-                    className="max-w-full w-full  bg-card sm:w-1/3"
+                    className="max-w-full w-full  sm:w-1/3"
                     labelKey="name"
                     valueKey="id"
                     options={dataPosition || []}
@@ -102,7 +102,6 @@ export default function AbsentPage() {
                             {data?.total_pages > 1 && (
                                 <ParamPagination
                                     totalPages={data?.total_pages}
-                                    PageSize={50}
                                 />
                             )}
                         </>
@@ -129,7 +128,6 @@ export default function AbsentPage() {
                             }
                             paginationProps={{
                                 totalPages: data?.total_pages,
-                                PageSize: 50,
                             }}
                             numeration
                         />

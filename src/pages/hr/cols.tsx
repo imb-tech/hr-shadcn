@@ -1,64 +1,68 @@
-import PopoverImage from "@/components/elements/popover-image";
-import { ColumnDef } from "@/components/ui/table";
-import findHighlights from "@/lib/find-highlights";
-import { formatMoney } from "@/lib/format-money";
-import formatPhoneNumber from "@/lib/formatter-phone";
-import { useMemo } from "react";
+import SeeInView from "@/components/ui/see-in-view"
+import findHighlights from "@/lib/find-highlights"
+import { formatMoney } from "@/lib/format-money"
+import { formatPhoneNumber } from "@/lib/format-phone-number"
+import { ColumnDef } from "@tanstack/react-table"
+import { useMemo } from "react"
 
 export const useHrListCols = (query?: string) => {
-  return useMemo<ColumnDef<Human>[]>(
-    () => [
-      {
-        header: "Rasm",
-        dataKey: "face",
-        cell: (value: string) => {
-          return (
-            <div className="max-w-8">
-              <PopoverImage image={value} />
-            </div>
-          );
-        },
-      },
-      {
-        header: "FIO",
-        dataKey: "middle_name",
-        cell: (_, item) => {
-          return (
-            <span className="whitespace-nowrap lg:break-all">
-              {findHighlights(
-                `${item.first_name} ${item.last_name} ${item.middle_name}`,
-                query ?? "",
-                "",
-              )}
-              {/* {item.first_name} {item.last_name} {item.middle_name} */}
-            </span>
-          );
-        },
-      },
-      {
-        header: "Telefon",
-        dataKey: "phone_number",
-        cell: (value) => {
-          return (
-            <span className="whitespace-nowrap lg:break-all">
-              {formatPhoneNumber(Number(value))}
-            </span>
-          );
-        },
-      },
-      {
-        header: "Lavozim",
-        dataKey: "role_name",
-      },
-      {
-        header: "Maosh",
-        dataKey: "salary",
-        cell: (salary) => {
-          return formatMoney(Number(salary));
-        },
-      },
-      { header: "Amallar", dataKey: "actions" },
-    ],
-    [query],
-  );
-};
+    return useMemo<ColumnDef<Human>[]>(
+        () => [
+            {
+                header: "Rasm",
+                accessorKey: "face",
+                cell: ({ row }) => (
+                    <SeeInView
+                        url={String(row.original.face)}
+                        className={"object-cover h-9 w-9 rounded-md"}
+                    />
+                ),
+            },
+            {
+                header: "FIO",
+                accessorKey: "first_name",
+                enableSorting:true,
+                cell: ({ row }) => {
+                    const { last_name, first_name, middle_name } = row.original
+                    return (
+                        <span className="whitespace-nowrap lg:break-all">
+                            {findHighlights(
+                                `${first_name} ${last_name} ${middle_name}`,
+                                query ?? "",
+                                "",
+                            )}
+                        </span>
+                    )
+                },
+            },
+            {
+                header: "Telefon",
+                accessorKey: "phone_number",
+                enableSorting:true,
+                cell: ({ row }) => {
+                    const { phone_number } = row.original
+                    return (
+                        <span className="whitespace-nowrap lg:break-all">
+                            {formatPhoneNumber(String(phone_number))}
+                        </span>
+                    )
+                },
+            },
+            {
+                header: "Lavozim",
+                accessorKey: "role_name",
+                enableSorting:true,
+            },
+            {
+                header: "Maosh",
+                accessorKey: "salary",
+                enableSorting:true,
+                cell: ({row}) => {
+                  const { salary } = row.original
+                    return formatMoney(Number(salary))
+                },
+            },
+        ],
+        [query],
+    )
+}

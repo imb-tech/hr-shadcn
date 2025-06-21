@@ -6,7 +6,7 @@ type Props = {
 };
 
 function PositonCard({ item }: Props) {
-  const { id } = useParams({ from: "/_main/office/$id" });
+  const { id } = useParams({strict:false });
 
   return (
     <Link

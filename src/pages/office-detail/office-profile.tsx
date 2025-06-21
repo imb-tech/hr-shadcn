@@ -17,7 +17,7 @@ import {
 
 export default function AttendanceDashboard() {
     const search = useSearch({ from: "__root__" })
-    const { id } = useParams({ from: "/_main/office/$id" })
+    const { id } = useParams({ strict:false })
     const { data: dataDetails } = useGet<CompanyStats>(
         `${OFFICE_DETAILS}/${id}`,
         { params: { date: search.date }, options: { enabled: Boolean(id) } },
@@ -65,7 +65,7 @@ export default function AttendanceDashboard() {
                         <span className="text-3xl font-bold dark:text-primary-500 ">
                             {formatMoney(total)}
                         </span>
-                        <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:-right-12 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-gray-700">
+                        <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:-right-12 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-primary">
                             <ChevronRight size={32} />
                         </span>
                     </Link>
@@ -101,7 +101,7 @@ export default function AttendanceDashboard() {
                                     </span>
                                 </div>
 
-                                <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:-right-12 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-gray-700">
+                                <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:-right-12 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-[#10B981]">
                                     <ChevronRight size={24} />
                                 </span>
                             </Link>
@@ -137,7 +137,7 @@ export default function AttendanceDashboard() {
                                         </span>
                                     </div>
 
-                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-gray-700">
+                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-[#6dceaef5]">
                                         <ChevronRight size={24} />
                                     </span>
                                 </Link>
@@ -170,7 +170,7 @@ export default function AttendanceDashboard() {
                                         </span>
                                     </div>
 
-                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-gray-700">
+                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-[#FDBA74]">
                                         <ChevronRight size={24} />
                                     </span>
                                 </Link>
@@ -209,7 +209,7 @@ export default function AttendanceDashboard() {
                                     </span>
                                 </div>
 
-                                <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-gray-700">
+                                <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-[#DC2626]">
                                     <ChevronRight size={24} />
                                 </span>
                             </Link>
@@ -249,7 +249,7 @@ export default function AttendanceDashboard() {
                                             {formatMoney(absentWithReason)}
                                         </span>
                                     </div>
-                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-gray-700">
+                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-[#FBBF24]">
                                         <ChevronRight size={24} />
                                     </span>
                                 </Link>
@@ -287,7 +287,7 @@ export default function AttendanceDashboard() {
                                             {formatMoney(absentWithoutReason)}
                                         </span>
                                     </div>
-                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-gray-700">
+                                    <span className="ml-4 absolute [transform:rotateY(90deg)] -right-6 group-hover:right-0 group-hover:[transform:rotateY(0deg)] transition-all duration-300 text-[#e75a5a]">
                                         <ChevronRight size={24} />
                                     </span>
                                 </Link>

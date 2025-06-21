@@ -35,13 +35,13 @@ export default function usePath() {
                 title: "Lavozimlar",
             }),
             linkOptions({
-                to: "/map",
+                to: "/hr",
                 icon: <UsersIcon />,
                 enabled: checkAllow("employee_view"),
                 title: "Hodimlar",
             }),
             linkOptions({
-                to: "/map",
+                to: "/landing",
                 icon: <NotebookText />,
                 enabled: true,
                 title: "Qo'llanma",

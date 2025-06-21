@@ -4,14 +4,14 @@ import FieldError from "./form-error"
 import { MultiCombobox as ShadcnCombobox } from "@/components/ui/multi-combobox"
 import { getNestedValue } from "./input"
 
-type ComboboxProps<T extends FieldValues> = {
-    name: Path<T>
+type ComboboxProps<TForm extends FieldValues,T extends FieldValues> = {
+    name: Path<TForm>
     label?: string
     placeholder?: string
     options: T[] | undefined
     disabled?: boolean
     required?: boolean
-    control: Control<T>
+    control: Control<TForm>
     hideError?: boolean
     onAdd?: () => void
     labelKey?: keyof T
@@ -20,8 +20,8 @@ type ComboboxProps<T extends FieldValues> = {
     isLoading?: boolean
     onSearchChange?: (val: string) => void
 }
-
-export function FormMultiCombobox<T extends FieldValues>({
+ 
+export function FormMultiCombobox<TForm extends FieldValues,T extends FieldValues>({
     name,
     label,
     options,
@@ -36,7 +36,7 @@ export function FormMultiCombobox<T extends FieldValues>({
     isLoading,
     skeletonCount,
     onSearchChange,
-}: ComboboxProps<T>) {
+}: ComboboxProps<TForm,T>) {
     const error = getNestedValue(control._formState.errors, name)
     return (
         <div>

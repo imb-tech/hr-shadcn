@@ -79,10 +79,10 @@ export default function WeekdaysFields<T extends FieldValues>({
                     <button
                         key={v}
                         className={cn(
-                            "cursor-pointer bg-default-100 py-1 rounded-md select-none w-10 sm:w-12 text-center capitalize",
-                            v === 7 ? "text-red-400 bg-red-400/10" : "",
+                            "cursor-pointer bg-card py-1 rounded-md select-none w-10 sm:w-12 text-center capitalize",
+                            v === 7 ? "text-red-500 bg-red-500/10" : "",
                             currentValue?.includes(v) ?
-                                "bg-primary text-white"
+                                "bg-blue-500 text-white"
                             :   "",
                             itemClassName,
                         )}

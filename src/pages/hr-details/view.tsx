@@ -1,12 +1,11 @@
-import { ColumnDef } from "@/components/ui/table"
 import { HR_API } from "@/constants/api-endpoints"
 import { useGet } from "@/hooks/useGet"
 import { formatMoney } from "@/lib/format-money"
+import { formatPhoneNumber } from "@/lib/format-phone-number"
 import formatPassportNumber from "@/lib/formatter-pasport"
-import formatPhoneNumber from "@/lib/formatter-phone"
-import { educationLevels } from "@/lib/utils"
-import { cn } from "@heroui/theme"
+import { cn, educationLevels } from "@/lib/utils"
 import { useParams } from "@tanstack/react-router"
+import { ColumnDef } from "@tanstack/react-table"
 import {
     FileUser,
     GraduationCap,
@@ -16,6 +15,7 @@ import {
     PhoneCall,
 } from "lucide-react"
 import { useMemo } from "react"
+import YearsAccordion from "./years/years-accordion"
 
 export const useHrListCols = () => {
     return useMemo<ColumnDef<any>[]>(
@@ -61,7 +61,7 @@ function ViewPage() {
                             <span>
                                 {data?.profile?.phone_number ?
                                     formatPhoneNumber(
-                                        data?.profile?.phone_number,
+                                        String(data?.profile?.phone_number),
                                     )
                                 :   "-"}
                             </span>
@@ -160,7 +160,10 @@ function ViewPage() {
                 </div>
             </div>
             <div className="mt-8 overflow-x-auto ">
-                <div className="min-w-[1024px]">{/* <YearsAccordion /> */}</div>
+                <div className="min-w-[1024px]">
+                    <YearsAccordion />
+
+                </div>
             </div>
         </div>
     )

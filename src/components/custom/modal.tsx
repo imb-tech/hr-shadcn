@@ -8,6 +8,7 @@ import {
     DialogDescription,
     DialogTitle,
 } from "../ui/dialog"
+import { cn } from "@/lib/utils"
 
 type Props = {
     modalKey?: string
@@ -21,6 +22,10 @@ type Props = {
         | "max-w-2xl"
         | "max-w-3xl"
         | "max-w-4xl"
+        | "max-w-5xl"
+        | "max-w-6xl"
+        | "max-w-7xl"
+        | "max-w-full"
         | "max-w-sm"
         | "max-w-md"
     onClose?: () => void
@@ -48,7 +53,7 @@ const Modal = ({
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
             {isOpen && (
-                <DialogContent className={size + className}>
+                <DialogContent className={cn(size, className)}>
                     {title && <DialogTitle>{title}</DialogTitle>}
                     {!title && (
                         <VisuallyHidden>

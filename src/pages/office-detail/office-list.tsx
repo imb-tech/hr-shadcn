@@ -9,7 +9,7 @@ import { Building2, CirclePlus, MapPin, Pencil } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 function OfficeList() {
-  const { id } = useParams({ from: "/_main/office/$id" });
+  const { id } = useParams({ strict:false });
   const { data: companies, isSuccess } = useGet<FeatureCollection>(COMPANIES);
   const navigate = useNavigate();
 

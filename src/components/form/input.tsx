@@ -72,7 +72,7 @@ export function FormInput<IForm extends FieldValues>({
                 {...props}
                 id={name}
                 fullWidth
-                className={cn(
+                className={cn('bg-secondary',
                    error && label
                         ? "border-destructive focus:border-border !ring-destructive"
                         : "",

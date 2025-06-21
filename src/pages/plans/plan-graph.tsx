@@ -22,10 +22,10 @@ export default function PlanGraph() {
                         )
 
                         const colorClasses = {
-                            green: "bg-green-400/30 text-green-600",
-                            yellow: "bg-yellow-400/30 text-yellow-600",
-                            gray: "bg-gray-400/15 text-gray-400",
-                            orange: "bg-orange-400/10 text-orange-500",
+                            green: "bg-green-500/15 text-green-500",
+                            yellow: "bg-yellow-500/15 text-yellow-500",
+                            gray: "bg-gray-500/15 text-gray-500",
+                            orange: "bg-orange-500/15 text-orange-500",
                         }
 
                         return (
@@ -36,7 +36,7 @@ export default function PlanGraph() {
                                     colorClasses[color],
                                 )}
                             >
-                                <p className="text-sm text-gray-300">
+                                <p className="text-sm ">
                                     {month.name}
                                 </p>
                                 <span className="opacity-80">

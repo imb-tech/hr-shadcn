@@ -19,7 +19,9 @@ export function DatePicker({
     calendarProps,
     defaultValue,
     isError,
-    size="lg",
+    size = "lg",
+    variant = "secondary",
+    titleHidden = true,
 }: {
     date: Date | any
     setDate: any
@@ -30,29 +32,39 @@ export function DatePicker({
     defaultValue?: Date
     isError?: boolean
     size?: "default" | "lg" | "sm" | "icon"
+    variant?: "secondary" | "default"
+    titleHidden?: boolean
 }) {
     return (
         <Popover>
             <PopoverTrigger asChild>
                 <Button
                     size={size}
-                    variant={"outline"}
+                    variant={variant}
                     className={cn(
-                        "w-[280px] justify-start text-left font-normal",
+                        "justify-start text-left font-normal",
                         !date && "text-muted-foreground",
                         fullWidth && "w-full",
                         isError && "border-destructive",
+                        titleHidden && "w-[280px]",
+                        !titleHidden && date && "w-[150px]",
                     )}
                     disabled={disabled}
                 >
-                    <CalendarIcon className="mr-1 text-gray-400 h-4 w-4" />
-                    {date ? (
-                        format(date, "dd/MM/yyyy")
-                    ) : (
-                        <span className="text-gray-400">
-                            {placeholder || "Kunni tanlang"}
-                        </span>
-                    )}
+                    <CalendarIcon
+                        className={cn(
+                            "text-muted-foreground h-4 w-4 ",
+                            date && "mr-1 ",
+                            !titleHidden && "text-primary"
+                        )}
+                    />
+                    {date
+                        ? format(date, "dd/MM/yyyy")
+                        : titleHidden && (
+                              <span className="text-muted-foreground">
+                                  {placeholder || "Kunni tanlang"}
+                              </span>
+                          )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">

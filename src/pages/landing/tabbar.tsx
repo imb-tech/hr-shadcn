@@ -5,7 +5,7 @@ export default function Tabbar() {
     <div className="flex items-center gap-2">
       {links?.map((link, i) => (
         <a key={i} href={link.to}>
-          <div className="bg-gray-400/15 text-gray-300 font-extralight flex items-center gap-2 py-1.5 px-3 rounded-lg">
+          <div className="bg-card text-gray-300 font-extralight flex items-center gap-2 py-1.5 px-3 rounded-lg">
             <span>{link.icon}</span>
             <span>{link.title}</span>
           </div>

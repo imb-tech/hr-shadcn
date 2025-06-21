@@ -15,4 +15,5 @@ type SearchParams = {
     last_company_id?: number
     search?: string
     tabs?: 'card' | 'table'
+    day?:string
 };

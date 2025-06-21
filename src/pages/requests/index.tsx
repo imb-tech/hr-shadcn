@@ -52,9 +52,9 @@ export default function RequestsPage() {
             queryClient.invalidateQueries({
                 queryKey: [EXCUSE_COUNT],
             })
-            status?.status === 2 ?
-                toast.error("Ruxsat berilmadi")
-            :   toast.success("Muvaffaqiyatli ruxsat berildi")
+            status?.status === 2
+                ? toast.error("Ruxsat berilmadi")
+                : toast.success("Muvaffaqiyatli ruxsat berildi")
         },
     })
 
@@ -90,20 +90,22 @@ export default function RequestsPage() {
                 onOpenChange={(op) => (op ? closeModal : undefined)}
             >
                 <DialogHeader className="flex flex-col gap-1 text-xl">
-                    {status?.status == 2 ?
-                        "Rad etilsinmi?"
-                    :   "Ruxsat berilsinmi?"}
+                    {status?.status == 2
+                        ? "Rad etilsinmi?"
+                        : status?.status == 1
+                        ? "Ruxsat berilsinmi?"
+                        : ""}
                 </DialogHeader>
                 <DialogContent>
-                    {status?.status === 2 ?
+                    {status?.status === 2 ? (
                         <Textarea
                             className="w-full"
                             placeholder="Sabab..."
                             onChange={(e) => setComment(e.target.value)}
                         />
-                    :   null}
+                    ) : null}
                     <DialogFooter>
-                        {status?.status === 2 ?
+                        {status?.status === 2 ? (
                             <Button
                                 color="danger"
                                 disabled={Boolean(!comment)}
@@ -114,7 +116,8 @@ export default function RequestsPage() {
                             >
                                 Rad etish
                             </Button>
-                        :   <Button
+                        ) : (
+                            <Button
                                 color="success"
                                 onClick={() => {
                                     updatesStatus()
@@ -122,7 +125,7 @@ export default function RequestsPage() {
                             >
                                 Ruxsat berish
                             </Button>
-                        }
+                        )}
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
