@@ -140,9 +140,9 @@ export default function HrPage() {
                 onRowClick={(item) => navigate({ to: `/hr-view/${item.id}` })}
                 head={
                     <div className="grid lg:grid-cols-3 gap-3 w-full mb-3">
-                        <ParamInput fullWidth className=" bg-secondary" />
+                        <ParamInput fullWidth  />
                         <ParamCombobox
-                            className="max-w-full sm:w-80 bg-secondary"
+                            className="max-w-full sm:w-80 "
                             labelKey="name"
                             valueKey="id"
                             options={dataPosition || []}

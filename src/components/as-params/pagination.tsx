@@ -152,7 +152,7 @@ const ParamPagination: React.FC<PaginationProps> = ({
             {changePageSize && (
                 <Select
                     disabled={disabled}
-                    className="w-20 h-8 sm:h-10"
+                    className="w-20 h-8 sm:h-10 hover:bg-primary/15 bg-primary/10 text-primary"
                     label=""
                     options={page_sizes?.map((size) => ({
                         label: `${size}`,

@@ -106,11 +106,11 @@ export function ParamCombobox<T extends Record<string, any>>({
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant="secondary"
+                    variant="secondary" 
                     role="combobox"
                     aria-expanded={open}
                     className={cn(
-                        "w-max  justify-between font-normal text-muted-foreground",
+                        "w-max  justify-between font-normal ",
                         currentValue && "font-medium !text-white",
                         isError && "!text-destructive",
                         className,
