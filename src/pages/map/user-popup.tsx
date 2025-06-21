@@ -1,4 +1,4 @@
-import { Avatar } from "@/components/ui/avatar"
+// import { Avatar } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { HR_API } from "@/constants/api-endpoints"
 import { useGet } from "@/hooks/useGet"
@@ -26,13 +26,13 @@ const UserPopup = () => {
     // }
 
     return (
-        <Card className="min-w-[320px]">
+        <Card className="sm:min-w-[320px]">
             {isLoading || !item ?
                 ""
             :   <>
                     <CardHeader className="flex flex-row items-start gap-4 p-4 pb-2 ">
                         <img
-                            className="h-14 w-14 rounded-full"
+                            className="sm:h-14 sm:w-14 h-10 w-10 rounded-full"
                             alt={item.full_name}
                             src={
                                 (item.face as string) ??
@@ -40,7 +40,7 @@ const UserPopup = () => {
                             }
                         />
                         <div>
-                            <h3 className="font-semibold">
+                            <h3 className="font-semibold sm:text-[16px] text-sm">
                                 {item.first_name} {item.last_name}
                             </h3>
                             <p className="text-sm text-muted-foreground">
@@ -57,14 +57,14 @@ const UserPopup = () => {
                                 })
                             }
                         >
-                            <X />
+                            <X className="size-4 sm:size-5" />
                         </button>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="sm:pt-4 pt-1">
                         <div className="flex flex-wrap gap-2 mb-4">
                             <div
                                 className={cn(
-                                    "text-sm rounded-full px-3 py-[2px]  dark:bg-zinc-800 border dark:border-zinc-700 text-green-500 border-green-500",
+                                    "sm:text-sm text-xs rounded-full px-3  sm:py-[2px]  dark:bg-zinc-800 border dark:border-zinc-700 text-green-500 border-green-500",
                                 )}
                             >
                                 online

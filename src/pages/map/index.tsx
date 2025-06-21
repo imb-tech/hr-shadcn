@@ -72,6 +72,7 @@ export default function MapPage() {
                     curve: 1.42,
                     zoom: 20,
                     essential: true,
+                    offset: [-100, -200],
                 })
             }
         }
