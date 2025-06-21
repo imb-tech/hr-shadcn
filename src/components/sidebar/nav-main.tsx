@@ -58,7 +58,7 @@ export function NavMain() {
                                             tooltip={title}
                                         >
                                             {item.icon}
-                                            {title}
+                                            <span>{title}</span>
                                         </SidebarMenuButton>
 
                                         {item.to === "/requests" &&

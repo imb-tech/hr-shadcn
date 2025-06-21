@@ -1,4 +1,3 @@
-import { UsersIcon } from "@/components/icons/nav-icons"
 import useCheckPermission from "@/hooks/use-check-permission"
 import { linkOptions } from "@tanstack/react-router"
 import {
@@ -7,6 +6,7 @@ import {
     NotebookText,
     ScrollText,
     SquareUser,
+    UsersIcon,
     WalletMinimal,
 } from "lucide-react"
 import { useMemo } from "react"
