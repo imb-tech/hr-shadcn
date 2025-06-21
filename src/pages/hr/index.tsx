@@ -10,7 +10,7 @@ import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/hooks/useGet"
 import { usePost } from "@/hooks/usePost"
 import { useNavigate, useSearch } from "@tanstack/react-router"
-import { Download, FileText, Upload } from "lucide-react"
+import { Download, FileText, Plus, Upload } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useHrListCols } from "./cols"
 import { useModal } from "@/hooks/useModal"
@@ -20,6 +20,8 @@ import ParamInput from "@/components/as-params/input"
 import { ParamCombobox } from "@/components/as-params/combobox"
 import { DataTable } from "@/components/ui/datatable"
 import DeleteModal from "@/components/custom/delete-modal"
+import { Badge } from "@/components/ui/badge"
+import { formatMoney } from "@/lib/format-money"
 
 export default function HrPage() {
     const { openModal } = useModal("delete")
@@ -45,12 +47,9 @@ export default function HrPage() {
             },
         },
     )
-    const { data, isLoading,  refetch } = useGet<ListResponse<Human>>(
-        HR_API,
-        {
-            params: { ...params, page_size: params?.page_size || 25 },
-        },
-    )
+    const { data, isLoading, refetch } = useGet<ListResponse<Human>>(HR_API, {
+        params: { ...params, page_size: params?.page_size || 25 },
+    })
 
     const { mutate, isPending } = usePost(
         {
@@ -142,53 +141,72 @@ export default function HrPage() {
                 className="min-w-[900px]"
                 onRowClick={(item) => navigate({ to: `/hr-view/${item.id}` })}
                 head={
-                    <div className="grid lg:grid-cols-3 gap-3 w-full mb-3">
-                        <ParamInput fullWidth />
-                        <ParamCombobox
-                            className="max-w-full w-full sm:w-80 "
-                            labelKey="name"
-                            valueKey="id"
-                            options={dataPosition || []}
-                            paramName="role_id"
-                            label="Lavozimlar"
-                        />
-                        <div className="w-full flex items-center gap-3">
+                    <div>
+                        <div className="flex  mb-3 flex-row items-center gap-3 justify-between">
+                            <div className="flex items-center gap-3">
+                                <h1 className="text-xl font-medium ">
+                                    Hodimlar ro'yxati
+                                </h1>
+                                <Badge className="text-sm">
+                                    {formatMoney(data?.total_pages)}
+                                </Badge>
+                            </div>
                             <PButton
-                                allow={["employee_upload"]}
-                                loading={isLoadingTemplate}
-                                onClick={() => handleExcel("template")}
-                                className="w-full px-2"
+                                allow={["employee_control"]}
+                                className="flex gap-1"
+                                onClick={() => navigate({ to: "/hr-create" })}
                             >
-                                Shablon
-                                <FileText size={18} />
+                                <Plus className="w-5 h-5" /> <span className="sm:block hidden">Hodim qo'shish</span>
                             </PButton>
-                            <>
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    onChange={handleExcelUp}
-                                    className="hidden"
-                                    accept=".xlsx"
-                                />
+                        </div>
+                        <div className="grid lg:grid-cols-3 gap-3 w-full mb-3">
+                            <ParamInput fullWidth />
+                            <ParamCombobox
+                                className="max-w-full w-full sm:w-80 "
+                                labelKey="name"
+                                valueKey="id"
+                                options={dataPosition || []}
+                                paramName="role_id"
+                                label="Lavozimlar"
+                            />
+                            <div className="w-full flex items-center sm:gap-3 gap-1.5">
                                 <PButton
                                     allow={["employee_upload"]}
-                                    loading={isPending}
-                                    disabled={isPending}
-                                    onClick={handleButtonClick}
+                                    loading={isLoadingTemplate}
+                                    onClick={() => handleExcel("template")}
                                     className="w-full px-2"
                                 >
-                                    Yuklash{" "}
-                                    <Upload size={18} className="ml-2" />
+                                    Shablon
+                                    <FileText size={18} />
                                 </PButton>
-                            </>
-                            <PButton
-                                allow={["employee_download"]}
-                                loading={isLoadingDown}
-                                onClick={() => handleExcel("down")}
-                                className="w-full px-2"
-                            >
-                                Yuklab olish <Download size={18} />
-                            </PButton>
+                                <>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleExcelUp}
+                                        className="hidden"
+                                        accept=".xlsx"
+                                    />
+                                    <PButton
+                                        allow={["employee_upload"]}
+                                        loading={isPending}
+                                        disabled={isPending}
+                                        onClick={handleButtonClick}
+                                        className="w-full px-2"
+                                    >
+                                        Yuklash{" "}
+                                        <Upload size={18} className="ml-2" />
+                                    </PButton>
+                                </>
+                                <PButton
+                                    allow={["employee_download"]}
+                                    loading={isLoadingDown}
+                                    onClick={() => handleExcel("down")}
+                                    className="w-full px-2"
+                                >
+                                    Yuklab olish <Download size={18} />
+                                </PButton>
+                            </div>
                         </div>
                     </div>
                 }

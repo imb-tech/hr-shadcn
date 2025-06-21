@@ -14,6 +14,7 @@ import usePath from "@/hooks/usePath"
 import { Link } from "@tanstack/react-router"
 import { Skeleton } from "../ui/skeleton"
 import { memo } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export const SkeletionNav = memo(({ isopen }: { isopen?: boolean }) => {
     return Array.from({ length: 7 }).map((_, i) => (
@@ -28,7 +29,8 @@ export const SkeletionNav = memo(({ isopen }: { isopen?: boolean }) => {
 
 export function NavMain() {
     const { links } = usePath()
-    const { open } = useSidebar()
+    const { open, toggleSidebar } = useSidebar()
+    const mobile = useIsMobile()
     const { data } = useGet<Profile>(GET_ME)
     const { isLoading } = usePermissions()
 
@@ -72,6 +74,9 @@ export function NavMain() {
                                     <SidebarMenuButton
                                         className="flex items-center gap-4"
                                         tooltip={title}
+                                        onClick={() => {
+                                            if (mobile) toggleSidebar()
+                                        }}
                                     >
                                         {item.icon}
                                         <span>{title}</span>

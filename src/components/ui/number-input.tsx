@@ -30,7 +30,7 @@ export function NumberInput<IForm extends FieldValues>({
     ...props
 }: IProps<IForm> & NumericFormatProps) {
     return (
-        <div>
+        <div className="w-full">
             <Label htmlFor={props.name || label} className="pb-1">
                 {label}
             </Label>

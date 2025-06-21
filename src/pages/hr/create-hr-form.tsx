@@ -171,7 +171,7 @@ export default function CreateHrForm() {
     return (
         <FormProvider {...form}>
             <form
-                className="my-6 space-y-6"
+                className="my-4 space-y-6"
                 onSubmit={form.handleSubmit(onSubmit)}
             >
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-4 px-4 py-6 border dark:border-zinc-700 rounded-2xl">

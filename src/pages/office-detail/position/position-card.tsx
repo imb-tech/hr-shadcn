@@ -5,26 +5,26 @@ import { getTimeDifference } from "../cols"
 import SeeInView from "@/components/ui/see-in-view"
 
 type Props = {
-    data: WorkerAttendance
+    data?: WorkerAttendance | null
 }
 
 function PositionHrCard({ data }: Props) {
     return (
-        <Link to="/hr-view/$id" params={{ id: `${data.id}` }}>
+        <Link to="/hr-view/$id" params={{ id: `${data?.id}` }}>
             <Card className={"transition-all cursor-pointer   h-full"}>
                 <CardHeader className="pb-2 border-b dark:border-b-zinc-700 h-16">
                     <div className="flex justify-between items-center w-full gap-3">
                         <div className="flex items-center gap-2">
                             <SeeInView
-                                url={String(data.face)}
+                                url={data?.face}
                                 className={"object-cover h-9 w-9 rounded-md"}
                             />
                             <h3 className="font-semibold text-[16px]">
-                                {data.full_name}  
+                                {data?.full_name}
                             </h3>
                         </div>
                         <span className="ml-1 text-sm whitespace-nowrap">
-                            {data.entry_log_status == 1
+                            {data?.entry_log_status == 1
                                 ? "Ofisda"
                                 : "Ofisdan tashqarida"}
                         </span>
@@ -38,9 +38,12 @@ function PositionHrCard({ data }: Props) {
                                 <p className="text-sm  text-gray-400">Kelish</p>
                             </div>
                             <p className="font-semibold">
-                                { data?.attendance?.attendance_time ? (
-                                    data?.attendance?.attendance_time?.slice(0,5)
-                                ) : "-"}
+                                {data?.attendance?.attendance_time
+                                    ? data?.attendance?.attendance_time?.slice(
+                                          0,
+                                          5,
+                                      )
+                                    : "-"}
                             </p>
                         </div>
                         <div className="dark:bg-zinc-800 bg-zinc-100 rounded-lg p-3 shadow-sm">
@@ -49,8 +52,9 @@ function PositionHrCard({ data }: Props) {
                                 <p className="text-sm  text-gray-400">Ketish</p>
                             </div>
                             <p className=" font-semibold">
-                                {data?.attendance?.left_time ? (data?.attendance?.left_time?.slice(0,5)) :
-                                    "-"}
+                                {data?.attendance?.left_time
+                                    ? data?.attendance?.left_time?.slice(0, 5)
+                                    : "-"}
                             </p>
                         </div>
                     </div>

@@ -38,7 +38,7 @@ export default function AllEmployeesPage() {
 
     const renderCardView = () => (
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-5">
-            {data?.results?.map((item, index) => (
+            { data?.results?.map((item, index) => (
                 <EmployeeCard
                     key={index}
                     color={
@@ -92,7 +92,7 @@ export default function AllEmployeesPage() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 w-full mb-3">
-                <ParamInput fullWidth  />
+                <ParamInput fullWidth />
                 <ParamCombobox
                     className="max-w-full w-full   sm:w-1/3"
                     labelKey="name"

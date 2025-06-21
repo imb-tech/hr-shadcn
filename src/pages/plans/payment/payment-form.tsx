@@ -21,6 +21,7 @@ export default function PaymentForm() {
 
     return (
         <Tabs aria-label="payment types" defaultValue="click">
+            <div className="overflow-x-auto no-scrollbar-x lg:mt-0 mt-4">
             <TabsList className="min-h-20 sm:min-h-24">
                 <TabsTrigger
                     value="click"
@@ -28,7 +29,9 @@ export default function PaymentForm() {
                 >
                     <div className="w-16 sm:w-24 flex justify-center">
                         <img
-                            src={`/images/click${theme === "dark" ? "-dark.svg" : ".png"}`}
+                            src={`/images/click${
+                                theme === "dark" ? "-dark.svg" : ".png"
+                            }`}
                             width={100}
                         />
                     </div>
@@ -39,7 +42,9 @@ export default function PaymentForm() {
                 >
                     <div className="w-16 sm:w-24 flex justify-center">
                         <img
-                            src={`/images/payme${theme === "dark" ? "-dark.svg" : ".png"}`}
+                            src={`/images/payme${
+                                theme === "dark" ? "-dark.svg" : ".png"
+                            }`}
                             width={100}
                         />
                     </div>
@@ -67,9 +72,12 @@ export default function PaymentForm() {
                 </TabsTrigger>
             </TabsList>
 
+            </div>
+
             <TabC value={"click"}>
-                <div className="p-5 flex items-center gap-3">
+                <div className="sm:p-5 p-0 flex sm:flex-row flex-col w-full items-end gap-3">
                     <NumberInput
+                        label="Summa kiriting"
                         thousandSeparator=" "
                         placeholder="Ex: 450,000"
                         suffix=" so'm"
@@ -78,8 +86,9 @@ export default function PaymentForm() {
                 </div>
             </TabC>
             <TabC value={"payme"}>
-                <div className="p-5 flex items-center gap-3">
+                <div className="sm:p-5 p-0 flex sm:flex-row flex-col items-end gap-3">
                     <NumberInput
+                        label="Summa kiriting"
                         thousandSeparator=" "
                         placeholder="Ex: 450,000"
                         suffix=" so'm"
@@ -88,8 +97,9 @@ export default function PaymentForm() {
                 </div>
             </TabC>
             <TabC value={"bonus"}>
-                <div className="p-5 flex items-center gap-3">
+                <div className="sm:p-5 p-0 flex sm:flex-row flex-col items-end gap-3">
                     <NumberInput
+                        label="Summa kiriting"
                         thousandSeparator=" "
                         placeholder="Ex: 450,000"
                         defaultValue="500,000"

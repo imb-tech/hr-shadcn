@@ -15,7 +15,7 @@ export default function SeeInView({
     children,
     fullWidth = false,
 }: {
-    url: string;
+    url: string | null | undefined;
     className?: ClassNameValue;
     children?: React.ReactNode;
     fullWidth?: boolean;

@@ -7,32 +7,31 @@ import PositionAccordion from "./position-accordion"
 import PositonCard from "./positon-card"
 import ParamTabs from "@/components/as-params/tabs"
 import { tabsParam } from "../absent"
+import EmptyBox from "@/components/custom/empty-box"
 
 export default function OfficeDetail() {
     const search = useSearch({ from: "__root__" })
 
-    const { id } = useParams({ strict:false })
-    const { data: info, isSuccess,isLoading } = useGet<CompanyStats[]>(
-        `${ROLES_STATISTIC}/${id}`,
-        {
-            params: {
-                date: search?.date,
-            },
-            options: {
-                enabled: Boolean(id),
-            },
+    const { id } = useParams({ strict: false })
+    const {
+        data: info,
+        isSuccess,
+        isLoading,
+    } = useGet<CompanyStats[]>(`${ROLES_STATISTIC}/${id}`, {
+        params: {
+            date: search?.date,
         },
-    )
+        options: {
+            enabled: Boolean(id),
+        },
+    })
 
-    const positionCard = () => (
-        <div className="flex gap-3">
-            {info?.map((item, index) => (
-                <div key={index} className="min-w-[350px]">
-                    <PositonCard item={item} />
-                </div>
-            ))}
-        </div>
-    )
+    const positionCard = () =>
+        info?.map((item, index) => <PositonCard key={index} item={item} />)
+    const positionCardSkeletion = () =>
+        Array.from({ length: 8 })?.map((_, index) => (
+            <PositonCard key={index} />
+        ))
 
     return (
         <div className=" w-full">
@@ -46,35 +45,23 @@ export default function OfficeDetail() {
             </div>
 
             {search.tabs === "card" ? (
-                isSuccess && !!info ? (
-                    <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 my-4 max-w-full">
-                        {info?.map((item, index) => (
-                            <div key={index}>
-                                <PositonCard item={item} />
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="flex items-center h-48 w-full justify-center bg-gray-500/20 rounded-md my-2">
-                        <p className="text-gray-500/95">
-                            Lavozimlar ma'lumoti topilmadi
-                        </p>
-                    </div>
-                )
+                <div className="sm:grid hidden lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 my-4 max-w-full">
+                    {isSuccess && !!info && positionCard()}
+                    {isLoading && positionCardSkeletion()}
+                </div>
             ) : (
                 <div>
                     <PositionAccordion info={info} loading={isLoading} />
-                    {isSuccess && !!info ? (
-                        <div className="lg:hidden grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 my-4 max-w-full overflow-x-auto">
-                            {positionCard()}
-                        </div>
-                    ) : (
-                        <div className="lg:hidden flex items-center h-48 w-full justify-center bg-gray-500/20 rounded-md my-2">
-                            <p className="text-gray-500/95">
-                                Lavozimlar ma'lumoti topilmadi
-                            </p>
-                        </div>
-                    )}
+                    <div className="lg:hidden flex gap-4 my-4 max-w-full overflow-x-auto no-scrollbar-x">
+                        {isSuccess && !!info && positionCard()}
+                        {isLoading && positionCardSkeletion()}
+                    </div>
+                </div>
+            )}
+
+            {isSuccess && info?.length === 0 && (
+                <div className="rounded-md bg-card mt-3">
+                    <EmptyBox />
                 </div>
             )}
         </div>

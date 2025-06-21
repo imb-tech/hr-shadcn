@@ -25,7 +25,7 @@ function RouteComponent() {
             <div className="max-w-3xl mx-auto ">
                 <PaymentForm />
             </div>
-            <div className="mt-24">
+            <div className="sm:mt-24 mt-8">
                 <h1 className="text-xl  mb-3">To'lovlar tarixi</h1>
                 <HistoryPage />
             </div>

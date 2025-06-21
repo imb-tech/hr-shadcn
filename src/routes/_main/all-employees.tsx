@@ -14,15 +14,13 @@ function RouteComponent() {
   return (
     <PageLayout
       breadcrumb={["Hodimlar ro'yxati"]}
-      leftComponent={
-        <Button
-          className="min-w-4"
+    >
+       <Button
+          className="min-w-4 mb-3"
           onClick={() => navigate({ to: "/" })}
         >
           <ArrowLeft className="w-5 h-5" />
         </Button>
-      }
-    >
       <AllEmployeesPage />
     </PageLayout>
   );
