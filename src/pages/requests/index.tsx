@@ -10,25 +10,20 @@ import { toast } from "sonner"
 import ParamTabs from "@/components/as-params/tabs"
 import ParamDatePicker from "@/components/as-params/date-picker"
 import { DataTable } from "@/components/ui/datatable"
-import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-} from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useModal } from "@/hooks/useModal"
+import Modal from "@/components/custom/modal"
 
 export default function RequestsPage() {
     const search = useSearch({ strict: false })
-    const { isOpen, closeModal } = useModal()
+    const { closeModal } = useModal()
 
     const {
         data: data,
         isSuccess,
         isLoading,
-    } = useGet<StatusType[]>(EXCUSE, { params: search })
+    } = useGet<StatusType[]>(EXCUSE, { params: { status: search.status ?? 0 } })
     const { data: dataCount } = useGet<{ [key: string]: string | undefined }>(
         EXCUSE_COUNT,
     )
@@ -44,7 +39,7 @@ export default function RequestsPage() {
     const { store: status } = useStore<{ status: number | string }>("status")
     const [comment, setComment] = useState("")
 
-    const { mutate } = usePatch({
+    const { mutate, isPending } = usePatch({
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: [EXCUSE],
@@ -52,9 +47,10 @@ export default function RequestsPage() {
             queryClient.invalidateQueries({
                 queryKey: [EXCUSE_COUNT],
             })
-            status?.status === 2
-                ? toast.error("Ruxsat berilmadi")
-                : toast.success("Muvaffaqiyatli ruxsat berildi")
+            status?.status === 2 ?
+                toast.error("Ruxsat berilmadi")
+            :   toast.success("Muvaffaqiyatli ruxsat berildi")
+            closeModal()
         },
     })
 
@@ -85,50 +81,50 @@ export default function RequestsPage() {
                 data={(isSuccess && data) || []}
                 loading={isLoading}
             />
-            <Dialog
-                open={isOpen}
-                onOpenChange={(op) => (op ? closeModal : undefined)}
+            <Modal
+                title={
+                    status?.status == 2 ? "Rad etilsinmi?"
+                    : status?.status == 1 ?
+                        "Ruxsat berilsinmi?"
+                    :   ""
+                }
             >
-                <DialogHeader className="flex flex-col gap-1 text-xl">
-                    {status?.status == 2
-                        ? "Rad etilsinmi?"
-                        : status?.status == 1
-                        ? "Ruxsat berilsinmi?"
-                        : ""}
-                </DialogHeader>
-                <DialogContent>
-                    {status?.status === 2 ? (
-                        <Textarea
-                            className="w-full"
-                            placeholder="Sabab..."
-                            onChange={(e) => setComment(e.target.value)}
-                        />
-                    ) : null}
-                    <DialogFooter>
-                        {status?.status === 2 ? (
-                            <Button
-                                color="danger"
-                                disabled={Boolean(!comment)}
-                                variant="secondary"
-                                onClick={() => {
-                                    updatesStatus()
-                                }}
-                            >
-                                Rad etish
-                            </Button>
-                        ) : (
-                            <Button
-                                color="success"
-                                onClick={() => {
-                                    updatesStatus()
-                                }}
-                            >
-                                Ruxsat berish
-                            </Button>
-                        )}
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+                <div>
+                    <div>
+                        {status?.status === 2 ?
+                            <Textarea
+                                className="w-full"
+                                placeholder="Sabab..."
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                        :   null}
+                        <div className="mt-2">
+                            {status?.status === 2 ?
+                                <Button
+                                    color="danger"
+                                    disabled={Boolean(!comment)}
+                                    variant="secondary"
+                                    onClick={() => {
+                                        updatesStatus()
+                                    }}
+                                    loading={isPending}
+                                >
+                                    Rad etish
+                                </Button>
+                            :   <Button
+                                    color="success"
+                                    onClick={() => {
+                                        updatesStatus()
+                                    }}
+                                    loading={isPending}
+                                >
+                                    Ruxsat berish
+                                </Button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </div>
     )
 }

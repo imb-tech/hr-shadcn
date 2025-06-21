@@ -12,19 +12,14 @@ export default function PlanProfile() {
 
     return (
         <div className="w-full rounded-xl mb-4">
-            <div className="grid grid-cols-2 gap-3">
-                <Card className="flex flex-row justify-between items-center gap-5 gap-x-8 gap-y-4 p-5 rounded-md">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <Card className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 gap-x-8 gap-y-4 p-5 rounded-md">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center justify-center p-2 bg-gray-100 dark:bg-gray-800 rounded-full">
-                            <DollarSign
-                                className=" text-primary"
-                                size={30}
-                            />
+                            <DollarSign className=" text-primary" size={30} />
                         </div>
                         <div>
-                            <p className="text-lg text-primary">
-                                Balans
-                            </p>
+                            <p className="text-lg text-primary">Balans</p>
                             <p className="text-xl font-medium text-gray-900 dark:text-white">
                                 {formatMoney(data?.balance)} so'm
                             </p>

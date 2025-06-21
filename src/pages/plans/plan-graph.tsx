@@ -12,7 +12,7 @@ export default function PlanGraph() {
     return (
         <div className="gap-3">
             <Card className="p-2 rounded-md">
-                <div className="grid grid-cols-12 gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-2">
                     {months.map((month) => {
                         const color = getMonthColor(
                             Number(month.key),
@@ -36,9 +36,7 @@ export default function PlanGraph() {
                                     colorClasses[color],
                                 )}
                             >
-                                <p className="text-sm ">
-                                    {month.name}
-                                </p>
+                                <p className="text-sm ">{month.name}</p>
                                 <span className="opacity-80">
                                     {Number(month.key) > curr ?
                                         <Clock size={20} />

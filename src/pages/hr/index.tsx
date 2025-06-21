@@ -45,12 +45,9 @@ export default function HrPage() {
             },
         },
     )
-    const { data, isLoading, isSuccess, refetch } = useGet<ListResponse<Human>>(
-        HR_API,
-        {
-            params: { ...params, page_size: 25 },
-        },
-    )
+    const { data, isLoading, refetch } = useGet<ListResponse<Human>>(HR_API, {
+        params: { ...params, page_size: 25 },
+    })
 
     const { mutate, isPending } = usePost(
         {
@@ -133,14 +130,16 @@ export default function HrPage() {
                 paginationProps={{
                     totalPages: data?.total_pages,
                 }}
-                onEdit={(item) => {
-                    if (!item.id) return
-                    navigate({ to: `/hr-edit/${item.id}` })
+                onEdit={({ original }) => {
+                    if (!original.id) return
+                    console.log(original)
+
+                    navigate({ to: `/hr-edit/${original.id}` })
                 }}
                 onRowClick={(item) => navigate({ to: `/hr-view/${item.id}` })}
                 head={
                     <div className="grid lg:grid-cols-3 gap-3 w-full mb-3">
-                        <ParamInput fullWidth  />
+                        <ParamInput fullWidth />
                         <ParamCombobox
                             className="max-w-full sm:w-80 "
                             labelKey="name"
