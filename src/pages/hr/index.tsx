@@ -148,7 +148,7 @@ export default function HrPage() {
                                     Hodimlar ro'yxati
                                 </h1>
                                 <Badge className="text-sm">
-                                    {formatMoney(data?.total_pages)}
+                                    {formatMoney(data?.count)}
                                 </Badge>
                             </div>
                             <PButton

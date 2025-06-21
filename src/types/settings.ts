@@ -25,4 +25,5 @@ type Profile = {
 type ListResponse<T> = {
     total_pages: number
     results: T[]
+    count:number
 }
