@@ -14,24 +14,17 @@ import usePath from "@/hooks/usePath"
 import { Link } from "@tanstack/react-router"
 import { Skeleton } from "../ui/skeleton"
 import { memo } from "react"
-import { cn } from "@/lib/utils"
 
-export const SkeletionNav = memo(
-    ({ isopen, className }: { isopen?: boolean; className?: string }) => {
-        return (
-            <div className={cn("flex flex-col gap-6 pt-1", className)}>
-                {Array.from({ length: 7 }).map((_, i) => (
-                    <div className="flex items-center gap-4 pl-3" key={i}>
-                        <Skeleton className="min-w-6 h-6 rounded-sm" />
-                        {isopen && (
-                            <Skeleton className="w-full h-6 rounded-sm" />
-                        )}
-                    </div>
-                ))}
-            </div>
-        )
-    },
-)
+export const SkeletionNav = memo(({ isopen }: { isopen?: boolean }) => {
+    return Array.from({ length: 7 }).map((_, i) => (
+        <SidebarMenuItem>
+            <SidebarMenuButton className="flex items-center gap-4">
+                <Skeleton className="w-8  h-full rounded-sm" />
+                {isopen && <Skeleton className="w-full h-full rounded-sm" />}
+            </SidebarMenuButton>
+        </SidebarMenuItem>
+    ))
+})
 
 export function NavMain() {
     const { links } = usePath()
@@ -62,9 +55,10 @@ export function NavMain() {
                             </Link>
                         </div>
                     </SidebarMenuItem>
-                    {isLoading ?
+                    {isLoading ? (
                         <SkeletionNav isopen={open} />
-                    :   links.map(({ title, ...item }) => (
+                    ) : (
+                        links.map(({ title, ...item }) => (
                             <Link
                                 {...item}
                                 key={title}
@@ -83,19 +77,19 @@ export function NavMain() {
                                         <span>{title}</span>
                                     </SidebarMenuButton>
 
-                                    {(
-                                        item.to === "/requests" &&
-                                        open &&
-                                        data?.excuses
-                                    ) ?
+                                    {item.to === "/requests" &&
+                                    open &&
+                                    data?.excuses ? (
                                         <span className="absolute text-xs right-2 top-[50%] translate-y-[-50%] size-6 z-50 flex items-center justify-center bg-primary/15 rounded-full text-primary ">
                                             {data?.excuses}
                                         </span>
-                                    :   ""}
+                                    ) : (
+                                        ""
+                                    )}
                                 </SidebarMenuItem>
                             </Link>
                         ))
-                    }
+                    )}
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>

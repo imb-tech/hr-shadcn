@@ -28,7 +28,7 @@ export default function SeeInView({
                 {children ? (
                     children
                 ) : (
-                    <img src={url} alt="img" className={`${className}` || ""} />
+                    <img src={url || "/images/user.png"} alt="img" className={`${className}` || ""} />
                 )}
             </DialogTrigger>
             <DialogContent onClick={(e)=>{e.stopPropagation()}} className="max-w-4xl min-h-64 max-h-[80vh] w-full !p-0 bg-transparent border-none">
@@ -41,7 +41,7 @@ export default function SeeInView({
                     </VisuallyHidden>
                 </DialogHeader>
                 <img
-                    src={url}
+                    src={url || "/images/user.png"}
                     alt="img"
                     className="max-h-[80vh] w-full object-contain"
                 />
