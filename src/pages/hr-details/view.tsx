@@ -52,7 +52,7 @@ function ViewPage() {
                     <ul className="h-full flex flex-col items-stretch gap-[3px]">
                         <li className="font-bold text-2xl">
                             {data?.first_name} {data?.last_name}{" "}
-                            {data?.middle_name}
+                            {data?.middle_name || ''}
                         </li>
                         <li className="flex flex-col sm:flex-row gap-2 sm:items-center">
                             <div className="flex gap-2 items-center min-w-52 text-foreground-500">

@@ -138,8 +138,14 @@ export default function CreateHrForm() {
         const selectedRole = dataPosition?.find((el) => el.id === role)
         if (selectedRole) {
             form.setValue("salary", selectedRole?.salary)
-            form.setValue("work_shift_start", selectedRole?.work_shift_start)
-            form.setValue("work_shift_end", selectedRole?.work_shift_end)
+            form.setValue(
+                "work_shift_start",
+                selectedRole?.work_shift_start?.slice(0, 5),
+            )
+            form.setValue(
+                "work_shift_end",
+                selectedRole?.work_shift_end?.slice(0, 5),
+            )
             form.setValue("work_days", selectedRole?.work_days)
             form.setValue("fine_per_minute", selectedRole?.fine_per_minute - 0)
         }
@@ -285,12 +291,14 @@ export default function CreateHrForm() {
                     />
 
                     <div className="grid md:grid-cols-2 grid-cols-1 gap-3">
-                        <TimeInput
+                        <FormInput
+                            type="time"
                             label={"Ish boshlanish vaqti"}
                             methods={form}
                             name="work_shift_start"
                         />
-                        <TimeInput
+                        <FormInput
+                            type="time"
                             label={"Ish tugash vaqti"}
                             methods={form}
                             name="work_shift_end"

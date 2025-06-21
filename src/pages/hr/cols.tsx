@@ -27,7 +27,7 @@ export const useHrListCols = (query?: string) => {
                     return (
                         <span className="whitespace-nowrap lg:break-all">
                             {findHighlights(
-                                `${first_name} ${last_name} ${middle_name}`,
+                                `${first_name} ${last_name} ${middle_name || ''}`,
                                 query ?? "",
                                 "",
                             )}
