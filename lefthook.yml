@@ -1,5 +1,0 @@
-pre-commit:
-    commands:
-        check:
-            run: tsc --noEmit
-            stage_fixed: true

@@ -7,12 +7,10 @@ import axios from "axios"
 
 const baseURL = import.meta.env.VITE_DEFAULT_URL
 const partURL = import.meta.env.VITE_DEFAULT_PART_URL
-// const baseURL = "https://location.imbtech.uz/api/v1/"
 
 const url = import.meta.env.DEV ? "demo.imbtech.uz" : window.location.hostname
-// const url = 'demo.imbtech.uz'
 const baseURLOrigin = 'https://' + url.split('.')[0] + partURL
-// const baseURLOrigin = "http://192.168.1.122/api/v1"
+
 
 
 const axiosInstance = axios.create({
@@ -51,7 +49,7 @@ export function setupAxiosInterceptors(queryClient: QueryClient) {
         async function (error) {
             const originalRequest = error.config
             const status = error.response?.status
-            const isLoginPage = window.location.pathname === '/login';
+            const isLoginPage = window.location.pathname === '/auth';
 
             if (status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true
@@ -72,14 +70,14 @@ export function setupAxiosInterceptors(queryClient: QueryClient) {
                         }
                     }
                     if (!isLoginPage) {
-                        location.href = "/login"
+                        location.href = "/auth"
                     }
 
                 } catch (refreshError) {
                     localStorage.removeItem(USER_ACCESS_KEY)
                     localStorage.removeItem(USER_REFRESH_KEY)
                     if (!isLoginPage) {
-                        location.href = '/login';
+                        location.href = '/auth';
                     }
                     return Promise.reject(refreshError)
                 }
