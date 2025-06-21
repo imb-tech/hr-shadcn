@@ -1,5 +1,7 @@
 import Header from "@/components/header"
 import MenuItemMobile from "@/components/sidebar/menu-item-mobile"
+import { SkeletionNav } from "@/components/sidebar/nav-main"
+import usePermissions from "@/hooks/use-permissions"
 import usePath from "@/hooks/usePath"
 import { cn } from "@/lib/utils"
 import { ReactNode } from "@tanstack/react-router"
@@ -18,7 +20,7 @@ const PageLayout = ({
     leftComponent,
 }: Props) => {
     const { links } = usePath()
-    // const { isLoading } = usePermissions()
+    const { isLoading } = usePermissions()
 
     return (
         <div className="w-full h-full overflow-y-auto">
@@ -36,15 +38,18 @@ const PageLayout = ({
             <main className=" mx-auto p-4 h-full overflow-y-auto pt-20">
                 {children}
 
-                <nav className="grid grid-cols-7 lg:hidden h-16 items-center border-t border-t-default w-full fixed left-0 ring-0 bottom-0 bg-background z-40">
-                    {links?.map((link, i) => (
-                        <MenuItemMobile
-                            badge={link.to === "/" ? Number(0) : undefined}
-                            key={i}
-                            {...link}
-                        />
-                    ))}
-                </nav>
+                {isLoading ?
+                    <SkeletionNav className="grid grid-cols-7 lg:hidden h-16 items-center border-t border-t-default w-full fixed left-0 ring-0 bottom-0 bg-background z-40 px-3"/>
+                :   <nav className="grid grid-cols-7 lg:hidden h-16 items-center border-t border-t-default w-full fixed left-0 ring-0 bottom-0 bg-background z-40">
+                        {links?.map((link, i) => (
+                            <MenuItemMobile
+                                badge={link.to === "/" ? Number(0) : undefined}
+                                key={i}
+                                {...link}
+                            />
+                        ))}
+                    </nav>
+                }
                 {/* {isLoading && (
                     <div className="flex items-center justify-center h-screen fixed z-[10000] w-full top-0 left-0 bg-background/90">
                         <div

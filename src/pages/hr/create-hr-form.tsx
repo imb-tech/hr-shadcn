@@ -29,8 +29,7 @@ export default function CreateHrForm() {
     })
     const { "hr-edit": id } = useParams({ strict: false })
     const queryClient = useQueryClient()
-    const { data: dataPosition, isSuccess: successPosition } =
-        useGet<Position[]>(POSITION)
+    const { data: dataPosition } = useGet<Position[]>(POSITION)
     const { data: companies } = useGet<Filter[]>(FILTER + "office")
     const { data, isSuccess } = useGet<Human>(`${HR_API}/${id}`, {
         options: { enabled: Boolean(id) },
@@ -133,9 +132,10 @@ export default function CreateHrForm() {
         }
     }
 
+    const role = form.watch("role")
+
     useEffect(() => {
-        const id = form.watch("role")
-        const selectedRole = dataPosition?.find((el) => el.id === id)
+        const selectedRole = dataPosition?.find((el) => el.id === role)
         if (selectedRole) {
             form.setValue("salary", selectedRole?.salary)
             form.setValue("work_shift_start", selectedRole?.work_shift_start)
@@ -143,7 +143,7 @@ export default function CreateHrForm() {
             form.setValue("work_days", selectedRole?.work_days)
             form.setValue("fine_per_minute", selectedRole?.fine_per_minute - 0)
         }
-    }, [form.watch("role")])
+    }, [role])
 
     useEffect(() => {
         if (data?.id) {
@@ -339,10 +339,10 @@ export default function CreateHrForm() {
                     />
                 </div>
 
-                {isSuccess && (
+                {(isSuccess || !id) && (
                     <div className="px-4 py-6 border dark:border-zinc-700 rounded-2xl">
                         <PermissionField
-                            defaultIsSite={(data.actions?.length ?? 0) > 0}
+                            defaultIsSite={(data?.actions?.length ?? 0) > 0}
                         />
                     </div>
                 )}

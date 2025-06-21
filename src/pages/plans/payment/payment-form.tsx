@@ -24,7 +24,7 @@ export default function PaymentForm() {
             <TabsList className="min-h-20 sm:min-h-24">
                 <TabsTrigger
                     value="click"
-                    className="px-3 sm:px-8 data-[state=active]:bg-secondary"
+                    className="px-3 sm:px-8 data-[state=active]:bg-primary/20 hover:bg-primary/5"
                 >
                     <div className="w-16 sm:w-24 flex justify-center">
                         <img
@@ -35,7 +35,7 @@ export default function PaymentForm() {
                 </TabsTrigger>
                 <TabsTrigger
                     value="payme"
-                    className="px-3 sm:px-8 data-[state=active]:bg-secondary"
+                    className="px-3 sm:px-8 data-[state=active]:bg-primary/20 hover:bg-primary/5"
                 >
                     <div className="w-16 sm:w-24 flex justify-center">
                         <img
@@ -46,7 +46,7 @@ export default function PaymentForm() {
                 </TabsTrigger>
                 <TabsTrigger
                     value="bonus"
-                    className="px-3 sm:px-8 data-[state=active]:bg-secondary"
+                    className="px-3 sm:px-8 data-[state=active]:bg-primary/20 hover:bg-primary/5"
                 >
                     <div className="flex items-center gap-3 w-[180px]">
                         <span className="flex items-center justify-center bg-green-500/15 p-2 rounded-xl">

@@ -10,7 +10,7 @@ type Props = {
     badge?: number
 }
 
-export default function MenuItemMobile({ to, title, icon, badge }: Props) {
+export default function MenuItemMobile({ to, icon, badge }: Props) {
     const { pathname } = useLocation()
 
     return (
