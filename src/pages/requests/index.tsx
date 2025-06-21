@@ -53,9 +53,9 @@ export default function RequestsPage() {
             queryClient.invalidateQueries({
                 queryKey: [EXCUSE_COUNT],
             })
-            status?.status === 2 ?
-                toast.error("Ruxsat berilmadi")
-            :   toast.success("Muvaffaqiyatli ruxsat berildi")
+            status?.status === 2
+                ? toast.error("Ruxsat berilmadi")
+                : toast.success("Muvaffaqiyatli ruxsat berildi")
             closeModal()
         },
     })
@@ -93,27 +93,27 @@ export default function RequestsPage() {
             />
             <Modal
                 title={
-                    status?.status == 2 ? "Rad etilsinmi?"
-                    : status?.status == 1 ?
-                        "Ruxsat berilsinmi?"
-                    :   ""
+                    status?.status == 2
+                        ? "Rad etilsinmi?"
+                        : status?.status == 1
+                        ? "Ruxsat berilsinmi?"
+                        : ""
                 }
             >
                 <div>
                     <div>
-                        {status?.status === 2 ?
+                        {status?.status === 2 ? (
                             <Textarea
-                                className="w-full"
+                                className="w-full mb-4"
                                 placeholder="Sabab..."
                                 onChange={(e) => setComment(e.target.value)}
                             />
-                        :   null}
-                        <div className="mt-2">
-                            {status?.status === 2 ?
+                        ) : null}
+                        <div className="mt-2 flex justify-end">
+                            {status?.status === 2 ? (
                                 <Button
-                                    color="danger"
                                     disabled={Boolean(!comment)}
-                                    variant="secondary"
+                                    variant="destructive"
                                     onClick={() => {
                                         updatesStatus()
                                     }}
@@ -121,8 +121,8 @@ export default function RequestsPage() {
                                 >
                                     Rad etish
                                 </Button>
-                            :   <Button
-                                    color="success"
+                            ) : (
+                                <Button
                                     onClick={() => {
                                         updatesStatus()
                                     }}
@@ -130,7 +130,7 @@ export default function RequestsPage() {
                                 >
                                     Ruxsat berish
                                 </Button>
-                            }
+                            )}
                         </div>
                     </div>
                 </div>
