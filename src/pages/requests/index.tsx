@@ -71,13 +71,15 @@ export default function RequestsPage() {
 
     return (
         <div>
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-3 w-full flex flex-col gap-3 sm:flex-row sm:items-center justify-between">
+                <div className="max-w-[560px] overflow-x-auto no-scrollbar-x">
                 <ParamTabs
                     dontCleanOthers
                     paramName="status"
                     options={tabOptions}
                 />
-                <ParamDatePicker className="w-auto" />
+                </div>
+                <ParamDatePicker  />
             </div>
 
             <DataTable

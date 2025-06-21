@@ -137,12 +137,13 @@ export default function HrPage() {
                     if (!item.id) return
                     navigate({ to: `/hr-edit/${item.id}` })
                 }}
+                className="min-w-[900px]"
                 onRowClick={(item) => navigate({ to: `/hr-view/${item.id}` })}
                 head={
                     <div className="grid lg:grid-cols-3 gap-3 w-full mb-3">
                         <ParamInput fullWidth  />
                         <ParamCombobox
-                            className="max-w-full sm:w-80 "
+                            className="max-w-full w-full sm:w-80 "
                             labelKey="name"
                             valueKey="id"
                             options={dataPosition || []}

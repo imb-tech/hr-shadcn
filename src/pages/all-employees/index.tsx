@@ -81,7 +81,7 @@ export default function AllEmployeesPage() {
     return (
         <div>
             <div className="flex justify-between items-center gap-3 w-full mb-3">
-                <div>
+                <div className="max-w-[460px] overflow-x-auto no-scrollbar-x">
                     <ParamTabs
                         paramName="has_attendance"
                         options={tabOptions}

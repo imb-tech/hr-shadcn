@@ -576,7 +576,7 @@ const SidebarMenuButton = React.forwardRef<
           sidebarMenuButtonVariants({ variant, size }),
           className,
           isActive ? '!bg-primary !text-primary ' : '',
-          'hover:bg-primary/15 hover:text-primary'
+          'hover:bg-primary/10 hover:text-primary'
         )}
         {...props}
       />

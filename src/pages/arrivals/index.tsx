@@ -73,7 +73,7 @@ export default function ArrivalsPage() {
     return (
         <div>
             <div className="flex justify-between items-center gap-3 w-full mb-3">
-                <div>
+                <div className="max-w-[460px] overflow-x-auto no-scrollbar-x">
                     <ParamTabs paramName="status" options={tabOptions} />
                 </div>
                 <div className="hidden lg:block">
