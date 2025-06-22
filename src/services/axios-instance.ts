@@ -8,7 +8,7 @@ import axios from "axios"
 const baseURL = import.meta.env.VITE_DEFAULT_URL
 const partURL = import.meta.env.VITE_DEFAULT_PART_URL
 
-const url = import.meta.env.DEV ? "vst.imbtech.uz" : "vst.imbtech.uz"
+const url = import.meta.env.DEV ? "vst.imbtech.uz" : "demo.imbtech.uz"
 const baseURLOrigin = 'https://' + url.split('.')[0] + partURL
 
 
