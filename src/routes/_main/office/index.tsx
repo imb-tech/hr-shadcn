@@ -1,12 +1,19 @@
 import ParamDatePicker from "@/components/as-params/date-picker"
 import { GET_ME } from "@/constants/api-endpoints"
 import PageLayout from "@/layouts/page-layout"
+import { getAccessToken } from "@/lib/get-token"
 import OfficeDetail from "@/pages/office-detail"
 import axiosInstance from "@/services/axios-instance"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/_main/office/")({
     beforeLoad: async () => {
+        const token = getAccessToken()
+        if (!token) {
+            throw redirect({
+                to: "/auth",
+            })
+        }
         const response = await axiosInstance.get<{ office_id?: number }>(GET_ME)
         const me = response.data
 
