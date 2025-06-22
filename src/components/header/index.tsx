@@ -17,6 +17,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import { Button } from "../ui/button"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/layouts/theme"
+import { getAccessToken } from "@/lib/get-token"
 
 const Header = ({
     rightComponent,
@@ -25,7 +26,10 @@ const Header = ({
     rightComponent?: ReactNode
     leftComponent?: ReactNode
 }) => {
-    const { data, isLoading } = useGet<Profile>(GET_ME)
+    const token = getAccessToken()
+    const { data, isLoading } = useGet<Profile>(GET_ME, {
+        options: { enabled: !!token },
+    })
     const navigate = useNavigate()
     const { theme, setTheme } = useTheme()
 
