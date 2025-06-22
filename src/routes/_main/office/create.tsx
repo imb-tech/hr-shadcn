@@ -11,10 +11,7 @@ export const Route = createFileRoute("/_main/office/create")({
 function RouteComponent() {
   const navigate = useNavigate();
   return (
-    <PageLayout
-      breadcrumb={["Ofis qo'shish"]}
-
-    >
+    <PageLayout>
       <div className="flex items-center gap-3">
           <Button
           className="min-w-4"

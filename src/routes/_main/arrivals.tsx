@@ -12,13 +12,20 @@ function RouteComponent() {
     const navigate = useNavigate()
 
     return (
-        <PageLayout breadcrumb={["Kelganlar ro'yxati"]}>
-            <Button
-                className="min-w-4 mb-3"
-                onClick={() => navigate({ to: "/" })}
-            >
-                <ArrowLeft className="w-5 h-5" />
-            </Button>
+        <PageLayout>
+            <div className="flex items-center gap-3 mb-3">
+                <Button
+                    className="min-w-4"
+                    onClick={() =>
+                        navigate({
+                            to: "/",
+                        })
+                    }
+                >
+                    <ArrowLeft className="w-5 h-5" />
+                </Button>
+                <h1 className="text-xl font-semibold">Kelganlar ro'yxati</h1>
+            </div>
             <ArrivalsPage />
         </PageLayout>
     )

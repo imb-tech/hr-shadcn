@@ -83,7 +83,7 @@ export default function PermissionField({
             </div>
 
             {isSite && (
-                <div className="mt-3 grid grid-cols-4 gap-3 transition-all duration-300 ease-linear">
+                <div className="mt-3 grid lg:grid-cols-4 sm:grid-cols-2 gap-3 transition-all duration-300 ease-linear">
                     {data?.map((mod) => (
                         <div
                             className="bg-gray-500/20 rounded-xl p-4"

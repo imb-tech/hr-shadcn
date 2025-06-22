@@ -19,11 +19,9 @@ import { cn } from "@/lib/utils"
 import { useTheme } from "@/layouts/theme"
 
 const Header = ({
-    items,
     rightComponent,
     leftComponent,
 }: {
-    items?: string[]
     rightComponent?: ReactNode
     leftComponent?: ReactNode
 }) => {
@@ -58,7 +56,6 @@ const Header = ({
                 {!!leftComponent && (
                     <div className="flex gap-2">{leftComponent}</div>
                 )}
-                {/* <HeaderBreadvrumb items={items ?? []} /> */}
             </div>
             <hgroup className="flex items-center gap-4">
                 {!!rightComponent && (

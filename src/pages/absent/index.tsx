@@ -11,6 +11,7 @@ import ParamPagination from "@/components/as-params/pagination"
 import { Card, CardContent } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/datatable"
 import { ParamCombobox } from "@/components/as-params/combobox"
+import EmptyBox from "@/components/custom/empty-box"
 
 export const tabsParam = [
     { value: "table", label: <Table /> },
@@ -56,19 +57,28 @@ export default function AbsentPage() {
     const columns = useAbsentListCols()
 
     const renderCardView = () => (
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-5">
-            {data?.results?.map((item, index) => (
-                <EmployeeCard
-                    key={index}
-                    color={
-                        item.excuses_status == 1
-                            ? "bg-orange-200 text-orange-400"
-                            : "bg-red-200 text-red-600"
-                    }
-                    item={item}
-                    status={item.excuses_status == 1 ? "Sababli" : "Sababsiz"}
-                />
-            ))}
+        <div className="grid 2xl:lg:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-5">
+            {isSuccess &&
+                !!data?.results?.length &&
+                data?.results?.map((item, index) => (
+                    <EmployeeCard
+                        key={index}
+                        color={
+                            item.excuses_status == 1
+                                ? "bg-orange-200 text-orange-400"
+                                : "bg-red-200 text-red-600"
+                        }
+                        item={item}
+                        status={
+                            item.excuses_status == 1 ? "Sababli" : "Sababsiz"
+                        }
+                    />
+                ))}
+
+            {isLoading &&
+                Array.from({ length: 12 }).map((_, index) => (
+                    <EmployeeCard key={index} />
+                ))}
         </div>
     )
 
@@ -83,7 +93,7 @@ export default function AbsentPage() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 w-full mb-3">
-                <ParamInput fullWidth  />
+                <ParamInput fullWidth />
                 <ParamCombobox
                     className="max-w-full w-full  sm:w-1/3"
                     labelKey="name"
@@ -96,21 +106,15 @@ export default function AbsentPage() {
 
             {search?.tabs === "card" ? (
                 <div className="space-y-3">
-                    {isSuccess && data?.results?.length > 0 ? (
-                        <>
-                            {renderCardView()}
-                            {data?.total_pages > 1 && (
-                                <ParamPagination
-                                    totalPages={data?.total_pages}
-                                />
-                            )}
-                        </>
-                    ) : (
-                        <Card>
-                            <CardContent className="h-72 flex items-center justify-center text-gray-400">
-                                Ma'lumot topilmadi
-                            </CardContent>
-                        </Card>
+                    {renderCardView()}
+
+                    {isSuccess && !!data?.results?.length && (
+                        <ParamPagination totalPages={data?.total_pages} />
+                    )}
+                    {isSuccess && data?.results?.length == 0 && (
+                        <div className="bg-card rounded-md">
+                            <EmptyBox />
+                        </div>
                     )}
                 </div>
             ) : (
@@ -132,7 +136,17 @@ export default function AbsentPage() {
                             numeration
                         />
                     </div>
-                    <div className="lg:hidden">{renderCardView()}</div>
+                    <div className="lg:hidden space-y-3">
+                        {renderCardView()}
+                        {isSuccess && !!data?.results?.length && (
+                            <ParamPagination totalPages={data?.total_pages} />
+                        )}
+                        {isSuccess && data?.results?.length == 0 && (
+                            <div className="bg-card rounded-md">
+                                <EmptyBox />
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
         </div>

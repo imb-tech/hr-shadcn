@@ -26,7 +26,6 @@ export const Route = createFileRoute("/_main/office/")({
     },
     component: () => (
         <PageLayout
-            breadcrumb={["Ofis", "Ofis ma'lumotlari va hodimlar"]}
             rightComponent={
                 <ParamDatePicker
                     titleHidden={false}

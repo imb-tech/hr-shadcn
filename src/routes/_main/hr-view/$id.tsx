@@ -33,14 +33,17 @@ function RouteComponent() {
     }
 
     return (
-        <PageLayout breadcrumb={["Hodim ma'lumoti"]}>
+        <PageLayout>
             <div className="flex justify-between gap-3">
-                <Button
-                    className="min-w-4"
-                    onClick={() => navigate({ to: "/hr" })}
-                >
-                    <ArrowLeft className="w-5 h-5" />
-                </Button>
+                <div className="flex items-center gap-3">
+                    <Button
+                        className="min-w-4"
+                        onClick={() => navigate({ to: "/hr" })}
+                    >
+                        <ArrowLeft className="w-5 h-5" />
+                    </Button>
+                    <h1 className="text-xl font-semibold">Hodim ma'lumoti</h1>
+                </div>
                 <Button
                     onClick={handleExcel}
                     loading={isLoadingDown}

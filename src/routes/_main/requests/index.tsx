@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_main/requests/")({
 
 function RouteComponent() {
     return (
-        <PageLayout breadcrumb={["So'rovlar ro'yxati"]}>
+        <PageLayout>
             <RequestsPage />
         </PageLayout>
     )

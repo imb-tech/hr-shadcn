@@ -10,7 +10,6 @@ import { ReactNode } from "@tanstack/react-router"
 
 type Props = {
     children: ReactNode
-    breadcrumb?: string[]
     rightComponent?: ReactNode
     leftComponent?: ReactNode
 }
@@ -38,7 +37,6 @@ type Props = {
 
 const PageLayout = ({
     children,
-    breadcrumb,
     rightComponent,
     leftComponent,
 }: Props) => {
@@ -53,7 +51,6 @@ const PageLayout = ({
                 )}
             >
                 <Header
-                    items={breadcrumb}
                     rightComponent={rightComponent}
                     leftComponent={leftComponent}
                 />

@@ -45,7 +45,7 @@ export default function OfficeDetail() {
             </div>
 
             {search.tabs === "card" ? (
-                <div className="sm:grid hidden lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 my-4 max-w-full">
+                <div className="sm:grid hidden lg:grid-cols-4 2xl:grid-cols-6 md:grid-cols-3 grid-cols-1 gap-4 my-4 max-w-full">
                     {isSuccess && !!info && positionCard()}
                     {isLoading && positionCardSkeletion()}
                 </div>

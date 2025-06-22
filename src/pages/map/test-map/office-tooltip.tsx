@@ -33,7 +33,7 @@ const OfficeTooltip = ({ office: { properties } }: { office: Office }) => {
 
                 {/* Hint content */}
                 <div
-                    className={`absolute bottom-[62px] left-1/2 ml-[64px] sm:w-[300px] px-0 py-[35px] text-white pointer-events-none transition-opacity duration-700 ${
+                    className={`absolute sm:bottom-[62px] bottom-[28px] ml-[30px] left-1/2 sm:ml-[64px] sm:w-[300px] px-0 py-[35px] text-white pointer-events-none transition-opacity duration-700 ${
                         hover ? "opacity-100 visible" : "opacity-0 invisible"
                     }`}
                 >
@@ -71,12 +71,12 @@ const OfficeTooltip = ({ office: { properties } }: { office: Office }) => {
                     {/* underline line */}
                     <div
                         className={`absolute bottom-[29px] left-0 h-[1px] bg-background dark:bg-white transition-all duration-400 ${
-                            hover ? "w-[180px]" : "w-0"
+                            hover ? "sm:w-[180px] w-20" : "w-0"
                         }`}
                     />
                     {/* rotated line */}
                     <div
-                        className="absolute bottom-[29px] left-0 h-[1px] bg-background dark:bg-white opacity-100 rotate-[-225deg] origin-[0_50%] w-[80px] transition-opacity duration-500"
+                        className="absolute bottom-[29px] left-0 h-[1px] bg-background dark:bg-white opacity-100 rotate-[-225deg] origin-[0_50%] sm:w-[80px] w-8 transition-opacity duration-500"
                         style={{ transitionDelay: "0s" }}
                         aria-hidden="true"
                     />

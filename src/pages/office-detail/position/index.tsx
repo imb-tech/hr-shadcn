@@ -22,7 +22,7 @@ function PositionHrView() {
 
     return (
         <div>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+            <div className="grid 2xl:lg:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
                 {isSuccess &&
                     data?.map((item) => (
                         <PositionHrCard data={item} key={item.id} />

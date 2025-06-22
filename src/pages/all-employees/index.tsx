@@ -10,6 +10,7 @@ import ParamPagination from "@/components/as-params/pagination"
 import ParamInput from "@/components/as-params/input"
 import { ParamCombobox } from "@/components/as-params/combobox"
 import { tabsParam } from "../absent"
+import EmptyBox from "@/components/custom/empty-box"
 
 export default function AllEmployeesPage() {
     const navigate = useNavigate()
@@ -37,31 +38,38 @@ export default function AllEmployeesPage() {
     const columns = useAllEmployeesListCols()
 
     const renderCardView = () => (
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-5">
-            { data?.results?.map((item, index) => (
-                <EmployeeCard
-                    key={index}
-                    color={
-                        item.has_attendance
-                            ? item.attendance_status == 1
-                                ? "text-green-400 bg-green-200"
-                                : "text-orange-300 bg-orange-200"
-                            : item.excuses_status == 1
-                            ? "text-orange-400 bg-orange-200"
-                            : "text-red-500 bg-red-200"
-                    }
-                    item={item}
-                    status={
-                        item.has_attendance
-                            ? item.attendance_status == 1
-                                ? "Vaqtida kelgan"
-                                : "Kech qolgan"
-                            : item.excuses_status == 1
-                            ? "Sababli"
-                            : "Sababsiz"
-                    }
-                />
-            ))}
+        <div className="grid 2xl:lg:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mb-5">
+            {isSuccess &&
+                !!data?.results?.length &&
+                data?.results?.map((item, index) => (
+                    <EmployeeCard
+                        key={index}
+                        color={
+                            item.has_attendance
+                                ? item.attendance_status == 1
+                                    ? "text-green-400 bg-green-200"
+                                    : "text-orange-300 bg-orange-200"
+                                : item.excuses_status == 1
+                                ? "text-orange-400 bg-orange-200"
+                                : "text-red-500 bg-red-200"
+                        }
+                        item={item}
+                        status={
+                            item.has_attendance
+                                ? item.attendance_status == 1
+                                    ? "Vaqtida kelgan"
+                                    : "Kech qolgan"
+                                : item.excuses_status == 1
+                                ? "Sababli"
+                                : "Sababsiz"
+                        }
+                    />
+                ))}
+
+            {isLoading &&
+                Array.from({ length: 12 }).map((_, index) => (
+                    <EmployeeCard key={index} />
+                ))}
         </div>
     )
 
@@ -105,21 +113,15 @@ export default function AllEmployeesPage() {
 
             {search.tabs === "card" ? (
                 <div className="space-y-3">
-                    {isSuccess && data?.results?.length > 0 ? (
-                        <>
-                            {renderCardView()}
-                            {data?.total_pages > 1 && (
-                                <ParamPagination
-                                    totalPages={data?.total_pages}
-                                />
-                            )}
-                        </>
-                    ) : (
-                        <Card>
-                            <CardContent className="h-72 flex items-center justify-center text-gray-400">
-                                Ma'lumot topilmadi
-                            </CardContent>
-                        </Card>
+                    {renderCardView()}
+
+                    {isSuccess && !!data?.results?.length && (
+                        <ParamPagination totalPages={data?.total_pages} />
+                    )}
+                    {isSuccess && data?.results?.length == 0 && (
+                        <div className="bg-card rounded-md">
+                            <EmptyBox />
+                        </div>
                     )}
                 </div>
             ) : (
@@ -141,7 +143,17 @@ export default function AllEmployeesPage() {
                             }}
                         />
                     </div>
-                    <div className="lg:hidden">{renderCardView()}</div>
+                    <div className="lg:hidden space-y-3">
+                        {renderCardView()}
+                        {isSuccess && !!data?.results?.length && (
+                            <ParamPagination totalPages={data?.total_pages} />
+                        )}
+                        {isSuccess && data?.results?.length == 0 && (
+                            <div className="bg-card rounded-md">
+                                <EmptyBox />
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
         </div>

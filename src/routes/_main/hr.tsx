@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_main/hr")({
 
 function RouteComponent() {
     return (
-        <PageLayout breadcrumb={["Hodimlar"]}>
+        <PageLayout >
             <HrPage />
         </PageLayout>
     )

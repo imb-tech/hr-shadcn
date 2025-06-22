@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_main/landing")({
 
 function RouteComponent() {
   return (
-    <PageLayout breadcrumb={["Foydalanish bo'yicha qo'llanma"]}>
+    <PageLayout>
       <div id="office"></div>
       <LandingMain />
     </PageLayout>

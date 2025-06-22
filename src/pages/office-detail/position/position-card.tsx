@@ -10,7 +10,7 @@ type Props = {
 
 function PositionHrCard({ data }: Props) {
     return (
-        <Link to="/hr-view/$id" params={{ id: `${data?.id}` }}>
+        <Link to="/hr-view/$id" params={{ id:data?.id?.toString() || "/" }}>
             <Card className={"transition-all cursor-pointer   h-full"}>
                 <CardHeader className="pb-2 border-b dark:border-b-zinc-700 h-16">
                     <div className="flex justify-between items-center w-full gap-3">
