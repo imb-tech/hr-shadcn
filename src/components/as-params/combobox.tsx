@@ -125,7 +125,7 @@ export function ParamCombobox<T extends Record<string, any>>({
                     <div className="relative">
                         {isSearch && (
                             <>
-                                <CommandInput placeholder={label} />
+                                <CommandInput placeholder={label} autoFocus={false}  />
                                 {currentValue && (
                                     <span className="absolute cursor-pointer text-red-600 top-1.5 right-1 p-1">
                                         <X
