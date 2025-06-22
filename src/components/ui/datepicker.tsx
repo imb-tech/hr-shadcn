@@ -46,7 +46,7 @@ export function DatePicker({
                         !date && "text-muted-foreground",
                         fullWidth && "w-full",
                         isError && "border-destructive",
-                        titleHidden && "sm:w-[280px]",
+                        titleHidden && "sm:min-w-[280px]",
                         !titleHidden && date && "w-[150px]",
                     )}
                     disabled={disabled}

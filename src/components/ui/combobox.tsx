@@ -126,7 +126,7 @@ export function Combobox<T extends Record<string, any>>({
                     <CommandList>
                         <CommandEmpty>Mavjud emas</CommandEmpty>
                         <CommandGroup>
-                            {options?.map((d, i) => (
+                            {sortedOptions?.map((d, i) => (
                                 <CommandItem
                                     key={i}
                                     onSelect={() => handleSelect(d)}

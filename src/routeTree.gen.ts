@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MainImport } from './routes/_main'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
+import { Route as MainTaskManagementImport } from './routes/_main/task-management'
 import { Route as MainLandingImport } from './routes/_main/landing'
 import { Route as MainHrCreateImport } from './routes/_main/hr-create'
 import { Route as MainHrImport } from './routes/_main/hr'
@@ -62,6 +63,12 @@ const AuthAuthLazyRoute = AuthAuthLazyImport.update({
   path: '/auth',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/auth.lazy').then((d) => d.Route))
+
+const MainTaskManagementRoute = MainTaskManagementImport.update({
+  id: '/task-management',
+  path: '/task-management',
+  getParentRoute: () => MainRoute,
+} as any)
 
 const MainLandingRoute = MainLandingImport.update({
   id: '/landing',
@@ -233,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLandingImport
       parentRoute: typeof MainImport
     }
+    '/_main/task-management': {
+      id: '/_main/task-management'
+      path: '/task-management'
+      fullPath: '/task-management'
+      preLoaderRoute: typeof MainTaskManagementImport
+      parentRoute: typeof MainImport
+    }
     '/_auth/auth': {
       id: '/_auth/auth'
       path: '/auth'
@@ -353,6 +367,7 @@ interface MainRouteChildren {
   MainHrRoute: typeof MainHrRoute
   MainHrCreateRoute: typeof MainHrCreateRoute
   MainLandingRoute: typeof MainLandingRoute
+  MainTaskManagementRoute: typeof MainTaskManagementRoute
   MainIndexRoute: typeof MainIndexRoute
   MainHrViewIdRoute: typeof MainHrViewIdRoute
   MainOfficeEditIdRoute: typeof MainOfficeEditIdRoute
@@ -375,6 +390,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainHrRoute: MainHrRoute,
   MainHrCreateRoute: MainHrCreateRoute,
   MainLandingRoute: MainLandingRoute,
+  MainTaskManagementRoute: MainTaskManagementRoute,
   MainIndexRoute: MainIndexRoute,
   MainHrViewIdRoute: MainHrViewIdRoute,
   MainOfficeEditIdRoute: MainOfficeEditIdRoute,
@@ -400,6 +416,7 @@ export interface FileRoutesByFullPath {
   '/hr': typeof MainHrRoute
   '/hr-create': typeof MainHrCreateRoute
   '/landing': typeof MainLandingRoute
+  '/task-management': typeof MainTaskManagementRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/hr-view/$id': typeof MainHrViewIdRoute
@@ -424,6 +441,7 @@ export interface FileRoutesByTo {
   '/hr': typeof MainHrRoute
   '/hr-create': typeof MainHrCreateRoute
   '/landing': typeof MainLandingRoute
+  '/task-management': typeof MainTaskManagementRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/hr-view/$id': typeof MainHrViewIdRoute
@@ -450,6 +468,7 @@ export interface FileRoutesById {
   '/_main/hr': typeof MainHrRoute
   '/_main/hr-create': typeof MainHrCreateRoute
   '/_main/landing': typeof MainLandingRoute
+  '/_main/task-management': typeof MainTaskManagementRoute
   '/_auth/auth': typeof AuthAuthLazyRoute
   '/_main/': typeof MainIndexRoute
   '/_main/hr-view/$id': typeof MainHrViewIdRoute
@@ -476,6 +495,7 @@ export interface FileRouteTypes {
     | '/hr'
     | '/hr-create'
     | '/landing'
+    | '/task-management'
     | '/auth'
     | '/'
     | '/hr-view/$id'
@@ -499,6 +519,7 @@ export interface FileRouteTypes {
     | '/hr'
     | '/hr-create'
     | '/landing'
+    | '/task-management'
     | '/auth'
     | '/'
     | '/hr-view/$id'
@@ -523,6 +544,7 @@ export interface FileRouteTypes {
     | '/_main/hr'
     | '/_main/hr-create'
     | '/_main/landing'
+    | '/_main/task-management'
     | '/_auth/auth'
     | '/_main/'
     | '/_main/hr-view/$id'
@@ -581,6 +603,7 @@ export const routeTree = rootRoute
         "/_main/hr",
         "/_main/hr-create",
         "/_main/landing",
+        "/_main/task-management",
         "/_main/",
         "/_main/hr-view/$id",
         "/_main/office-edit/$id",
@@ -618,6 +641,10 @@ export const routeTree = rootRoute
     },
     "/_main/landing": {
       "filePath": "_main/landing.tsx",
+      "parent": "/_main"
+    },
+    "/_main/task-management": {
+      "filePath": "_main/task-management.tsx",
       "parent": "/_main"
     },
     "/_auth/auth": {

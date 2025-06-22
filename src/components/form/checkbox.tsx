@@ -46,7 +46,7 @@ export function FormCheckbox<TForm extends FieldValues>({
 
 interface thisProps<TForm extends FieldValues> {
     name: Path<TForm>
-    label: string
+    label?: string
     disabled?: boolean
     control: Control<TForm>
     required?: boolean
