@@ -41,6 +41,7 @@ type FeatureCollection = {
 type UserPoint = {
   id: number,
   full_name: string
+  urole_id?:number
   company: number
   lat: number,
   lng: number

@@ -10,12 +10,10 @@ import TestMap from "./test-map/test-map"
 export default function MapPage() {
     const search = useSearch({ from: "__root__" })
 
-    const { role_id, last_company_id, id } = search
+    const { role_id, id } = search
 
     const { data: companies } = useGet<FeatureCollection>(MAP_POLYGONS)
-    const { data: users } = useGet<UserPoint[]>(USER_LOCATIONS, {
-        params: { role_id, last_company_id },
-    })
+    const { data: users } = useGet<UserPoint[]>(USER_LOCATIONS)
 
     const data: GeoJSON.FeatureCollection[] = useMemo(() => {
         return (
@@ -23,13 +21,19 @@ export default function MapPage() {
                 type: "FeatureCollection",
                 features:
                     users
-                        ?.filter((u) => u.company == company.id)
+                        ?.filter((u) => {
+                            const matchCompany = u.company == company.id
+                            const matchRole = role_id
+                                ? u.urole_id == role_id
+                                : true
+                            return matchCompany && matchRole
+                        })
                         ?.map((usr) => ({
                             id: usr.id,
                             type: "Feature",
                             properties: {
                                 id: usr.id,
-                                name: `Hodim ${usr.id}`,
+                                name: usr.full_name,
                             },
                             geometry: {
                                 type: "Point",
@@ -38,7 +42,7 @@ export default function MapPage() {
                         })) ?? [],
             })) ?? []
         )
-    }, [users])
+    }, [users, companies, role_id])
 
     const ref = useRef<MapRef | null>(null)
 
@@ -60,6 +64,7 @@ export default function MapPage() {
                 duration: 1000,
                 curve: 1.42,
                 zoom: 17,
+                essential: true,
             })
         } else if (ref.current && id) {
             const allFeatures = data.flatMap((d) => d.features || [])
@@ -70,7 +75,7 @@ export default function MapPage() {
                     center: (user?.geometry as Geometry).coordinates,
                     duration: 1000,
                     curve: 1.42,
-                    zoom: 20,
+                    zoom: 17,
                     essential: true,
                     offset: [-100, -200],
                 })
@@ -115,7 +120,10 @@ export default function MapPage() {
 
     return (
         <div className="h-[90%] w-full bottom-0">
-            <MapFilters className="mb-3 w-full flex sm:flex-row flex-col items-center gap-3" />
+            <MapFilters
+                users={users}
+                className="mb-3 w-full flex sm:flex-row flex-col items-center gap-3"
+            />
             <TestMap
                 ref={ref}
                 defaultZoom={17}

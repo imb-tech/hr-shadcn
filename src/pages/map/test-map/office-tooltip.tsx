@@ -33,7 +33,7 @@ const OfficeTooltip = ({ office: { properties } }: { office: Office }) => {
 
                 {/* Hint content */}
                 <div
-                    className={`absolute bottom-[62px] left-1/2 ml-[64px] w-[300px] px-0 py-[35px] text-white pointer-events-none transition-opacity duration-700 ${
+                    className={`absolute bottom-[62px] left-1/2 ml-[64px] sm:w-[300px] px-0 py-[35px] text-white pointer-events-none transition-opacity duration-700 ${
                         hover ? "opacity-100 visible" : "opacity-0 invisible"
                     }`}
                 >
@@ -45,17 +45,17 @@ const OfficeTooltip = ({ office: { properties } }: { office: Office }) => {
                                     {properties.name}
                                 </span>
                             </div>
-                            <div className="flex gap-3 p-2 justify-between items-center">
-                                <div className="flex flex-col mt-2">
-                                    <p className="w-full flex items-center justify-between font-extralight text-lg gap-3">
+                            <div className="flex gap-4 sm:gap-2 p-2 justify-between items-center">
+                                <div className="flex flex-col mt-2 sm:gap-2 font-normal sm:text-[16px]">
+                                    <p className="w-full flex items-center justify-between  gap-3">
                                         Hodimlar:{" "}
                                         <span> {properties.total_count}</span>
                                     </p>
-                                    <p className="w-full flex items-center justify-between font-extralight text-lg gap-3 text-green-400">
+                                    <p className="w-full flex items-center justify-between  gap-3 text-green-400">
                                         Keldi:{" "}
                                         <span> {properties.exists_count}</span>
                                     </p>
-                                    <p className="w-full flex items-center justify-between font-extralight text-lg gap-3 text-rose-400">
+                                    <p className="w-full flex items-center justify-between  gap-3 text-rose-400">
                                         Kelmadi:{" "}
                                         <span> {properties.absend_count}</span>
                                     </p>

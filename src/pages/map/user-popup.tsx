@@ -137,9 +137,9 @@ const UserPopup = () => {
                             item?.attendance_json?.attendance_time ||
                             item?.attendance_json?.left_time
                         ) ?
-                            <div className="mt-6 dark:bg-zinc-800 bg-zinc-100 rounded-lg p-4 grid grid-cols-2 gap-4">
+                            <div className="sm:mt-4 mt-2 sm:text-sm text-xs dark:bg-zinc-800 bg-zinc-100 rounded-lg px-4 py-2 grid grid-cols-2 gap-4">
                                 <div>
-                                    <p className="text-xs text-gray-400 mb-1">
+                                    <p className=" text-gray-400 ">
                                         Kelish
                                     </p>
                                     <p className="font-medium text-green-400">
@@ -156,7 +156,7 @@ const UserPopup = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-gray-400 mb-1">
+                                    <p className="text-gray-400 ">
                                         Ketish
                                     </p>
                                     <p className="font-medium text-red-400">

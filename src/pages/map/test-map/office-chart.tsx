@@ -1,7 +1,7 @@
 export default function Component({ persentage }: { persentage: number }) {
     return (
         <div className="flex items-center justify-center h-full">
-            <div className="relative w-[80px] h-[80px]">
+            <div className="relative sm:w-[80px] sm:h-[80px] w-[65px] h-[65px]">
                 <svg
                     className="absolute top-0 left-0 w-full h-full transform -rotate-90"
                     viewBox="0 0 100 100"

@@ -2,21 +2,33 @@ import { ParamCombobox } from "@/components/as-params/combobox"
 import { FILTER } from "@/constants/api-endpoints"
 import { useGet } from "@/hooks/useGet"
 import { useSearch } from "@tanstack/react-router"
-import { HTMLProps } from "react"
+import { HTMLProps, useMemo } from "react"
 
-export default function MapFilters(props: HTMLProps<HTMLDivElement>) {
+interface Props extends HTMLProps<HTMLDivElement> {
+    users: UserPoint[] | undefined
+}
+
+export default function MapFilters({ users, className, ...rest }: Props) {
     const search = useSearch({ from: "__root__" })
-    const { role_id, last_company_id } = search
+    const { last_company_id, role_id } = search
     const { data: oficeData } = useGet<Filter[]>(FILTER + "office")
     const { data: positions } = useGet<Filter[]>(FILTER + "role", {
         params: { last_company_id },
     })
-    const { data: users } = useGet<Filter[]>(FILTER + "user", {
-        params: { role_id, last_company_id },
-    })
+
+    const data = useMemo(() => {
+        return users?.filter((user) => {
+            const matchCompany = last_company_id
+                ? user.company == last_company_id
+                : true
+            const matchRole = role_id ? user.urole_id == role_id : true
+            return matchCompany && matchRole
+        })
+    }, [users, last_company_id, role_id])
+
 
     return (
-        <div {...props}>
+        <div {...rest} className={className}>
             <ParamCombobox
                 labelKey="name"
                 valueKey="id"
@@ -36,14 +48,9 @@ export default function MapFilters(props: HTMLProps<HTMLDivElement>) {
                 className="w-full"
             />
             <ParamCombobox
-                labelKey="name"
+                labelKey="full_name"
                 valueKey="id"
-                options={
-                    users?.map((usr) => ({
-                        id: usr.id,
-                        name: usr?.first_name + " " + usr?.last_name,
-                    })) ?? []
-                }
+                options={data || []}
                 paramName={"id"}
                 className="w-full"
                 label="Hodim"

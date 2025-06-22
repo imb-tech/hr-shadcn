@@ -70,7 +70,7 @@ export function ParamCombobox<T extends Record<string, any>>({
             string,
             string | undefined
         >
-        updatedSearch[paramName] = returnValue
+        updatedSearch[paramName] = String(returnValue)
 
         asloClear.forEach((key) => {
             delete updatedSearch[key]
@@ -92,7 +92,7 @@ export function ParamCombobox<T extends Record<string, any>>({
         setOpen(false)
     }
 
-    const selectedOption = options?.find((d) => d[valueKey] === currentValue)
+    const selectedOption = options?.find((d) => d[valueKey] == currentValue)
 
     const sortedOptions = options?.sort((a, b) => {
         const isASelected = a[valueKey] == currentValue
@@ -127,9 +127,8 @@ export function ParamCombobox<T extends Record<string, any>>({
                             <>
                                 <CommandInput placeholder={label} />
                                 {currentValue && (
-                                    <span className="absolute cursor-pointer text-destructive top-1.5 right-1 p-1">
+                                    <span className="absolute cursor-pointer text-red-600 top-1.5 right-1 p-1">
                                         <X
-                                            className="text-destructive"
                                             width={16}
                                             onClick={handleCancel}
                                         />
