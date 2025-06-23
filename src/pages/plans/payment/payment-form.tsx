@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form"
 import { FormNumberInput } from "@/components/form/number-input"
 import ParamTabs from "@/components/as-params/tabs"
 import { useSearch } from "@tanstack/react-router"
-import { WalletMinimal } from "lucide-react"
 
 type FormValues = { amount: string }
 
