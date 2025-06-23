@@ -6,7 +6,7 @@ import { ClassNameValue } from "tailwind-merge"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
- 
+
 interface ParamTabsProps {
     options: Array<{
         value: string | number
@@ -23,6 +23,7 @@ interface ParamTabsProps {
     right?: ReactNode
     is_visible?: boolean
     onValueChange?: (val: string) => void
+    className?: ClassNameValue
 }
 
 const ParamTabs: React.FC<ParamTabsProps> = ({
@@ -33,6 +34,7 @@ const ParamTabs: React.FC<ParamTabsProps> = ({
     dontCleanOthers = true,
     right,
     is_visible = true,
+    className,
     onValueChange,
 }) => {
     const navigate = useNavigate()
@@ -54,7 +56,7 @@ const ParamTabs: React.FC<ParamTabsProps> = ({
                 : navigate({ search: { [paramName]: tab } as any })
         }
     }
-    
+
     if (!is_visible) return null
     return (
         <Tabs
@@ -63,7 +65,7 @@ const ParamTabs: React.FC<ParamTabsProps> = ({
             className={options?.[0]?.content ? "space-y-4 w-full " : ""}
         >
             <div className="max-w-full  flex flex-wrap items-center justify-between gap-4">
-                <TabsList className="h-10 flex gap-3 ">
+                <TabsList className={cn(" flex gap-3 ", className)}>
                     {options.map(
                         (option) =>
                             !option.disabled && (
