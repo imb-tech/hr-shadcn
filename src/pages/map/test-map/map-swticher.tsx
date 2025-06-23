@@ -27,8 +27,8 @@ export function MapStyleSwitcher({
             className="bg-background"
             style={{
                 position: "absolute",
-                bottom: 10,
-                left: 10,
+                bottom: 8,
+                left: 8,
                 borderRadius: 6,
                 padding: "4px 6px",
                 fontSize: 11,
@@ -36,14 +36,15 @@ export function MapStyleSwitcher({
             }}
         >
             <RadioGroup
-                orientation="horizontal"
+                className="flex items-center gap-3"
                 value={selected}
                 onValueChange={(v) => handleChange(v)}
             >
                 {styles.map((style) => (
-                    <RadioGroupItem key={style.id} value={style.id}>
-                        {style.label}
-                    </RadioGroupItem>
+                    <label className="flex items-center gap-1">
+                        <RadioGroupItem key={style.id} value={style.id} />
+                        <span>{style.label}</span>
+                    </label>
                 ))}
             </RadioGroup>
         </div>

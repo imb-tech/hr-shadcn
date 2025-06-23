@@ -23,11 +23,11 @@ export const usHistoryCols = () => {
                     <div>
                         {
                             original.provider === 2 ?
-                                // <img src="/images/click-dark.svg" width={40} />
-                                <img
-                                    src="https://clickday.uz/static/favicon.ico"
-                                    width={18}
-                                />
+                                <img src="/images/click-dark.svg" width={50} />
+                                // <img
+                                //     src="https://clickday.uz/static/favicon.ico"
+                                //     width={18}
+                                // />
                                 // <img src="/images/payme-dark.svg" width={40} />
                             :   <img
                                     src="https://cdn.payme.uz/payme-logos/ico/p/1/favicon-32x32.png"
