@@ -89,7 +89,7 @@ const TaskManagment = () => {
           <TaskDnd />
         </div>
       </div>
-      Task Scrollbar
+  
       <div className="fixed bottom-4 right-4 h-14 bg-gray-800 p-[2px] rounded-md">
         <div
           ref={minimapRef}

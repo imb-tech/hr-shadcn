@@ -8,41 +8,26 @@ import { Button } from "@/components/ui/button"
 import SeeInView from "@/components/ui/see-in-view"
 import { HR_API } from "@/constants/api-endpoints"
 import { useGet } from "@/hooks/useGet"
+import { useTaskStore } from "@/store/task-management"
 import { ImageIcon, Mic, MicOff, Plus, Save, X } from "lucide-react"
-import { useRef, useState } from "react"
-import {  useFieldArray, useForm } from "react-hook-form"
-
-interface SubTask {
-    id: number
-    title: string
-    completed: boolean
-}
-
-interface TaskFormInputs {
-    title: string
-    description: string
-    priority: 1 | 2 | 3
-    deadline: string
-    assignedTo: number | null
-    images: string[]
-    voiceNotes: string[]
-    subtasks: SubTask[]
-}
+import { useEffect, useRef, useState } from "react"
+import { useFieldArray, useForm } from "react-hook-form"
 
 export default function CompleteTaskManager() {
     const [search, setSearch] = useState("")
+    const { task } = useTaskStore()
     const { data: hrData, isLoading } = useGet<ListResponse<Human>>(HR_API, {
         params: { search, page_size: 50 },
     })
-    const form = useForm<TaskFormInputs>({
+    const form = useForm<QuoteCard>({
         defaultValues: {
             title: "",
             description: "",
-            priority: 2,
+            priority: "",
             deadline: "",
-            assignedTo: null,
+            responsible: "",
             images: [],
-            voiceNotes: [],
+            voiceNote: [],
             subtasks: [],
         },
     })
@@ -58,7 +43,7 @@ export default function CompleteTaskManager() {
     const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
 
-    const onSubmit = (data: TaskFormInputs) => {
+    const onSubmit = (data: QuoteCard) => {
         console.log("Task created:", data)
         // form.reset();
     }
@@ -78,8 +63,8 @@ export default function CompleteTaskManager() {
             mediaRecorder.onstop = () => {
                 const blob = new Blob(audioChunks, { type: "audio/wav" })
                 const url = URL.createObjectURL(blob)
-                const currentVoiceNotes = form.getValues("voiceNotes")
-                form.setValue("voiceNotes", [...currentVoiceNotes, url])
+                const currentVoiceNotes = form.getValues("voiceNote")
+                form.setValue("voiceNote", [...currentVoiceNotes, url])
                 stream.getTracks().forEach((track) => track.stop())
             }
 
@@ -125,6 +110,12 @@ export default function CompleteTaskManager() {
         return `${mins}:${secs.toString().padStart(2, "0")}`
     }
 
+    useEffect(() => {
+        if (task?.id) {
+            form.reset(task)
+        }
+    }, [form, task])
+
     return (
         <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -157,9 +148,9 @@ export default function CompleteTaskManager() {
                     valueKey="key"
                     name="priority"
                     options={[
-                        { label: "Past", key: 1 },
-                        { label: "O'rta", key: 2 },
-                        { label: "Yuqori", key: 3 },
+                        { label: "Past", key: "Past" },
+                        { label: "O'rta", key: "O'rta" },
+                        { label: "Yuqori", key: "Yuqori" },
                     ]}
                 />
                 <FormDatePicker
@@ -174,7 +165,7 @@ export default function CompleteTaskManager() {
                 <FormCombobox
                     label="Ma'sul hodim"
                     control={form.control}
-                    name="assignedTo"
+                    name="responsible"
                     labelKey="full_name"
                     valueKey="id"
                     options={hrData?.results}
@@ -307,7 +298,7 @@ export default function CompleteTaskManager() {
                         )}
                     </Button>
                 </div>
-                {form.watch("voiceNotes").map((note, i) => (
+                {form.watch("voiceNote").map((note, i) => (
                     <div key={i} className="flex items-center gap-3">
                         <audio controls src={note} className="flex-1 h-11 " />
                         <Button
@@ -316,9 +307,9 @@ export default function CompleteTaskManager() {
                             className="min-w-8"
                             onClick={() =>
                                 form.setValue(
-                                    "voiceNotes",
+                                    "voiceNote",
                                     form
-                                        .watch("voiceNotes")
+                                        .watch("voiceNote")
                                         .filter((_, idx) => idx !== i),
                                 )
                             }
