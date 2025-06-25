@@ -16,7 +16,7 @@ export const useAllEmployeesListCols = () => {
                 cell: ({ row }) => {
                     return (
                         <SeeInView
-                            url={String(row.original.face)}
+                            url={row.original.face}
                             className={"object-cover h-9 w-9 rounded-md"}
                         />
                     )

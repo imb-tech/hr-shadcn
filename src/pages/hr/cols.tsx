@@ -13,7 +13,7 @@ export const useHrListCols = (query?: string) => {
                 accessorKey: "face",
                 cell: ({ row }) => (
                     <SeeInView
-                        url={String(row.original.face)}
+                        url={row.original.face}
                         className={"object-cover h-9 w-9 rounded-md"}
                     />
                 ),
@@ -21,13 +21,15 @@ export const useHrListCols = (query?: string) => {
             {
                 header: "FIO",
                 accessorKey: "first_name",
-                enableSorting:true,
+                enableSorting: true,
                 cell: ({ row }) => {
                     const { last_name, first_name, middle_name } = row.original
                     return (
                         <span className="whitespace-nowrap lg:break-all">
                             {findHighlights(
-                                `${first_name} ${last_name} ${middle_name || ''}`,
+                                `${first_name} ${last_name} ${
+                                    middle_name || ""
+                                }`,
                                 query ?? "",
                                 "",
                             )}
@@ -38,7 +40,7 @@ export const useHrListCols = (query?: string) => {
             {
                 header: "Telefon",
                 accessorKey: "phone_number",
-                enableSorting:true,
+                enableSorting: true,
                 cell: ({ row }) => {
                     const { phone_number } = row.original
                     return (
@@ -51,14 +53,14 @@ export const useHrListCols = (query?: string) => {
             {
                 header: "Lavozim",
                 accessorKey: "role_name",
-                enableSorting:true,
+                enableSorting: true,
             },
             {
                 header: "Maosh",
                 accessorKey: "salary",
-                enableSorting:true,
-                cell: ({row}) => {
-                  const { salary } = row.original
+                enableSorting: true,
+                cell: ({ row }) => {
+                    const { salary } = row.original
                     return formatMoney(Number(salary))
                 },
             },

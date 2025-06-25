@@ -9,10 +9,10 @@ export const useWorkerInfoCols = () => {
             {
                 header: "Rasm",
                 accessorKey: "face",
-                cell: ({row}) => {
+                cell: ({ row }) => {
                     return (
                         <SeeInView
-                            url={String(row.original.face)}
+                            url={row.original.face}
                             className={"object-cover h-9 w-9 rounded-md"}
                         />
                     )

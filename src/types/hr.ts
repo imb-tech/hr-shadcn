@@ -41,7 +41,7 @@ type Human = {
   excuses_status?: string | number
   status?: boolean
   fine_per_minute: number
-  face?: string | File
+  face?: string
   fine?: number
   hikvision_id?: number
   actions?: string[]
