@@ -26,7 +26,6 @@ export default function MapFilters({ users, className, ...rest }: Props) {
         })
     }, [users, last_company_id, role_id])
 
-
     return (
         <div {...rest} className={className}>
             <ParamCombobox

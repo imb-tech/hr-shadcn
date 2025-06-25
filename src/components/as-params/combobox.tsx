@@ -12,10 +12,12 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { DEBOUNCETIME } from "@/constants/default"
 import { cn } from "@/lib/utils"
 import { useNavigate, useSearch } from "@tanstack/react-router"
 import { CheckIcon, ChevronDown, X } from "lucide-react"
 import { useEffect, useState } from "react"
+import { Skeleton } from "../ui/skeleton"
 
 type ParamComboboxProps<T extends Record<string, any>> = {
     options: T[]
@@ -29,6 +31,9 @@ type ParamComboboxProps<T extends Record<string, any>> = {
     asloClear?: string[]
     defaultOpt?: T
     isSearch?: boolean
+    isLoading?:boolean
+    skeletonCount?: number
+    onSearchChange?: (val: string) => void
 }
 
 export function ParamCombobox<T extends Record<string, any>>({
@@ -43,6 +48,9 @@ export function ParamCombobox<T extends Record<string, any>>({
     labelKey = "label",
     valueKey = "value",
     isSearch = true,
+    onSearchChange,
+    skeletonCount=5,
+    isLoading,
 }: ParamComboboxProps<T>) {
     const navigate = useNavigate()
     const search: any = useSearch({ from: "/_main" }) as Record<
@@ -100,7 +108,6 @@ export function ParamCombobox<T extends Record<string, any>>({
         return isASelected === isBSelected ? 0 : isASelected ? -1 : 1
     })
 
-
     return (
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -121,17 +128,23 @@ export function ParamCombobox<T extends Record<string, any>>({
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="p-0">
-                <Command>
+                <Command shouldFilter={onSearchChange ? false : true}>
                     <div className="relative">
                         {isSearch && (
                             <>
-                                <CommandInput placeholder={label} autoFocus={false}  />
+                                <CommandInput
+                                    placeholder={label}
+                                    onValueChange={(text) => {
+                                        if (onSearchChange) {
+                                            setTimeout(() => {
+                                                onSearchChange(text)
+                                            }, DEBOUNCETIME)
+                                        }
+                                    }}
+                                />
                                 {currentValue && (
                                     <span className="absolute cursor-pointer text-red-600 top-1.5 right-1 p-1">
-                                        <X
-                                            width={16}
-                                            onClick={handleCancel}
-                                        />
+                                        <X width={16} onClick={handleCancel} />
                                     </span>
                                 )}
                             </>
@@ -148,7 +161,6 @@ export function ParamCombobox<T extends Record<string, any>>({
                                         onSelect={() => handleSelect(d)}
                                         className="text-nowrap"
                                     >
-                                        
                                         {d[labelKey]}
                                         <CheckIcon
                                             className={cn(
@@ -162,6 +174,21 @@ export function ParamCombobox<T extends Record<string, any>>({
                                     </CommandItem>
                                 )
                             })}
+
+                            {isLoading ? (
+                                <div className="space-y-1">
+                                    {Array.from({ length: skeletonCount }).map(
+                                        (_, index) => (
+                                            <CommandItem
+                                                key={index}
+                                                className="p-0"
+                                            >
+                                                <Skeleton className="w-full h-7" />
+                                            </CommandItem>
+                                        ),
+                                    )}
+                                </div>
+                            ) : null}
                         </CommandGroup>
                     </CommandList>
                 </Command>

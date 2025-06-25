@@ -16,7 +16,6 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as MainImport } from './routes/_main'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as MainIndexImport } from './routes/_main/index'
-import { Route as MainTaskManagementImport } from './routes/_main/task-management'
 import { Route as MainLandingImport } from './routes/_main/landing'
 import { Route as MainHrCreateImport } from './routes/_main/hr-create'
 import { Route as MainHrImport } from './routes/_main/hr'
@@ -25,9 +24,11 @@ import { Route as MainAllEmployeesImport } from './routes/_main/all-employees'
 import { Route as MainAbsentImport } from './routes/_main/absent'
 import { Route as MainRolesIndexImport } from './routes/_main/roles/index'
 import { Route as MainRequestsIndexImport } from './routes/_main/requests/index'
+import { Route as MainProjectIndexImport } from './routes/_main/project/index'
 import { Route as MainPlansIndexImport } from './routes/_main/plans/index'
 import { Route as MainOfficeIndexImport } from './routes/_main/office/index'
 import { Route as MainMapIndexImport } from './routes/_main/map/index'
+import { Route as MainProjectIdImport } from './routes/_main/project/$id'
 import { Route as MainPositionHrViewIdImport } from './routes/_main/position-hr-view/$id'
 import { Route as MainPlansCheckoutImport } from './routes/_main/plans/checkout'
 import { Route as MainOfficeCreateImport } from './routes/_main/office/create'
@@ -63,12 +64,6 @@ const AuthAuthLazyRoute = AuthAuthLazyImport.update({
   path: '/auth',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/auth.lazy').then((d) => d.Route))
-
-const MainTaskManagementRoute = MainTaskManagementImport.update({
-  id: '/task-management',
-  path: '/task-management',
-  getParentRoute: () => MainRoute,
-} as any)
 
 const MainLandingRoute = MainLandingImport.update({
   id: '/landing',
@@ -118,6 +113,12 @@ const MainRequestsIndexRoute = MainRequestsIndexImport.update({
   getParentRoute: () => MainRoute,
 } as any)
 
+const MainProjectIndexRoute = MainProjectIndexImport.update({
+  id: '/project/',
+  path: '/project/',
+  getParentRoute: () => MainRoute,
+} as any)
+
 const MainPlansIndexRoute = MainPlansIndexImport.update({
   id: '/plans/',
   path: '/plans/',
@@ -143,6 +144,12 @@ const MainHrEditHrEditLazyRoute = MainHrEditHrEditLazyImport.update({
 } as any).lazy(() =>
   import('./routes/_main/hr-edit/$hr-edit.lazy').then((d) => d.Route),
 )
+
+const MainProjectIdRoute = MainProjectIdImport.update({
+  id: '/project/$id',
+  path: '/project/$id',
+  getParentRoute: () => MainRoute,
+} as any)
 
 const MainPositionHrViewIdRoute = MainPositionHrViewIdImport.update({
   id: '/position-hr-view/$id',
@@ -240,13 +247,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLandingImport
       parentRoute: typeof MainImport
     }
-    '/_main/task-management': {
-      id: '/_main/task-management'
-      path: '/task-management'
-      fullPath: '/task-management'
-      preLoaderRoute: typeof MainTaskManagementImport
-      parentRoute: typeof MainImport
-    }
     '/_auth/auth': {
       id: '/_auth/auth'
       path: '/auth'
@@ -303,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainPositionHrViewIdImport
       parentRoute: typeof MainImport
     }
+    '/_main/project/$id': {
+      id: '/_main/project/$id'
+      path: '/project/$id'
+      fullPath: '/project/$id'
+      preLoaderRoute: typeof MainProjectIdImport
+      parentRoute: typeof MainImport
+    }
     '/_main/hr-edit/$hr-edit': {
       id: '/_main/hr-edit/$hr-edit'
       path: '/hr-edit/$hr-edit'
@@ -329,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/plans'
       fullPath: '/plans'
       preLoaderRoute: typeof MainPlansIndexImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/project/': {
+      id: '/_main/project/'
+      path: '/project'
+      fullPath: '/project'
+      preLoaderRoute: typeof MainProjectIndexImport
       parentRoute: typeof MainImport
     }
     '/_main/requests/': {
@@ -367,7 +381,6 @@ interface MainRouteChildren {
   MainHrRoute: typeof MainHrRoute
   MainHrCreateRoute: typeof MainHrCreateRoute
   MainLandingRoute: typeof MainLandingRoute
-  MainTaskManagementRoute: typeof MainTaskManagementRoute
   MainIndexRoute: typeof MainIndexRoute
   MainHrViewIdRoute: typeof MainHrViewIdRoute
   MainOfficeEditIdRoute: typeof MainOfficeEditIdRoute
@@ -375,10 +388,12 @@ interface MainRouteChildren {
   MainOfficeCreateRoute: typeof MainOfficeCreateRoute
   MainPlansCheckoutRoute: typeof MainPlansCheckoutRoute
   MainPositionHrViewIdRoute: typeof MainPositionHrViewIdRoute
+  MainProjectIdRoute: typeof MainProjectIdRoute
   MainHrEditHrEditLazyRoute: typeof MainHrEditHrEditLazyRoute
   MainMapIndexRoute: typeof MainMapIndexRoute
   MainOfficeIndexRoute: typeof MainOfficeIndexRoute
   MainPlansIndexRoute: typeof MainPlansIndexRoute
+  MainProjectIndexRoute: typeof MainProjectIndexRoute
   MainRequestsIndexRoute: typeof MainRequestsIndexRoute
   MainRolesIndexRoute: typeof MainRolesIndexRoute
 }
@@ -390,7 +405,6 @@ const MainRouteChildren: MainRouteChildren = {
   MainHrRoute: MainHrRoute,
   MainHrCreateRoute: MainHrCreateRoute,
   MainLandingRoute: MainLandingRoute,
-  MainTaskManagementRoute: MainTaskManagementRoute,
   MainIndexRoute: MainIndexRoute,
   MainHrViewIdRoute: MainHrViewIdRoute,
   MainOfficeEditIdRoute: MainOfficeEditIdRoute,
@@ -398,10 +412,12 @@ const MainRouteChildren: MainRouteChildren = {
   MainOfficeCreateRoute: MainOfficeCreateRoute,
   MainPlansCheckoutRoute: MainPlansCheckoutRoute,
   MainPositionHrViewIdRoute: MainPositionHrViewIdRoute,
+  MainProjectIdRoute: MainProjectIdRoute,
   MainHrEditHrEditLazyRoute: MainHrEditHrEditLazyRoute,
   MainMapIndexRoute: MainMapIndexRoute,
   MainOfficeIndexRoute: MainOfficeIndexRoute,
   MainPlansIndexRoute: MainPlansIndexRoute,
+  MainProjectIndexRoute: MainProjectIndexRoute,
   MainRequestsIndexRoute: MainRequestsIndexRoute,
   MainRolesIndexRoute: MainRolesIndexRoute,
 }
@@ -416,7 +432,6 @@ export interface FileRoutesByFullPath {
   '/hr': typeof MainHrRoute
   '/hr-create': typeof MainHrCreateRoute
   '/landing': typeof MainLandingRoute
-  '/task-management': typeof MainTaskManagementRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/hr-view/$id': typeof MainHrViewIdRoute
@@ -425,10 +440,12 @@ export interface FileRoutesByFullPath {
   '/office/create': typeof MainOfficeCreateRoute
   '/plans/checkout': typeof MainPlansCheckoutRoute
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
+  '/project/$id': typeof MainProjectIdRoute
   '/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/map': typeof MainMapIndexRoute
   '/office': typeof MainOfficeIndexRoute
   '/plans': typeof MainPlansIndexRoute
+  '/project': typeof MainProjectIndexRoute
   '/requests': typeof MainRequestsIndexRoute
   '/roles': typeof MainRolesIndexRoute
 }
@@ -441,7 +458,6 @@ export interface FileRoutesByTo {
   '/hr': typeof MainHrRoute
   '/hr-create': typeof MainHrCreateRoute
   '/landing': typeof MainLandingRoute
-  '/task-management': typeof MainTaskManagementRoute
   '/auth': typeof AuthAuthLazyRoute
   '/': typeof MainIndexRoute
   '/hr-view/$id': typeof MainHrViewIdRoute
@@ -450,10 +466,12 @@ export interface FileRoutesByTo {
   '/office/create': typeof MainOfficeCreateRoute
   '/plans/checkout': typeof MainPlansCheckoutRoute
   '/position-hr-view/$id': typeof MainPositionHrViewIdRoute
+  '/project/$id': typeof MainProjectIdRoute
   '/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/map': typeof MainMapIndexRoute
   '/office': typeof MainOfficeIndexRoute
   '/plans': typeof MainPlansIndexRoute
+  '/project': typeof MainProjectIndexRoute
   '/requests': typeof MainRequestsIndexRoute
   '/roles': typeof MainRolesIndexRoute
 }
@@ -468,7 +486,6 @@ export interface FileRoutesById {
   '/_main/hr': typeof MainHrRoute
   '/_main/hr-create': typeof MainHrCreateRoute
   '/_main/landing': typeof MainLandingRoute
-  '/_main/task-management': typeof MainTaskManagementRoute
   '/_auth/auth': typeof AuthAuthLazyRoute
   '/_main/': typeof MainIndexRoute
   '/_main/hr-view/$id': typeof MainHrViewIdRoute
@@ -477,10 +494,12 @@ export interface FileRoutesById {
   '/_main/office/create': typeof MainOfficeCreateRoute
   '/_main/plans/checkout': typeof MainPlansCheckoutRoute
   '/_main/position-hr-view/$id': typeof MainPositionHrViewIdRoute
+  '/_main/project/$id': typeof MainProjectIdRoute
   '/_main/hr-edit/$hr-edit': typeof MainHrEditHrEditLazyRoute
   '/_main/map/': typeof MainMapIndexRoute
   '/_main/office/': typeof MainOfficeIndexRoute
   '/_main/plans/': typeof MainPlansIndexRoute
+  '/_main/project/': typeof MainProjectIndexRoute
   '/_main/requests/': typeof MainRequestsIndexRoute
   '/_main/roles/': typeof MainRolesIndexRoute
 }
@@ -495,7 +514,6 @@ export interface FileRouteTypes {
     | '/hr'
     | '/hr-create'
     | '/landing'
-    | '/task-management'
     | '/auth'
     | '/'
     | '/hr-view/$id'
@@ -504,10 +522,12 @@ export interface FileRouteTypes {
     | '/office/create'
     | '/plans/checkout'
     | '/position-hr-view/$id'
+    | '/project/$id'
     | '/hr-edit/$hr-edit'
     | '/map'
     | '/office'
     | '/plans'
+    | '/project'
     | '/requests'
     | '/roles'
   fileRoutesByTo: FileRoutesByTo
@@ -519,7 +539,6 @@ export interface FileRouteTypes {
     | '/hr'
     | '/hr-create'
     | '/landing'
-    | '/task-management'
     | '/auth'
     | '/'
     | '/hr-view/$id'
@@ -528,10 +547,12 @@ export interface FileRouteTypes {
     | '/office/create'
     | '/plans/checkout'
     | '/position-hr-view/$id'
+    | '/project/$id'
     | '/hr-edit/$hr-edit'
     | '/map'
     | '/office'
     | '/plans'
+    | '/project'
     | '/requests'
     | '/roles'
   id:
@@ -544,7 +565,6 @@ export interface FileRouteTypes {
     | '/_main/hr'
     | '/_main/hr-create'
     | '/_main/landing'
-    | '/_main/task-management'
     | '/_auth/auth'
     | '/_main/'
     | '/_main/hr-view/$id'
@@ -553,10 +573,12 @@ export interface FileRouteTypes {
     | '/_main/office/create'
     | '/_main/plans/checkout'
     | '/_main/position-hr-view/$id'
+    | '/_main/project/$id'
     | '/_main/hr-edit/$hr-edit'
     | '/_main/map/'
     | '/_main/office/'
     | '/_main/plans/'
+    | '/_main/project/'
     | '/_main/requests/'
     | '/_main/roles/'
   fileRoutesById: FileRoutesById
@@ -603,7 +625,6 @@ export const routeTree = rootRoute
         "/_main/hr",
         "/_main/hr-create",
         "/_main/landing",
-        "/_main/task-management",
         "/_main/",
         "/_main/hr-view/$id",
         "/_main/office-edit/$id",
@@ -611,10 +632,12 @@ export const routeTree = rootRoute
         "/_main/office/create",
         "/_main/plans/checkout",
         "/_main/position-hr-view/$id",
+        "/_main/project/$id",
         "/_main/hr-edit/$hr-edit",
         "/_main/map/",
         "/_main/office/",
         "/_main/plans/",
+        "/_main/project/",
         "/_main/requests/",
         "/_main/roles/"
       ]
@@ -641,10 +664,6 @@ export const routeTree = rootRoute
     },
     "/_main/landing": {
       "filePath": "_main/landing.tsx",
-      "parent": "/_main"
-    },
-    "/_main/task-management": {
-      "filePath": "_main/task-management.tsx",
       "parent": "/_main"
     },
     "/_auth/auth": {
@@ -679,6 +698,10 @@ export const routeTree = rootRoute
       "filePath": "_main/position-hr-view/$id.tsx",
       "parent": "/_main"
     },
+    "/_main/project/$id": {
+      "filePath": "_main/project/$id.tsx",
+      "parent": "/_main"
+    },
     "/_main/hr-edit/$hr-edit": {
       "filePath": "_main/hr-edit/$hr-edit.lazy.tsx",
       "parent": "/_main"
@@ -693,6 +716,10 @@ export const routeTree = rootRoute
     },
     "/_main/plans/": {
       "filePath": "_main/plans/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/project/": {
+      "filePath": "_main/project/index.tsx",
       "parent": "/_main"
     },
     "/_main/requests/": {

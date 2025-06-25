@@ -45,7 +45,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             : type
                     }
                     className={cn(
-                        "flex h-10 w-full no-time-icon  placeholder:text-gray-400 rounded-md border bg-secondary border-input px-3 py-1 text-sm  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium  focus-visible:outline-none focus-visible:ring-1  focus-visible:ring-blue-500 focus-visible:primary/50 disabled:cursor-not-allowed disabled:opacity-50",
+                        "flex h-10 w-full no-time-icon  placeholder:text-gray-400 rounded-md border dark:!bg-secondary bg-zinc-200 border-input px-3 py-1 text-sm  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium  focus-visible:outline-none focus-visible:ring-1  focus-visible:ring-blue-500 focus-visible:primary/50 disabled:cursor-not-allowed disabled:opacity-50",
                         className,
                         (type === "search" || !!prefixIcon) && "pr-7",
                         (type === "password" || !!suffix) && "pr-8",

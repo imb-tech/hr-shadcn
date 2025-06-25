@@ -17,4 +17,5 @@ type SearchParams = {
     tabs?: 'card' | 'table'
     day?:string
     page_size?:string
+    task?:string
 };

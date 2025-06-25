@@ -1,0 +1,100 @@
+import { ParamCombobox } from "@/components/as-params/combobox"
+import { HR_API, TASKLY_PROJECT } from "@/constants/api-endpoints"
+import { useGet } from "@/hooks/useGet"
+import { useState } from "react"
+import ProjectCard from "./project-card"
+import { Card, CardContent } from "@/components/ui/card"
+import { CirclePlus } from "lucide-react"
+import Modal from "@/components/custom/modal"
+import ProjectCreate from "./create"
+import { useModal } from "@/hooks/useModal"
+import DeleteModal from "@/components/custom/delete-modal"
+
+type Props = {}
+
+function TaskBoard({}: Props) {
+    const [searchCustomer, setCustomerSearch] = useState("")
+    const [current, setCurrent] = useState<FormValues | null>(null)
+    const { openModal: openModalProject } = useModal("project-create")
+    const { openModal: openModalDelete } = useModal("project-delete")
+    const { data: dataCustomer, isLoading: isLoadingCustomer } = useGet<
+        ListResponse<Human>
+    >(HR_API, {
+        params: { search: searchCustomer, page_size: 50 },
+    })
+    const {
+        data: dataProjects,
+        isSuccess: isSuccessProject,
+        isLoading: isLoadingProject,
+    } = useGet<FormValues[]>(TASKLY_PROJECT)
+
+    const handleAdd = () => {
+        setCurrent(null)
+        openModalProject()
+    }
+    const handleItem = (item: FormValues) => {
+        setCurrent(item)
+        openModalProject()
+    }
+    const handleDelete = (item: FormValues) => {
+        setCurrent(item)
+        openModalDelete()
+    }
+
+    return (
+        <div className="w-full space-y-6">
+            <div className="grid sm:grid-cols-3 gap-4">
+                <ParamCombobox
+                    labelKey="full_name"
+                    valueKey="id"
+                    options={dataCustomer?.results || []}
+                    paramName={"id"}
+                    className="w-full"
+                    label="Hodim"
+                    onSearchChange={(val) => setCustomerSearch(val)}
+                    isLoading={isLoadingCustomer}
+                />
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-3">
+                {isSuccessProject &&
+                    dataProjects?.map((item) => (
+                        <ProjectCard
+                            item={item}
+                            handleItem={(val) => handleItem(val)}
+                            handleDelete={(val) => handleDelete(val)}
+                        />
+                    ))}
+                {isLoadingProject &&
+                    Array.from({ length: 2 }).map((_, index) => (
+                        <Card
+                            key={index}
+                            onClick={handleAdd}
+                            className="cursor-pointer shadow-lg min-h-[244px] animate-pulse rounded-md bg-muted"
+                        >
+                            <CardContent className="flex text-2xl items-center justify-center gap-2 h-full"></CardContent>
+                        </Card>
+                    ))}
+                <Card
+                    onClick={handleAdd}
+                    className="cursor-pointer shadow-lg min-h-[244px]"
+                >
+                    <CardContent className="flex text-2xl items-center justify-center gap-2 h-full">
+                        <CirclePlus size={30} /> <h1>Loyiha qo'shish</h1>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <Modal title={"Loyiha qo'shish"} modalKey="project-create">
+                <ProjectCreate item={current || undefined} />
+            </Modal>
+            <DeleteModal
+                modalKey="project-delete"
+                id={current?.id}
+                path={TASKLY_PROJECT}
+            />
+        </div>
+    )
+}
+
+export default TaskBoard

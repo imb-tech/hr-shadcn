@@ -23,7 +23,7 @@ export default function usePath() {
                 title: "Ofis",
             }),
             linkOptions({
-                to: "/task-management",
+                to: "/project",
                 icon: <MapPinned />,
                 enabled: checkAllow("map_view"),
                 title: "Vazialar",

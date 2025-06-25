@@ -36,8 +36,10 @@ export function FormMultiCombobox<TForm extends FieldValues,T extends FieldValue
     isLoading,
     skeletonCount,
     onSearchChange,
-}: ComboboxProps<TForm,T>) {
-    const error = getNestedValue(control._formState.errors, name)
+}: ComboboxProps<TForm,T>) { 
+    const error = getNestedValue(control._formState.errors, name);
+
+    
     return (
         <div>
             {label && (

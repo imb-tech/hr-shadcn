@@ -1,18 +1,48 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarGroup,
+    AvatarImage,
+} from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { useModal } from "@/hooks/useModal"
 import { cn } from "@/lib/utils"
-import { useTaskStore } from "@/store/task-management"
-import { Calendar, Clock, SquareCheckBig } from "lucide-react"
+import { useNavigate, useSearch } from "@tanstack/react-router"
+import { format } from "date-fns"
+import {
+    Calendar,
+    ChevronsDown,
+    ChevronsUp,
+    Flame,
+    SquareCheckBig,
+} from "lucide-react"
 
-const getPriorityColor = (priority: string) => {
+const getPriorityIcon = (priority: number) => {
     switch (priority) {
-        case "Yuqori":
+        case 3:
+            return <Flame />
+        case 2:
+            return <ChevronsUp />
+        case 1:
+            return <ChevronsDown />
+        default:
+            return <Flame />
+    }
+}
+
+export const getPriorityColor = (priority: number) => {
+    switch (priority) {
+        case 3:
             return "bg-red-500/10 text-red-500 border-red-500/10"
-        case "O'rta":
+        case 2:
             return "bg-yellow-500/10 text-yellow-500 border-yellow-500/10"
-        case "Past":
+        case 1:
             return "bg-green-500/10 text-green-500 border-green-500/10"
         default:
             return "bg-gray-500/10 text-gray-500 border-gray-500/10"
@@ -21,40 +51,64 @@ const getPriorityColor = (priority: string) => {
 
 export default function TaskCard({ item }: { item: QuoteCard }) {
     const { openModal } = useModal("task-modal")
-    const { clearTask, setTask } = useTaskStore()
+    const navigate = useNavigate()
+    const search: any = useSearch({ from: "/_main" })
 
-    const handleItem = (item: QuoteCard) => {
-        clearTask()
-        if (item?.id) {
-            setTask(item)
+    const handleItem = (id: number) => {
+        if (id) {
+            navigate({
+                search: {
+                    ...search,
+                    task: id.toString(),
+                },
+            })
             openModal()
         }
     }
+    
 
+    
     return (
         <Card
-            onClick={() => handleItem(item)}
+            onClick={() => handleItem(item.id)}
             className="hover:shadow-md transition-shadow"
         >
-            <CardHeader className="p-3 pb-0">
-                <div className="flex items-center gap-3">
-                    <Avatar className="h-10 w-10">
-                        <AvatarImage src={undefined} alt={item.responsible} />
-                        <AvatarFallback
-                            className={cn(
-                                "uppercase",
-                                getPriorityColor(item.priority),
-                            )}
-                        >
-                            {item.responsible?.slice(0, 2)}
-                        </AvatarFallback>
-                    </Avatar>
-                    <div>
-                        <p className="text-sm font-medium">
-                            {item.responsible}
-                        </p>
-                        <p className="text-xs text-muted-foreground">Mas'ul</p>
-                    </div>
+            <CardHeader className="p-3 pb-0 flex space-y-0 flex-row justify-between items-start gap-3">
+                <AvatarGroup max={4} total={3} countClass="h-7 w-7">
+                    {item?.users_data?.map((user, index) => (
+                        <TooltipProvider key={index}>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Avatar className="h-10 w-10">
+                                        <AvatarImage
+                                            src={user.face || undefined}
+                                            alt={user.first_name}
+                                        />
+                                        <AvatarFallback
+                                            className={cn(
+                                                "uppercase",
+                                                getPriorityColor(item.priority),
+                                            )}
+                                        >
+                                            {user?.first_name?.slice(0, 1)}
+                                            {user?.last_name?.slice(0, 1)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    {user.first_name} {user.last_name}
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    ))}
+                </AvatarGroup>
+                <div
+                    className={cn(
+                        "h-10 w-10 rounded-full flex items-center justify-center",
+                        getPriorityColor(item.priority),
+                    )}
+                >
+                    {getPriorityIcon(item.priority)}
                 </div>
             </CardHeader>
             <CardContent className="space-y-3 p-3">
@@ -63,32 +117,24 @@ export default function TaskCard({ item }: { item: QuoteCard }) {
                         {item.title}
                     </h3>
                     <p className="text-[14px] text-muted-foreground">
-                        {item.description}
+                        {item.desc} 
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur porro corrupti reprehenderit possimus id mollitia, magni provident voluptas facilis amet?
                     </p>
                 </div>
 
-                <div className="flex gap-2">
-                    <Badge
-                        variant="outline"
-                        className={getPriorityColor(item.priority)}
-                    >
-                        {item.priority}
-                    </Badge>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <SquareCheckBig className="h-4 w-4" />
-                        <span>2 / 7</span>
-                    </div>
-                </div>
-
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{item.deadline}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{"2 kun qoldi"}</span>
-                    </div>
+                    {item.deadline && (
+                        <div className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            <span>{format(item.deadline,"yyyy-MM-dd")}</span>
+                        </div>
+                    )}
+                    {item?.todo && item.todo !== 0 ? (
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <SquareCheckBig className="h-4 w-4" />
+                            <span>{`${item.finished}/${item.todo}`}</span>
+                        </div>
+                    ) : null}
                 </div>
             </CardContent>
         </Card>

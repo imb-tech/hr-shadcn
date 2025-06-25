@@ -1,5 +1,5 @@
-import { Plus } from "lucide-react"
-import React, { useState } from "react"
+import { Plus, Trash } from "lucide-react"
+import React, { useEffect, useState } from "react"
 import {
     DragDropContext,
     Draggable,
@@ -9,13 +9,16 @@ import {
 import TaskCard from "./task-card"
 import { useModal } from "@/hooks/useModal"
 import { Button } from "@/components/ui/button"
-import { dataTask } from "@/lib/utils"
-import { useTaskStore } from "@/store/task-management"
-
+import { useGet } from "@/hooks/useGet"
+import { PROJECTS_TASKS } from "@/constants/api-endpoints"
+import { useParams } from "@tanstack/react-router"
 
 const TaskDnd: React.FC = () => {
-    const [columns, setColumns] = useState<Column[]>(dataTask)
-    const { clearTask } = useTaskStore()
+    const params = useParams({ from: "/_main/project/$id" })
+    const { data, isSuccess } = useGet(`${PROJECTS_TASKS}/${params?.id}`, {
+        options: { enabled: !!params?.id },
+    })
+    const [columns, setColumns] = useState<Column[]>([])
     const { openModal } = useModal("task-modal")
 
     const onDragEnd = (result: DropResult) => {
@@ -39,31 +42,36 @@ const TaskDnd: React.FC = () => {
             (col) => col.id === destination.droppableId,
         )
 
-        const sourceItems = [...columns[sourceColIndex].items]
-        const destItems = [...columns[destColIndex].items]
+        const sourceItems = [...columns[sourceColIndex].tasks]
+        const destItems = [...columns[destColIndex].tasks]
         const [movedItem] = sourceItems.splice(source.index, 1)
 
         if (source.droppableId === destination.droppableId) {
             sourceItems.splice(destination.index, 0, movedItem)
             const newColumns = [...columns]
-            newColumns[sourceColIndex].items = sourceItems
+            newColumns[sourceColIndex].tasks = sourceItems
             setColumns(newColumns)
         } else {
             destItems.splice(destination.index, 0, movedItem)
             const newColumns = [...columns]
-            newColumns[sourceColIndex].items = sourceItems
-            newColumns[destColIndex].items = destItems
+            newColumns[sourceColIndex].tasks = sourceItems
+            newColumns[destColIndex].tasks = destItems
             setColumns(newColumns)
         }
     }
 
-    const handleAdd = ()=>{
-      clearTask()
-      openModal()
+    const handleAdd = () => {
+        openModal()
     }
 
+    useEffect(() => {
+        if (isSuccess) {
+            setColumns(data)
+        }
+    }, [params, data, isSuccess])
+
     return (
-        <div className="py-3">
+        <div className="py-3  h-full">
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable
                     droppableId="all-columns"
@@ -86,7 +94,7 @@ const TaskDnd: React.FC = () => {
                                         <div
                                             {...provided.draggableProps}
                                             ref={provided.innerRef}
-                                            className="bg-background px-1  rounded-md"
+                                            className="rounded-md"
                                         >
                                             <Droppable
                                                 droppableId={column.id}
@@ -99,13 +107,20 @@ const TaskDnd: React.FC = () => {
                                                         style={{
                                                             minHeight: 50,
                                                         }}
-                                                        className="bg-zinc-800 p-2 rounded-lg  min-w-72"
+                                                        className="dark:bg-zinc-800 bg-zinc-200   p-2 rounded-lg  min-w-80 max-w-80"
                                                     >
-                                                        <h1 className=" p-2">
-                                                            {column.name}
-                                                        </h1>
-                                                        <div className="no-scrollbar-x overflow-y-auto h-full max-h-[70vh]">
-                                                            {column.items.map(
+                                                        <div className="w-full flex items-center justify-between">
+                                                            <h1 className=" p-2">
+                                                                {`${column.name} (${column?.count})`}
+                                                            </h1>
+                                                            <button className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500">
+                                                                <Trash
+                                                                    size={16}
+                                                                />
+                                                            </button>
+                                                        </div>
+                                                        <div className="no-scrollbar-x max-h-[68vh] 2xl:max-h-[80vh] h-full overflow-y-auto  transition-[height]">
+                                                            {column?.tasks?.map(
                                                                 (
                                                                     item,
                                                                     index,

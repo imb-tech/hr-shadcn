@@ -1,23 +1,51 @@
-type SubTask= {
+type SubTask = {
     id: number
     title: string
-    completed: boolean
+    finished: boolean
 }
 
 type QuoteCard = {
     id: number
     title: string
-    description: string
-    priority: string
+    desc: string
+    priority: 1 | 2 | 3
     deadline: string
-    responsible: string
     subtasks: SubTask[]
     images: string[]
     voiceNote: string[]
+    users: number[]
+    users_data: {
+        id: number
+        face: string,
+        last_name: string,
+        first_name: string
+    }[]
+    todo: number
+    finished: number
 }
+
 
 type Column = {
     id: string
     name: string
-    items: QuoteCard[]
+    count: number
+    tasks: QuoteCard[]
+}
+
+type FormValues = {
+    name: string
+    background: string
+    author?: string
+    id: number
+    statuses: {
+        name: string
+        count: number
+    }[]
+    created_at: string
+    users: {
+        id: number
+        face: string,
+        last_name: string,
+        first_name: string
+    }[]
 }
