@@ -22,11 +22,11 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: pnpm ci
 
       # Build the app
       - name: Build the app
-        run: npm run build
+        run: pnpm run build
 
       # Deploy to the server
       - name: Deploy to server
