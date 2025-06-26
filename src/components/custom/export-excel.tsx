@@ -10,6 +10,7 @@ import Modal from "./modal"
 import { useModal } from "@/hooks/useModal"
 import { useGet } from "@/hooks/useGet"
 import { FormDatePicker } from "../form/date-picker"
+import { baseURLOrigin } from "@/services/axios-instance"
 
 type Dates = {
     start: string
@@ -17,7 +18,7 @@ type Dates = {
     date: string
 }
 
-const baseURL = import.meta.env.VITE_DEFAULT_URL
+const baseURL = baseURLOrigin
 
 const ExportAsExcel = ({
     url,
@@ -60,7 +61,7 @@ const ExportAsExcel = ({
     async function handleSubmit(vals: Dates) {
         setLoading(true)
         const searchParams = new URLSearchParams({ ...vals, ...params })
-        const response = await fetch(`${baseURL}/${url}?` + searchParams, {
+        const response = await fetch(`${baseURL}${url}?` + searchParams, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("user_access")}`,
             },

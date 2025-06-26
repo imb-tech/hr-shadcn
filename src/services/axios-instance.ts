@@ -9,9 +9,7 @@ const baseURL = import.meta.env.VITE_DEFAULT_URL
 const partURL = import.meta.env.VITE_DEFAULT_PART_URL
 
 const url = import.meta.env.DEV ? "demo.imbtech.uz" : window.location.hostname
-const baseURLOrigin = 'https://' + url.split('.')[0] + partURL
-
-
+export const baseURLOrigin = 'https://' + url.split('.')[0] + partURL
 
 const axiosInstance = axios.create({
     baseURL: baseURLOrigin,
