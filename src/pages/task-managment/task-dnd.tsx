@@ -1,5 +1,5 @@
 import { Plus, Trash } from "lucide-react"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
     DragDropContext,
     Draggable,
@@ -10,16 +10,24 @@ import TaskCard from "./task-card"
 import { useModal } from "@/hooks/useModal"
 import { Button } from "@/components/ui/button"
 import { useGet } from "@/hooks/useGet"
-import { PROJECTS_TASKS } from "@/constants/api-endpoints"
+import { PROJECTS_TASKS, TASKS } from "@/constants/api-endpoints"
 import { useParams } from "@tanstack/react-router"
+import DeleteModal from "@/components/custom/delete-modal"
 
-const TaskDnd: React.FC = () => {
+type Props = {
+    onClickItem?: (val: number) => void
+    onDelete: (id: number) => void
+}
+
+const TaskDnd = ({ onClickItem, onDelete }: Props) => {
     const params = useParams({ from: "/_main/project/$id" })
     const { data, isSuccess } = useGet(`${PROJECTS_TASKS}/${params?.id}`, {
         options: { enabled: !!params?.id },
     })
     const [columns, setColumns] = useState<Column[]>([])
-    const { openModal } = useModal("task-modal")
+    const [currentId, setCurrentId] = useState<number>()
+    const { openModal: openModalCreate } = useModal("task-modal")
+    const { openModal: openModalDelete } = useModal("project-delete")
 
     const onDragEnd = (result: DropResult) => {
         const { source, destination, type } = result
@@ -60,8 +68,11 @@ const TaskDnd: React.FC = () => {
         }
     }
 
-    const handleAdd = () => {
-        openModal()
+    const handleAdd = (id: number) => {
+        if (onClickItem) {
+            onClickItem(id)
+        }
+        openModalCreate()
     }
 
     useEffect(() => {
@@ -113,11 +124,26 @@ const TaskDnd: React.FC = () => {
                                                             <h1 className=" p-2">
                                                                 {`${column.name} (${column?.count})`}
                                                             </h1>
-                                                            <button className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500">
-                                                                <Trash
-                                                                    size={16}
-                                                                />
-                                                            </button>
+                                                            {column.name !==
+                                                                "Finished" && (
+                                                                <button
+                                                                    onClick={() => {
+                                                                        onDelete(
+                                                                            Number(
+                                                                                column.id,
+                                                                            ),
+                                                                        )
+                                                                        openModalDelete()
+                                                                    }}
+                                                                    className="p-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500"
+                                                                >
+                                                                    <Trash
+                                                                        size={
+                                                                            16
+                                                                        }
+                                                                    />
+                                                                </button>
+                                                            )}
                                                         </div>
                                                         <div className="no-scrollbar-x max-h-[68vh] 2xl:max-h-[80vh] h-full overflow-y-auto  transition-[height]">
                                                             {column?.tasks?.map(
@@ -151,6 +177,13 @@ const TaskDnd: React.FC = () => {
                                                                                 }}
                                                                             >
                                                                                 <TaskCard
+                                                                                    onDelete={(
+                                                                                        id,
+                                                                                    ) =>
+                                                                                        setCurrentId(
+                                                                                            id,
+                                                                                        )
+                                                                                    }
                                                                                     item={
                                                                                         item
                                                                                     }
@@ -165,7 +198,13 @@ const TaskDnd: React.FC = () => {
                                                             }
                                                         </div>
                                                         <Button
-                                                            onClick={handleAdd}
+                                                            onClick={() =>
+                                                                handleAdd(
+                                                                    Number(
+                                                                        column.id,
+                                                                    ),
+                                                                )
+                                                            }
                                                             className="w-full"
                                                         >
                                                             <Plus size={16} />
@@ -183,6 +222,12 @@ const TaskDnd: React.FC = () => {
                     )}
                 </Droppable>
             </DragDropContext>
+            <DeleteModal
+                refetchKeys={[`${PROJECTS_TASKS}/${params?.id}`]}
+                modalKey="task-delete"
+                id={currentId}
+                path={TASKS}
+            />
         </div>
     )
 }

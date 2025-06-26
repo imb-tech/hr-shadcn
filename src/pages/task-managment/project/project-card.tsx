@@ -58,7 +58,7 @@ function ProjectCard({ handleItem, handleDelete, item }: Props) {
                                             <AvatarFallback
                                                 className={cn(
                                                     "uppercase !bg-secondary !text-muted-foreground",
-                                                    getPriorityColor("Yuqori"),
+                                                    getPriorityColor(2),
                                                 )}
                                             >
                                                 {item?.first_name?.slice(0, 1)}

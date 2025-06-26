@@ -21,6 +21,7 @@ import {
     ChevronsUp,
     Flame,
     SquareCheckBig,
+    Trash,
 } from "lucide-react"
 
 const getPriorityIcon = (priority: number) => {
@@ -49,8 +50,14 @@ export const getPriorityColor = (priority: number) => {
     }
 }
 
-export default function TaskCard({ item }: { item: QuoteCard }) {
-    const { openModal } = useModal("task-modal")
+type Props = {
+    onDelete: (id: number) => void
+    item: QuoteCard
+}
+
+export default function TaskCard({ item, onDelete }: Props) {
+    const { openModal: openModalView } = useModal("task-modal")
+    const { openModal: openModalDelete } = useModal("task-delete")
     const navigate = useNavigate()
     const search: any = useSearch({ from: "/_main" })
 
@@ -62,19 +69,26 @@ export default function TaskCard({ item }: { item: QuoteCard }) {
                     task: id.toString(),
                 },
             })
-            openModal()
+            openModalView()
         }
     }
-    
 
-    
     return (
         <Card
             onClick={() => handleItem(item.id)}
-            className="hover:shadow-md transition-shadow"
+            className={cn(
+                "hover:shadow-xl transition-shadow border-[1.5px] ",
+                item.priority == 3
+                    ? "hover:border-red-500"
+                    : item.priority == 1
+                    ? "hover:border-green-500"
+                    : item.priority == 2
+                    ? "hover:border-yellow-500"
+                    : "",
+            )}
         >
             <CardHeader className="p-3 pb-0 flex space-y-0 flex-row justify-between items-start gap-3">
-                <AvatarGroup max={4} total={3} countClass="h-7 w-7">
+                <AvatarGroup max={4} total={3} countClass={cn("h-10 w-10")}>
                     {item?.users_data?.map((user, index) => (
                         <TooltipProvider key={index}>
                             <Tooltip>
@@ -113,28 +127,41 @@ export default function TaskCard({ item }: { item: QuoteCard }) {
             </CardHeader>
             <CardContent className="space-y-3 p-3">
                 <div>
-                    <h3 className="font-semibold text-[15px] mb-1">
+                    <h3 className="font-semibold text-[15px] mb-1 break-all line-clamp-1">
                         {item.title}
                     </h3>
                     <p className="text-[14px] text-muted-foreground">
-                        {item.desc} 
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur porro corrupti reprehenderit possimus id mollitia, magni provident voluptas facilis amet?
+                        {item.desc}
                     </p>
                 </div>
 
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    {item.deadline && (
-                        <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            <span>{format(item.deadline,"yyyy-MM-dd")}</span>
-                        </div>
-                    )}
-                    {item?.todo && item.todo !== 0 ? (
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <SquareCheckBig className="h-4 w-4" />
-                            <span>{`${item.finished}/${item.todo}`}</span>
-                        </div>
-                    ) : null}
+                <div className="flex items-center gap-4 justify-between text-sm text-muted-foreground">
+                    <div className="flex items-center gap-4">
+                        {item.deadline && (
+                            <div className="flex items-center gap-1">
+                                <Calendar className="h-4 w-4" />
+                                <span>
+                                    {format(item.deadline, "yyyy-MM-dd")}
+                                </span>
+                            </div>
+                        )}
+                        {item?.todo && item.todo !== 0 ? (
+                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                <SquareCheckBig className="h-4 w-4" />
+                                <span>{`${item.finished}/${item.todo}`}</span>
+                            </div>
+                        ) : null}
+                    </div>
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            onDelete(item.id)
+                            openModalDelete()
+                        }}
+                        className="p-2 rounded-md  hover:bg-red-500/20 hover:text-red-500"
+                    >
+                        <Trash size={16} />
+                    </button>
                 </div>
             </CardContent>
         </Card>

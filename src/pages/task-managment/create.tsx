@@ -19,7 +19,11 @@ import { useEffect, useRef, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-export default function CompleteTaskManager() {
+type Props = {
+    statusId?: number
+}
+
+export default function CompleteTaskManager({ statusId }: Props) {
     const params = useParams({ from: "/_main/project/$id" })
     const search = useSearch({ from: "/_main/project/$id" })
     const { data: hrData, isLoading } = useGet<
@@ -38,7 +42,7 @@ export default function CompleteTaskManager() {
             priority: 1,
             deadline: "",
             users: [],
-            images: [],
+            files: [] as { file: File; type: string }[],
             voiceNote: [],
             subtasks: [],
         },
@@ -50,6 +54,7 @@ export default function CompleteTaskManager() {
     })
 
     const [isRecording, setIsRecording] = useState(false)
+    const [deletedItem, setDeletedItem] = useState<number[]>([])
     const [recordingTime, setRecordingTime] = useState(0)
     const mediaRecorderRef = useRef<MediaRecorder | null>(null)
     const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -66,6 +71,7 @@ export default function CompleteTaskManager() {
                 toast.success("Muaffaqiyatli qo'shildi")
                 closeModal()
                 form.reset()
+                setDeletedItem([])
             },
         },
         {
@@ -83,6 +89,7 @@ export default function CompleteTaskManager() {
                 toast.success("Muaffaqiyatli yangilandi")
                 closeModal()
                 form.reset()
+                setDeletedItem([])
             },
         },
         {
@@ -92,13 +99,75 @@ export default function CompleteTaskManager() {
         },
     )
 
-    const onSubmit = (data: QuoteCard) => {
-        console.log("Task created:", data)
-        if (task?.id) {
-            mutateUpdate(`${TASKS}/${task.id}`, data)
-        } else {
-            mutateCreate(TASKS, data)
+    const onSubmit = async (data: QuoteCard) => {
+        const formData = new FormData()
+        const dirtyFields = form.formState.dirtyFields
+        const currentFiles = form.watch("files")
+
+        if (currentFiles?.length) {
+            currentFiles.forEach(({ file }) => {
+                const isNewFile = !task?.files?.some(
+                    (item) =>
+                        item.file?.name === file.name &&
+                        item.file?.size === file.size &&
+                        item.type === getFileType(file),
+                )
+
+                if (isNewFile) {
+                    formData.append(getFileType(file), file)
+                }
+            })
         }
+
+        const fetchPromises: Promise<void>[] = []
+        const currentVoiceNotes = form.watch("voiceNote") || []
+
+        const backendAudios =
+            task?.files
+                ?.filter((item) => item.type === "audio")
+                ?.map((item) => item.file) || []
+
+        currentVoiceNotes.forEach((url: string, index: number) => {
+            const isNewAudio = !backendAudios.some((file: any) => {
+                if (!file) return false
+
+                return typeof file === "string" && file === url
+            })
+
+            if (isNewAudio) {
+                const promise = fetch(url)
+                    .then((res) => res.blob())
+                    .then((blob) => {
+                        formData.append("audio", blob, `voice-${index}.wav`)
+                    })
+                fetchPromises.push(promise)
+            }
+        })
+
+        await Promise.all(fetchPromises)
+
+        if (statusId) {
+            formData.append("status", statusId.toString())
+        }
+        formData.append("subtasks", JSON.stringify(data.subtasks))
+        formData.append("users", JSON.stringify(data.users))
+
+        if (deletedItem?.length > 0) {
+            formData.append("deleted_files", JSON.stringify(deletedItem))
+        }
+
+        for (const [key, value] of Object.entries(data)) {
+            if (
+                !["files", "subtasks", "voiceNote", "users"].includes(key) &&
+                (dirtyFields as any)[key]
+            ) {
+                formData.append(key, String(value))
+            }
+        }
+
+        const url = task?.id ? `${TASKS}/${task.id}` : TASKS
+        const mutate = task?.id ? mutateUpdate : mutateCreate
+        mutate(url, formData)
     }
 
     const startRecording = async () => {
@@ -139,33 +208,31 @@ export default function CompleteTaskManager() {
         clearInterval(recordingIntervalRef.current!)
     }
 
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files
         if (files) {
-            const readers = Array.from(files).map((file) => {
-                return new Promise<string>((resolve) => {
-                    const reader = new FileReader()
-                    reader.onload = (e) => resolve(e.target?.result as string)
-                    reader.readAsDataURL(file)
-                })
-            })
+            const currentFiles = form.getValues("files") || []
 
-            Promise.all(readers).then((images) => {
-                const currentImages = form.getValues("images")
-                form.setValue("images", [...currentImages, ...images])
-            })
+            const newFiles = Array.from(files).map((file) => ({
+                file,
+                type: getFileType(file),
+            }))
+
+            form.setValue("files", [...currentFiles, ...newFiles])
         }
-    }
-
-    const formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60)
-        const secs = seconds % 60
-        return `${mins}:${secs.toString().padStart(2, "0")}`
     }
 
     useEffect(() => {
         if (task?.id) {
-            form.reset(task)
+            form.reset({
+                ...task,
+                voiceNote: task.files
+                    ?.filter((item) => item.type === "audio")
+                    .map((item) => item.file),
+                files: task.files
+                    ?.filter((item) => item.type !== "audio")
+                    .map((item) => item),
+            })
         }
     }, [form, task, search])
 
@@ -287,36 +354,76 @@ export default function CompleteTaskManager() {
                     ref={fileInputRef}
                     type="file"
                     multiple
-                    accept="image/*"
-                    onChange={handleImageUpload}
+                    onChange={handleFileUpload}
                     className="hidden"
                 />
                 <div className="grid grid-cols-3 gap-2">
-                    {form.watch("images")?.map((img, i) => (
-                        <div key={i} className="relative">
-                            <SeeInView
-                                url={img}
-                                fullWidth
-                                className="w-full object-cover rounded-md border"
-                            />
-
-                            <Button
-                                variant={"destructive"}
-                                type="button"
-                                className="absolute bg-red-500 hover:bg-red-500/90 text-white w-7 h-7 p-0 top-0 right-0 min-w-8 "
-                                onClick={() =>
-                                    form.setValue(
-                                        "images",
-                                        form
-                                            .watch("images")
-                                            .filter((_, idx) => idx !== i),
-                                    )
-                                }
+                    {form
+                        .watch("files")
+                        ?.slice()
+                        ?.sort((a, b) => (a.type === "image" ? -1 : 1))
+                        ?.map((item, i) => (
+                            <div
+                                key={i}
+                                className={cn(
+                                    "relative",
+                                    item.type !== "image" && "col-span-3 flex items-center justify-between gap-3",
+                                )}
                             >
-                                <X className="w-4 h-4" />
-                            </Button>
-                        </div>
-                    ))}
+                                {item.type === "image" ? (
+                                    <SeeInView
+                                        url={
+                                            typeof item.file !== "string"
+                                                ? URL.createObjectURL(item.file)
+                                                : item.file
+                                        }
+                                        fullWidth
+                                        className="w-full h-[200px] object-cover rounded-md border"
+                                    />
+                                ) : (
+                                    <div className="text-sm flex flex-col bg-secondary rounded-md px-3 py-[10px]">
+                                        <span className="line-clamp-1 break-all">
+                                            {typeof item.file === "string"
+                                                ? item.file
+                                                : item.file.name}
+                                        </span>
+                                    </div>
+                                )}
+
+                                <Button
+                                    variant={"destructive"}
+                                    type="button"
+                                    className={cn(
+                                        item.type === "image"
+                                            ? " bg-red-500 hover:bg-red-500/90 absolute text-white w-7 h-7 p-0 top-0 right-0 min-w-8 "
+                                            : "",
+                                    )}
+                                    onClick={() => {
+                                        const currentFiles = form.watch("files")
+
+                                        const deletedFile: any =
+                                            currentFiles.find(
+                                                (f) => f.file === item.file,
+                                            )
+                                        const fileId = deletedFile?.id
+                                        const updatedFiles =
+                                            currentFiles.filter(
+                                                (f) => f.file !== item.file,
+                                            )
+                                        form.setValue("files", updatedFiles)
+
+                                        if (fileId) {
+                                            setDeletedItem((prev) => [
+                                                ...prev,
+                                                fileId,
+                                            ])
+                                        }
+                                    }}
+                                >
+                                    <X className="w-4 h-4" />
+                                </Button>
+                            </div>
+                        ))}
                 </div>
             </div>
 
@@ -324,7 +431,7 @@ export default function CompleteTaskManager() {
             <div>
                 <div
                     className={cn(
-                        "flex justify-between items-center ",
+                        "flex justify-between items-center  ",
                         form.watch("voiceNote")?.length && "mb-4",
                     )}
                 >
@@ -348,20 +455,31 @@ export default function CompleteTaskManager() {
                     </Button>
                 </div>
                 {form.watch("voiceNote")?.map((note, i) => (
-                    <div key={i} className="flex items-center gap-3">
+                    <div key={i} className="flex items-center gap-3 mb-2">
                         <audio controls src={note} className="flex-1 h-11 " />
                         <Button
                             type="button"
                             variant="destructive"
                             className="min-w-8"
-                            onClick={() =>
+                            onClick={() => {
+                                const audioFiles =
+                                    task?.files?.filter(
+                                        (item) => item.type === "audio",
+                                    ) || []
+
+                                const fileId = audioFiles[i]?.id
+
+                                if (fileId) {
+                                    setDeletedItem((prev) => [...prev, fileId])
+                                }
+
                                 form.setValue(
                                     "voiceNote",
                                     form
                                         .watch("voiceNote")
                                         .filter((_, idx) => idx !== i),
                                 )
-                            }
+                            }}
                         >
                             <X className="w-5 h-5" />
                         </Button>
@@ -382,4 +500,16 @@ export default function CompleteTaskManager() {
             </div>
         </form>
     )
+}
+
+const getFileType = (file: File): string => {
+    const mimeType = file?.type
+    if (mimeType?.startsWith("image/")) return "image"
+    return "file"
+}
+
+const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins}:${secs.toString().padStart(2, "0")}`
 }

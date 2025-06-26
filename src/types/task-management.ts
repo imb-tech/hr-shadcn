@@ -11,7 +11,7 @@ type QuoteCard = {
     priority: 1 | 2 | 3
     deadline: string
     subtasks: SubTask[]
-    images: string[]
+    files: { file: any; type: string,id?:number }[] | []
     voiceNote: string[]
     users: number[]
     users_data: {

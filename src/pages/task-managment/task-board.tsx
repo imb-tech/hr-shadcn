@@ -3,10 +3,13 @@ import TaskDnd from "./task-dnd"
 import TaskHeader from "./task-header"
 import CompleteTaskManager from "./create"
 import Modal from "@/components/custom/modal"
-import { useNavigate, useSearch } from "@tanstack/react-router"
+import { useNavigate, useParams, useSearch } from "@tanstack/react-router"
 import { useModal } from "@/hooks/useModal"
+import { PROJECTS_TASKS, STATUSES } from "@/constants/api-endpoints"
+import DeleteModal from "@/components/custom/delete-modal"
 
 const TaskManagment = () => {
+    const params = useParams({ from: "/_main/project/$id" })
     const containerRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
     const minimapRef = useRef<HTMLDivElement>(null)
@@ -18,6 +21,8 @@ const TaskManagment = () => {
     const [maxScroll, setMaxScroll] = useState(0)
     const [focusWidth, setFocusWidth] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
+    const [statusId, setStatusId] = useState<number>()
+    const [currentId, setCurrentId] = useState<number>()
 
     useEffect(() => {
         const container = containerRef.current
@@ -106,7 +111,10 @@ const TaskManagment = () => {
                 onScroll={handleScroll}
             >
                 <div ref={contentRef} className="inline-flex">
-                    <TaskDnd />
+                    <TaskDnd
+                        onClickItem={(id) => setStatusId(id)}
+                        onDelete={(id) => setCurrentId(id)}
+                    />
                 </div>
             </div>
 
@@ -134,8 +142,14 @@ const TaskManagment = () => {
                 </div>
             </div>
             <Modal onClose={closeModal} size="max-w-3xl" modalKey="task-modal">
-                <CompleteTaskManager />
+                <CompleteTaskManager statusId={statusId} />
             </Modal>
+            <DeleteModal
+                modalKey="project-delete"
+                id={currentId}
+                path={STATUSES}
+                refetchKeys={[`${PROJECTS_TASKS}/${params?.id}`]}
+            />
         </div>
     )
 }
