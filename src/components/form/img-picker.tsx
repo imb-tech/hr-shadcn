@@ -27,6 +27,7 @@ export default function FormImagePicker<IForm extends FieldValues>({
                         <>
                             {field.value ? (
                                 <SeeInView
+                                className={"max-h-[40vh] w-full object-cover"}
                                     url={
                                         typeof field.value === "string"
                                             ? field.value

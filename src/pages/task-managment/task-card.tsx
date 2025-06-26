@@ -27,13 +27,13 @@ import {
 const getPriorityIcon = (priority: number) => {
     switch (priority) {
         case 3:
-            return <Flame />
+            return <Flame className="w-5 h-5" />
         case 2:
-            return <ChevronsUp />
+            return <ChevronsUp className="w-5 h-5" />
         case 1:
-            return <ChevronsDown />
+            return <ChevronsDown  className="w-5 h-5"/>
         default:
-            return <Flame />
+            return <Flame className="w-5 h-5" />
     }
 }
 
@@ -77,7 +77,7 @@ export default function TaskCard({ item, onDelete }: Props) {
         <Card
             onClick={() => handleItem(item.id)}
             className={cn(
-                "hover:shadow-xl transition-shadow border-[1.5px] ",
+                "hover:shadow-xl transition-shadow border-[1.5px] dark:bg-[#22272B]",
                 item.priority == 3
                     ? "hover:border-red-500"
                     : item.priority == 1
@@ -88,12 +88,12 @@ export default function TaskCard({ item, onDelete }: Props) {
             )}
         >
             <CardHeader className="p-3 pb-0 flex space-y-0 flex-row justify-between items-start gap-3">
-                <AvatarGroup max={4} total={3} countClass={cn("h-10 w-10")}>
+                <AvatarGroup max={4} total={item?.users_data?.length} countClass={cn("h-7 w-7")}>
                     {item?.users_data?.map((user, index) => (
                         <TooltipProvider key={index}>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Avatar className="h-10 w-10">
+                                    <Avatar className="h-7 w-7">
                                         <AvatarImage
                                             src={user.face || undefined}
                                             alt={user.first_name}
@@ -118,7 +118,7 @@ export default function TaskCard({ item, onDelete }: Props) {
                 </AvatarGroup>
                 <div
                     className={cn(
-                        "h-10 w-10 rounded-full flex items-center justify-center",
+                        "h-7 w-7 rounded-full flex items-center justify-center",
                         getPriorityColor(item.priority),
                     )}
                 >
@@ -127,10 +127,10 @@ export default function TaskCard({ item, onDelete }: Props) {
             </CardHeader>
             <CardContent className="space-y-3 p-3">
                 <div>
-                    <h3 className="font-semibold text-[15px] mb-1 break-all line-clamp-1">
+                    <h3 className="font-semibold 2xl:text-[15px] text-[14px] mb-1 break-all line-clamp-1">
                         {item.title}
                     </h3>
-                    <p className="text-[14px] text-muted-foreground">
+                    <p className="text-xs 2xl:text-[14px] break-all line-clamp-3 text-muted-foreground">
                         {item.desc}
                     </p>
                 </div>
@@ -161,6 +161,7 @@ export default function TaskCard({ item, onDelete }: Props) {
                         className="p-2 rounded-md  hover:bg-red-500/20 hover:text-red-500"
                     >
                         <Trash size={16} />
+                        
                     </button>
                 </div>
             </CardContent>

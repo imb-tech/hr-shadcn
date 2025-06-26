@@ -239,7 +239,7 @@ export default function CompleteTaskManager({ statusId }: Props) {
     return (
         <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full max-h-[85vh] overflow-y-auto sm:space-y-6 space-y-4 px-2 pb-[64px] no-scrollbar-x"
+            className="w-full h-[85vh] overflow-y-auto sm:space-y-6 space-y-4 px-2 pb-[64px] no-scrollbar-x"
         >
             {/* Title */}
             <FormInput
@@ -381,7 +381,7 @@ export default function CompleteTaskManager({ statusId }: Props) {
                                         className="w-full h-[200px] object-cover rounded-md border"
                                     />
                                 ) : (
-                                    <div className="text-sm flex flex-col bg-secondary rounded-md px-3 py-[10px]">
+                                    <div className="w-full text-sm flex flex-col bg-secondary rounded-md px-3 py-[10px]">
                                         <span className="line-clamp-1 break-all">
                                             {typeof item.file === "string"
                                                 ? item.file

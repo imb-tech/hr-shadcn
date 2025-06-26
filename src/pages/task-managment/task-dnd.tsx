@@ -5,22 +5,19 @@ import {
     Droppable,
     DropResult,
 } from "react-beautiful-dnd"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import TaskCard from "./task-card"
 import { useModal } from "@/hooks/useModal"
 import { Button } from "@/components/ui/button"
 import { useGet } from "@/hooks/useGet"
-import {
-    PROJECTS_TASKS,
-    TASKS,
-    STATUSES,
-    STATUSES_MOVE,
-} from "@/constants/api-endpoints"
+import { PROJECTS_TASKS, TASKS, STATUSES_MOVE } from "@/constants/api-endpoints"
 import { useParams } from "@tanstack/react-router"
 import DeleteModal from "@/components/custom/delete-modal"
 import { usePatch } from "@/hooks/usePatch"
 import { useQueryClient } from "@tanstack/react-query"
 import { usePost } from "@/hooks/usePost"
+import { Card, CardContent } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 
 type Props = {
     onClickItem?: (val: number) => void
@@ -31,7 +28,9 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
     const params = useParams({ from: "/_main/project/$id" })
     const { data, isSuccess } = useGet<Column[]>(
         `${PROJECTS_TASKS}/${params?.id}`,
-        { options: { enabled: !!params?.id } },
+        {
+            options: { enabled: !!params?.id },
+        },
     )
 
     const [currentId, setCurrentId] = useState<number>()
@@ -123,7 +122,7 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
     }
 
     return (
-        <div className="py-3 h-full">
+        <div className={cn("py-3    flex  items-start gap-3 w-full ")}>
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable
                     droppableId="all-columns"
@@ -162,7 +161,7 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
                                                                     provided.innerRef
                                                                 }
                                                                 {...provided.droppableProps}
-                                                                className="dark:bg-zinc-800 bg-zinc-200 p-2 rounded-lg min-w-80 max-w-80"
+                                                                className="dark:bg-[#0c0d03] bg-zinc-200 p-2 rounded-lg min-w-64 max-w-64"
                                                             >
                                                                 <div className="w-full flex items-center justify-between">
                                                                     <h1 className="p-2">
@@ -189,7 +188,7 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
                                                                         </button>
                                                                     )}
                                                                 </div>
-                                                                <div className="no-scrollbar-x max-h-[68vh] 2xl:max-h-[80vh] overflow-y-auto">
+                                                                <div className="no-scrollbar-y max-h-[68vh] 2xl:max-h-[80vh] overflow-y-auto">
                                                                     {column.tasks?.map(
                                                                         (
                                                                             item,
@@ -240,6 +239,8 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
                                                                     }
                                                                 </div>
                                                                 <Button
+                                                                    size={"sm"}
+                                                                    variant={"ghost"}
                                                                     onClick={() =>
                                                                         handleAdd(
                                                                             Number(
@@ -247,7 +248,7 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
                                                                             ),
                                                                         )
                                                                     }
-                                                                    className="w-full mt-2"
+                                                                    className="w-full dark:hover:bg-[#131506]h hover:text-white flex justify-start 2xl:text-sm text-xs"
                                                                 >
                                                                     <Plus
                                                                         size={
@@ -255,7 +256,7 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
                                                                         }
                                                                     />
                                                                     Yangi
-                                                                    qo‘shish
+                                                                    qo'shish
                                                                 </Button>
                                                             </div>
                                                         )}
@@ -270,7 +271,18 @@ const TaskDnd = ({ onClickItem, onDelete }: Props) => {
                     )}
                 </Droppable>
             </DragDropContext>
-
+            <Card className="w-64 bg-background cursor-pointer">
+                <CardContent className="h-full p-3  flex gap-2 items-center justify-center">
+                    {" "}
+                    <Button size={"sm"} className="text-xs justify-start 2xl:text-sm flex gap-2 items-center w-full">
+                        <Plus size={18} />
+                        <span className="font-medium">
+                            {" "}
+                            Boshqa ro'yxat qo'shing
+                        </span>
+                    </Button>
+                </CardContent>
+            </Card>
             <DeleteModal
                 refetchKeys={[`${PROJECTS_TASKS}/${params?.id}`]}
                 modalKey="task-delete"
