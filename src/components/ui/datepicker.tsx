@@ -44,10 +44,10 @@ export function DatePicker({
                     className={cn(
                         "justify-start text-left font-normal w-full",
                         !date && "text-muted-foreground",
-                        fullWidth && "w-full",
                         isError && "border-destructive",
-                        titleHidden && "sm:w-[280px]",
+                        titleHidden && !fullWidth && "sm:w-[280px]",
                         !titleHidden && date && "w-[150px]",
+                        fullWidth && "w-full",
                     )}
                     disabled={disabled}
                 >

@@ -4,6 +4,7 @@ import { CalendarProps } from "../ui/calendar"
 import FieldError from "./form-error"
 import FieldLabel from "./form-label"
 import { getNestedValue } from "./input"
+import { ClassNameValue } from "tailwind-merge"
 
 export function FormDatePicker<TForm extends FieldValues>({
     name,
@@ -14,6 +15,7 @@ export function FormDatePicker<TForm extends FieldValues>({
     calendarProps,
     hideError = true,
     placeholder,
+    className,
 }: thisProps<TForm>) {
     const error = getNestedValue(control._formState.errors, name)
     return (
@@ -70,4 +72,5 @@ interface thisProps<TForm extends FieldValues> {
     calendarProps?: CalendarProps | undefined
     hideError?: boolean
     placeholder?: string
+    className?: ClassNameValue
 }
