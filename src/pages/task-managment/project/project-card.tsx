@@ -20,7 +20,6 @@ import { useNavigate } from "@tanstack/react-router"
 import { format } from "date-fns"
 import { useGet } from "@/hooks/useGet"
 import { TASKS_EXCEL } from "@/constants/api-endpoints"
-import { useEffect, useState } from "react"
 import { downloadExcel } from "@/lib/download-excel"
 
 type Props = {
@@ -31,25 +30,22 @@ type Props = {
 
 function ProjectCard({ handleItem, handleDelete, item }: Props) {
     const navigate = useNavigate()
-    const [state, setState] = useState<boolean>(false)
-    const { data, isSuccess, isLoading } = useGet(`${TASKS_EXCEL}/${item.id}`, {
-        options: { enabled: state },
-        config: {
-            responseType: "blob",
+    const { data, isSuccess, isLoading, refetch } = useGet(
+        `${TASKS_EXCEL}/${item.id}`,
+        {
+            options: { enabled: false },
+            config: {
+                responseType: "blob",
+            },
         },
-    })
+    )
 
-    const handleExcelItem = () => {
-        setState((prev) => !prev)
-    }
-
-    useEffect(() => {
-        if (isSuccess) {
-            downloadExcel({ data: data })
+    const handleExcelItem = async () => {
+        const response = await refetch()
+        if (response.isSuccess) {
+            downloadExcel({ data: response.data })
         }
-    }, [data, isSuccess])
-
-
+    }
 
     return (
         <Card
