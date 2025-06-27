@@ -13,18 +13,18 @@ import { usePatch } from "@/hooks/usePatch"
 import { usePost } from "@/hooks/usePost"
 import { cn } from "@/lib/utils"
 import { useQueryClient } from "@tanstack/react-query"
-import { useParams, useSearch } from "@tanstack/react-router"
+import { useSearch } from "@tanstack/react-router"
 import { Mic, MicOff, Paperclip, Plus, X } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 type Props = {
-    statusId?: number
+    params: { id: string }
+    currentId: number | undefined
 }
 
-export default function CompleteTaskManager({ statusId }: Props) {
-    const params = useParams({ from: "/_main/project/$id" })
+export default function CompleteTaskManager({ currentId, params }: Props) {
     const search = useSearch({ from: "/_main/project/$id" })
     const { data: hrData, isLoading } = useGet<
         { first_name?: string; last_name: string; id: number }[]
@@ -146,8 +146,8 @@ export default function CompleteTaskManager({ statusId }: Props) {
 
         await Promise.all(fetchPromises)
 
-        if (statusId) {
-            formData.append("status", statusId.toString())
+        if (currentId) {
+            formData.append("status", currentId.toString())
         }
         formData.append("subtasks", JSON.stringify(data.subtasks))
         formData.append("users", JSON.stringify(data.users))
@@ -367,7 +367,8 @@ export default function CompleteTaskManager({ statusId }: Props) {
                                 key={i}
                                 className={cn(
                                     "relative",
-                                    item.type !== "image" && "col-span-3 flex items-center justify-between gap-3",
+                                    item.type !== "image" &&
+                                        "col-span-3 flex items-center justify-between gap-3",
                                 )}
                             >
                                 {item.type === "image" ? (

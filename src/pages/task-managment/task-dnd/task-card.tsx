@@ -17,25 +17,12 @@ import { useNavigate, useSearch } from "@tanstack/react-router"
 import { format } from "date-fns"
 import {
     Calendar,
-    ChevronsDown,
-    ChevronsUp,
     Flame,
     SquareCheckBig,
     Trash,
 } from "lucide-react"
 
-const getPriorityIcon = (priority: number) => {
-    switch (priority) {
-        case 3:
-            return <Flame className="w-5 h-5" />
-        case 2:
-            return <ChevronsUp className="w-5 h-5" />
-        case 1:
-            return <ChevronsDown  className="w-5 h-5"/>
-        default:
-            return <Flame className="w-5 h-5" />
-    }
-}
+
 
 export const getPriorityColor = (priority: number) => {
     switch (priority) {
@@ -44,7 +31,7 @@ export const getPriorityColor = (priority: number) => {
         case 2:
             return "bg-yellow-500/10 text-yellow-500 border-yellow-500/10"
         case 1:
-            return "bg-green-500/10 text-green-500 border-green-500/10"
+            return "bg-primary/15 text-primary border-primary/15"
         default:
             return "bg-gray-500/10 text-gray-500 border-gray-500/10"
     }
@@ -81,7 +68,7 @@ export default function TaskCard({ item, onDelete }: Props) {
                 item.priority == 3
                     ? "hover:border-red-500"
                     : item.priority == 1
-                    ? "hover:border-green-500"
+                    ? "hover:border-primary"
                     : item.priority == 2
                     ? "hover:border-yellow-500"
                     : "",
@@ -122,7 +109,7 @@ export default function TaskCard({ item, onDelete }: Props) {
                         getPriorityColor(item.priority),
                     )}
                 >
-                    {getPriorityIcon(item.priority)}
+                    <Flame className="w-5 h-5" />
                 </div>
             </CardHeader>
             <CardContent className="space-y-3 p-3">

@@ -29,6 +29,7 @@ type Column = {
     id: string
     name: string
     count: number
+    has_delete:boolean
     tasks: QuoteCard[]
 }
 

@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react"
-import TaskDnd from "./task-dnd"
-import TaskHeader from "./task-header"
-import CompleteTaskManager from "./create"
+import TaskHeader from "./task-dnd/task-header"
+import CompleteTaskManager from "./task-dnd/create"
 import Modal from "@/components/custom/modal"
-import { useNavigate, useParams, useSearch } from "@tanstack/react-router"
+import { useNavigate, useSearch } from "@tanstack/react-router"
 import { useModal } from "@/hooks/useModal"
 import { PROJECTS_TASKS, STATUSES } from "@/constants/api-endpoints"
 import DeleteModal from "@/components/custom/delete-modal"
+import TaskDnd from "./task-dnd/task-dnd"
+import { useTaskDndHandlers } from "./task-dnd/useTaskDndHandlers"
 
 const TaskManagment = () => {
-    const params = useParams({ from: "/_main/project/$id" })
     const search: any = useSearch({ from: "/_main/project/$id" })
     const navigate = useNavigate()
     const { isOpen } = useModal("task-modal")
-
-    const [statusId, setStatusId] = useState<number>()
-    const [currentId, setCurrentId] = useState<number>()
+    const {
+        data,
+        isSuccess,
+        onDragEnd,
+        handleAdd,
+        currentId,
+        onDelete,
+        params,
+    } = useTaskDndHandlers()
 
     const closeModal = () => {
         navigate({
@@ -37,13 +43,18 @@ const TaskManagment = () => {
             <TaskHeader />
             <div className="max-w-full h-[83vh] 2xl:h-[87vh]  overflow-x-scroll no-scrollbar-x overflow-y-hidden">
                 <TaskDnd
-                    onClickItem={(id) => setStatusId(id)}
-                    onDelete={(id) => setCurrentId(id)}
+                    currentId={currentId}
+                    onDelete={onDelete}
+                    handleAdd={handleAdd}
+                    data={data || []}
+                    params={params}
+                    isSuccess={isSuccess}
+                    onDragEnd={onDragEnd}
                 />
             </div>
 
             <Modal onClose={closeModal} size="max-w-3xl" modalKey="task-modal">
-                <CompleteTaskManager statusId={statusId} />
+                <CompleteTaskManager currentId={currentId} params={params} />
             </Modal>
             <DeleteModal
                 modalKey="project-delete"
