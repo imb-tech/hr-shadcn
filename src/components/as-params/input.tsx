@@ -64,7 +64,7 @@ export default function ParamInput({
                 ref={inputRef}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                className="h-10"
+                className={props.className}
                 {...props}
             />
         </>

@@ -2,6 +2,7 @@ import useCheckPermission from "@/hooks/use-check-permission"
 import { linkOptions } from "@tanstack/react-router"
 import {
     Building2,
+    ListTodo,
     MapPinned,
     NotebookText,
     ScrollText,
@@ -23,12 +24,6 @@ export default function usePath() {
                 title: "Ofis",
             }),
             linkOptions({
-                to: "/project",
-                icon: <MapPinned />,
-                enabled: checkAllow("map_view"),
-                title: "Vazialar",
-            }),
-            linkOptions({
                 to: "/map",
                 icon: <MapPinned />,
                 enabled: checkAllow("map_view"),
@@ -45,6 +40,12 @@ export default function usePath() {
                 icon: <UsersIcon />,
                 enabled: checkAllow("employee_view"),
                 title: "Hodimlar",
+            }),
+            linkOptions({
+                to: "/project",
+                icon: <ListTodo />,
+                enabled: checkAllow("map_view"),
+                title: "Vazifalar",
             }),
             linkOptions({
                 to: "/landing",

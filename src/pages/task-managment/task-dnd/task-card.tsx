@@ -64,7 +64,7 @@ export default function TaskCard({ item, onDelete }: Props) {
         <Card
             onClick={() => handleItem(item.id)}
             className={cn(
-                "hover:shadow-xl transition-shadow border-[1.5px] dark:bg-[#22272B]",
+                "hover:shadow-md transition-shadow border-[1.5px] dark:bg-[#22272B]",
                 item.priority == 3
                     ? "hover:border-red-500"
                     : item.priority == 1

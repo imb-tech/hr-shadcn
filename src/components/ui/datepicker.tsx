@@ -42,7 +42,7 @@ export function DatePicker({
                     size={size}
                     variant={variant}
                     className={cn(
-                        "justify-start text-left font-normal w-full",
+                        "justify-start text-left font-normal w-full  bg-secondary ",
                         !date && "text-muted-foreground",
                         fullWidth && "w-full",
                         isError && "border-destructive",

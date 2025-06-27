@@ -71,7 +71,7 @@ export function MultiCombobox<T extends Record<string, any>>({
                     role="combobox"
                     aria-expanded={open}
                     className={cn(
-                        "w-full justify-between bg-secondary overflow-hidden px-2 hover:bg-card font-normal text-gray-400 hover:text-gray-400",
+                        "w-full justify-between !bg-secondary overflow-hidden px-2 hover:bg-card font-normal text-gray-400 hover:text-gray-400",
                         values && "font-medium text-foreground",
                         isError && " border-destructive",
                         className,

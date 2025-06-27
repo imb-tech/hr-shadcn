@@ -37,7 +37,7 @@ function TodoListCreate({}: Props) {
         })
     }
     return (
-        <Card className="min-w-64 max-w-64 bg-background cursor-pointer">
+        <Card className="min-w-64 max-w-64 dark:bg-background bg-zinc-200  cursor-pointer">
             <CardContent className="h-full p-3  flex gap-2 items-center justify-center">
                 {state === "button" ? (
                     <Button

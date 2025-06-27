@@ -1,5 +1,4 @@
-import { ParamCombobox } from "@/components/as-params/combobox"
-import { HR_API, TASKLY_PROJECT } from "@/constants/api-endpoints"
+import { FILTER, TASKLY_PROJECT } from "@/constants/api-endpoints"
 import { useGet } from "@/hooks/useGet"
 import { useState } from "react"
 import ProjectCard from "./project-card"
@@ -9,24 +8,29 @@ import Modal from "@/components/custom/modal"
 import ProjectCreate from "./create"
 import { useModal } from "@/hooks/useModal"
 import DeleteModal from "@/components/custom/delete-modal"
+import { ParamMultiCombobox } from "@/components/as-params/multi-combobox"
+import { useSearch } from "@tanstack/react-router"
 
 type Props = {}
 
 function TaskBoard({}: Props) {
+    const search = useSearch({ from: "/_main/project/" })
     const [searchCustomer, setCustomerSearch] = useState("")
     const [current, setCurrent] = useState<FormValues | null>(null)
     const { openModal: openModalProject } = useModal("project-create")
     const { openModal: openModalDelete } = useModal("project-delete")
     const { data: dataCustomer, isLoading: isLoadingCustomer } = useGet<
-        ListResponse<Human>
-    >(HR_API, {
-        params: { search: searchCustomer, page_size: 50 },
+        Human[]
+    >(`${FILTER}user`, {
+        params: { search: searchCustomer },
     })
     const {
         data: dataProjects,
         isSuccess: isSuccessProject,
         isLoading: isLoadingProject,
-    } = useGet<FormValues[]>(TASKLY_PROJECT)
+    } = useGet<FormValues[]>(TASKLY_PROJECT, {
+        params: search,
+    })
 
     const handleAdd = () => {
         setCurrent(null)
@@ -44,11 +48,16 @@ function TaskBoard({}: Props) {
     return (
         <div className="w-full space-y-6">
             <div className="grid sm:grid-cols-3 gap-4">
-                <ParamCombobox
+                <ParamMultiCombobox
                     labelKey="full_name"
                     valueKey="id"
-                    options={dataCustomer?.results || []}
-                    paramName={"id"}
+                    options={
+                        dataCustomer?.map((item) => ({
+                            id: item.id,
+                            full_name: `${item.first_name} ${item.last_name}`,
+                        })) || []
+                    }
+                    paramName={"user_id"}
                     className="w-full"
                     label="Hodim"
                     onSearchChange={(val) => setCustomerSearch(val)}

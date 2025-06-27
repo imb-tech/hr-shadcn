@@ -46,7 +46,7 @@ function ProjectCard({ handleItem, handleDelete, item }: Props) {
                 <div className="space-y-4">
                     <div className="flex justify-between  items-center gap-3">
                         <h1 className="font-semibold text-xl">{item.name}</h1>
-                        <AvatarGroup max={4} total={4} countClass="h-10 w-10 ">
+                        <AvatarGroup max={4} total={item?.users?.length} countClass="h-10 w-10 ">
                             {item?.users.map((item, index) => (
                                 <TooltipProvider key={index}>
                                     <Tooltip>

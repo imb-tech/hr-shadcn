@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils"
 import { useNavigate, useSearch } from "@tanstack/react-router"
 import { CheckIcon, ChevronDown, X } from "lucide-react"
 import { useState } from "react"
+import { Skeleton } from "../ui/skeleton"
 
 type ParamComboboxProps<T extends Record<string, any>> = {
     options: T[]
@@ -28,6 +29,8 @@ type ParamComboboxProps<T extends Record<string, any>> = {
     isError?: boolean
     className?: string
     onSearchChange?: (val: string) => void
+    isLoading?: boolean
+    skeletonCount?: number
 }
 
 export function ParamMultiCombobox<T extends Record<string, any>>({
@@ -39,6 +42,8 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
     className,
     labelKey,
     valueKey,
+    isLoading,
+    skeletonCount=5,
     onSearchChange,
 }: ParamComboboxProps<T>) {
     const navigate = useNavigate()
@@ -87,7 +92,7 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant="outline"
+                    variant="secondary"
                     role="combobox"
                     aria-expanded={open}
                     className={cn(
@@ -98,7 +103,7 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
                     )}
                     disabled={disabled}
                 >
-                    {currentValues.length > 3
+                    {currentValues.length > 2
                         ? `${currentValues.length} ta tanlandi`
                         : selectedLabels || label}
                     <ChevronDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
@@ -148,6 +153,20 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
                                     />
                                 </CommandItem>
                             ))}
+                            {isLoading ? (
+                                <div className="space-y-1">
+                                    {Array.from({ length: skeletonCount }).map(
+                                        (_, index) => (
+                                            <CommandItem
+                                                key={index}
+                                                className="p-0"
+                                            >
+                                                <Skeleton className="w-full h-7" />
+                                            </CommandItem>
+                                        ),
+                                    )}
+                                </div>
+                            ) : null}
                         </CommandGroup>
                     </CommandList>
                 </Command>
