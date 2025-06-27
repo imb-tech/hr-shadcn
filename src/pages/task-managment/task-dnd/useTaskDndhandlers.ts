@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router"
+import { useParams, useSearch } from "@tanstack/react-router"
 import { useGet } from "@/hooks/useGet"
 import { usePost } from "@/hooks/usePost"
 import { useQueryClient } from "@tanstack/react-query"
@@ -9,11 +9,13 @@ import { DropResult } from "react-beautiful-dnd"
 
 export const useTaskDndHandlers = () => {
     const params = useParams({ from: "/_main/project/$id" })
+    const search = useSearch({ from: "/_main/project/$id" })
     const [currentId, setCurrentId] = useState<number>()
     const { openModal: openModalCreate } = useModal("task-modal")
     const queryClient = useQueryClient()
 
-    const { data, isSuccess } = useGet<Column[]>(`${PROJECTS_TASKS}/${params?.id}`, {
+    const { data, isSuccess, isLoading} = useGet<Column[]>(`${PROJECTS_TASKS}/${params?.id}`, {
+        params: search,
         options: { enabled: !!params?.id },
     })
 
@@ -140,5 +142,6 @@ export const useTaskDndHandlers = () => {
         currentId,
         onDelete,
         params,
+        isLoading,
     }
 }

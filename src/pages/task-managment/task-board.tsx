@@ -7,7 +7,7 @@ import { useModal } from "@/hooks/useModal"
 import { PROJECTS_TASKS, STATUSES } from "@/constants/api-endpoints"
 import DeleteModal from "@/components/custom/delete-modal"
 import TaskDnd from "./task-dnd/task-dnd"
-import { useTaskDndHandlers } from "./task-dnd/useTaskDndHandlers"
+import { useTaskDndHandlers } from "./task-dnd/useTaskDndhandlers"
 
 const TaskManagment = () => {
     const search: any = useSearch({ from: "/_main/project/$id" })
@@ -21,6 +21,7 @@ const TaskManagment = () => {
         currentId,
         onDelete,
         params,
+        isLoading,
     } = useTaskDndHandlers()
 
     const closeModal = () => {
@@ -50,6 +51,7 @@ const TaskManagment = () => {
                     params={params}
                     isSuccess={isSuccess}
                     onDragEnd={onDragEnd}
+                    isLoading={isLoading}
                 />
             </div>
 

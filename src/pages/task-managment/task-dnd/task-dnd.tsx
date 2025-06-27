@@ -3,6 +3,8 @@ import DeleteModal from "@/components/custom/delete-modal"
 import TaskColumn from "./task-column"
 import TodoListCreate from "./todo-list-create"
 import { TASKS } from "@/constants/api-endpoints"
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 
 type Props = {
     currentId: number | undefined
@@ -11,7 +13,8 @@ type Props = {
     data: Column[]
     isSuccess: boolean
     onDragEnd: (result: DropResult) => void
-    params: {id:string}
+    params: { id: string }
+    isLoading: boolean
 }
 
 const TaskDnd = ({
@@ -22,6 +25,7 @@ const TaskDnd = ({
     onDelete,
     onDragEnd,
     params,
+    isLoading,
 }: Props) => {
     return (
         <div className="py-3 flex items-start gap-3 w-full">
@@ -47,7 +51,22 @@ const TaskDnd = ({
                                         onDelete={onDelete}
                                     />
                                 ))}
-                                {provided.placeholder}
+                            {isLoading &&
+                                Array.from({ length: 4 }).map((_, index) => (
+                                    <Card className="w-64" key={index}>
+                                        <CardContent className="space-y-3">
+                                            {Array.from({ length: 3 }).map(
+                                                (_, idx) => (
+                                                    <Skeleton
+                                                        key={idx}
+                                                        className="h-40"
+                                                    />
+                                                ),
+                                            )}
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            {provided.placeholder}
                         </div>
                     )}
                 </Droppable>
