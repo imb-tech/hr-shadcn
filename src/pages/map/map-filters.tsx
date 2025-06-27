@@ -13,7 +13,7 @@ export default function MapFilters({ users, className, ...rest }: Props) {
     const { last_company_id, role_id } = search
     const { data: oficeData } = useGet<Filter[]>(FILTER + "office")
     const { data: positions } = useGet<Filter[]>(FILTER + "role", {
-        params: { last_company_id },
+        params: { users__last_company_id:last_company_id },
     })
 
     const data = useMemo(() => {
