@@ -14,10 +14,11 @@ import { usePost } from "@/hooks/usePost"
 import { cn } from "@/lib/utils"
 import { useQueryClient } from "@tanstack/react-query"
 import { useSearch } from "@tanstack/react-router"
-import { Mic, MicOff, Paperclip, Plus, X } from "lucide-react"
+import { Flame, Mic, MicOff, Paperclip, Plus, X } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { getPriorityColor } from "./task-card"
 
 type Props = {
     params: { id: string }
@@ -267,11 +268,7 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
                     labelKey="label"
                     valueKey="key"
                     name="priority"
-                    options={[
-                        { label: "Past", key: 1 },
-                        { label: "O'rta", key: 2 },
-                        { label: "Yuqori", key: 3 },
-                    ]}
+                    options={options}
                 />
                 <FormDatePicker
                     label="Muddati"
@@ -295,23 +292,8 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
             />
 
             {/* Subtasks */}
-            <div>
-                <div className="flex justify-between items-center mb-4">
-                    <label>Kichik vazifalar</label>
-                    <Button
-                        type="button"
-                        className="min-w-8 w-[115px]"
-                        onClick={() =>
-                            append({
-                                id: Date.now(),
-                                title: "",
-                                finished: false,
-                            })
-                        }
-                    >
-                        <Plus className="w-5 h-5" /> Qo'shish
-                    </Button>
-                </div>
+            <div className="space-y-2">
+                <label>Kichik vazifalar</label>
                 {fields?.map((field, index) => (
                     <div
                         key={field.id}
@@ -336,6 +318,19 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
                         </Button>
                     </div>
                 ))}
+                <Button
+                    type="button"
+                    className="min-w-8 w-full"
+                    onClick={() =>
+                        append({
+                            id: Date.now(),
+                            title: "",
+                            finished: false,
+                        })
+                    }
+                >
+                    <Plus className="w-5 h-5" /> Qo'shish
+                </Button>
             </div>
 
             {/* Images */}
@@ -347,7 +342,7 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                     >
-                        <Paperclip className="w-4 h-4 mr-1" /> Yuklash
+                        <Paperclip className="w-4 h-4 mr-1" /> Fayllar
                     </Button>
                 </div>
                 <input
@@ -489,7 +484,7 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
             </div>
 
             {/* Submit */}
-            <div className="flex absolute bottom-0 right-0 p-3 w-full bg-zinc-900 justify-end border-t border-t-zinc-700 ">
+            <div className="flex absolute bottom-0 right-0 p-3 w-full dark:bg-zinc-900 bg-zinc-200 justify-end border-t dark:border-t-zinc-700 border-t-zinc-300 ">
                 <Button
                     disabled={isPendingCreate || isPendingUpdate}
                     loading={isPendingCreate || isPendingUpdate}
@@ -503,6 +498,10 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
     )
 }
 
+
+
+
+
 const getFileType = (file: File): string => {
     const mimeType = file?.type
     if (mimeType?.startsWith("image/")) return "image"
@@ -514,3 +513,63 @@ const formatTime = (seconds: number) => {
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, "0")}`
 }
+
+const options = [
+    {
+        label: (
+            <div className="flex items-center justify-center w-full gap-2">
+                <span
+                    className={cn(
+                        "h-7 w-7 rounded-full flex items-center justify-center",
+                        getPriorityColor(1),
+                    )}
+                >
+                    <Flame className="w-5 h-5" />
+                </span>
+                <span>
+                    {" "}
+                    <span>Past</span>
+                </span>
+            </div>
+        ),
+        key: 1,
+    },
+    {
+        label: (
+            <div className="flex items-center justify-center w-full gap-2">
+                <span
+                    className={cn(
+                        "h-7 w-7 rounded-full flex items-center justify-center",
+                        getPriorityColor(2),
+                    )}
+                >
+                    <Flame className="w-5 h-5" />
+                </span>
+                <span>
+                    {" "}
+                    <span>O'rta</span>
+                </span>
+            </div>
+        ),
+        key: 2,
+    },
+    {
+        label: (
+            <div className="flex items-center justify-center w-full gap-2">
+                <span
+                    className={cn(
+                        "h-7 w-7 rounded-full flex items-center justify-center",
+                        getPriorityColor(3),
+                    )}
+                >
+                    <Flame className="w-5 h-5" />
+                </span>
+                <span>
+                    {" "}
+                    <span>Yuqori</span>
+                </span>
+            </div>
+        ),
+        key: 3,
+    },
+]

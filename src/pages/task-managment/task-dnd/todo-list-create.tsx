@@ -16,9 +16,9 @@ interface FormValue {
 }
  
 function TodoListCreate({}: Props) {
+    const [state, setState] = useState<"button" | "create">("button")
     const queryClient = useQueryClient()
     const params = useParams({ from: "/_main/project/$id" })
-    const [state, setState] = useState<"button" | "create">("button")
     const { mutate: mutateCreate, isPending: isPendingCreate } = usePost({
         onSuccess: () => {
             queryClient.invalidateQueries({
@@ -58,7 +58,7 @@ function TodoListCreate({}: Props) {
                         className="w-full space-y-2"
                     >
                         <FormInput
-                            className="h-8 !placeholder:text-sm"
+                            className="h-8 placeholder:text-[13px] 2xl:placeholder:text-sm"
                             wrapperClassName={"h-8"}
                             methods={form}
                             name="name"

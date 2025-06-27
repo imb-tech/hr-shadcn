@@ -112,29 +112,29 @@ export default function TaskCard({ item, onDelete }: Props) {
                     <Flame className="w-5 h-5" />
                 </div>
             </CardHeader>
-            <CardContent className="space-y-3 p-3">
+            <CardContent className="space-y-3 px-2 py-1">
                 <div>
-                    <h3 className="font-semibold 2xl:text-[15px] text-[14px] mb-1 break-all line-clamp-1">
+                    <h3 className="font-semibold 2xl:text-[15px] text-[13px] mb-1 break-all line-clamp-1">
                         {item.title}
                     </h3>
-                    <p className="text-xs 2xl:text-[14px] break-all line-clamp-3 text-muted-foreground">
+                    <p className="text-xs 2xl:text-[14px] break-all line-clamp-3 text-zinc-300">
                         {item.desc}
                     </p>
                 </div>
 
-                <div className="flex items-center gap-4 justify-between text-sm text-muted-foreground">
-                    <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 justify-between text-sm text-zinc-300">
+                    <div className="flex items-center gap-4 text-xs">
                         {item.deadline && (
                             <div className="flex items-center gap-1">
-                                <Calendar className="h-4 w-4" />
+                                <Calendar className="h-3.5 w-3.5" />
                                 <span>
                                     {format(item.deadline, "yyyy-MM-dd")}
                                 </span>
                             </div>
                         )}
                         {item?.todo && item.todo !== 0 ? (
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                <SquareCheckBig className="h-4 w-4" />
+                            <div className="flex items-center gap-1  ">
+                                <SquareCheckBig className="h-3.w-3.5 w-3.5" />
                                 <span>{`${item.finished}/${item.todo}`}</span>
                             </div>
                         ) : null}
@@ -147,7 +147,7 @@ export default function TaskCard({ item, onDelete }: Props) {
                         }}
                         className="p-2 rounded-md  hover:bg-red-500/20 hover:text-red-500"
                     >
-                        <Trash size={16} />
+                        <Trash size={14} />
                         
                     </button>
                 </div>

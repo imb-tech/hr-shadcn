@@ -18,13 +18,9 @@ export const useTaskDndHandlers = () => {
         options: { enabled: !!params?.id },
     })
 
-    const { mutate: mutateCard } = usePatch({
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${PROJECTS_TASKS}/${params?.id}`] }),
-    })
+    const { mutate: mutateCard } = usePatch()
 
-    const { mutate: mutateColumn } = usePost({
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${PROJECTS_TASKS}/${params?.id}`] }),
-    })
+    const { mutate: mutateColumn } = usePost()
 
     const handleAdd = (id: number) => {
         openModalCreate();
@@ -34,7 +30,7 @@ export const useTaskDndHandlers = () => {
     const onDelete = (id: number) => {
         setCurrentId(id)
     }
-
+ 
     const onDragEnd = (result: DropResult) => {
         const { destination, source, draggableId, type } = result
         if (!destination) return
@@ -67,14 +63,24 @@ export const useTaskDndHandlers = () => {
             const fromTasks = newColumns[fromIndex].tasks || []
             const toTasks = newColumns[toIndex].tasks || []
 
-            const taskIdx = fromTasks.findIndex((t:any) => t.id.toString() === draggableId)
+            const taskIdx = fromTasks.findIndex((t: any) => t.id.toString() === draggableId)
             if (taskIdx === -1) return
 
             const [movingTask] = fromTasks.splice(taskIdx, 1)
-            toTasks.unshift(movingTask)
 
-            newColumns[fromIndex].tasks = fromTasks
-            newColumns[toIndex].tasks = toTasks
+
+            if (fromIndex !== toIndex) {
+                toTasks.splice(destination.index, 0, movingTask)
+                newColumns[fromIndex].tasks = fromTasks
+                newColumns[toIndex].tasks = toTasks
+                newColumns[fromIndex].count = fromTasks.length
+                newColumns[toIndex].count = toTasks.length
+            } else {
+                const updatedTasks = [...fromTasks]
+                updatedTasks.splice(destination.index, 0, movingTask)
+                newColumns[fromIndex].tasks = updatedTasks
+                newColumns[fromIndex].count = updatedTasks.length
+            }
 
             queryClient.setQueryData(cacheKey, newColumns)
 
