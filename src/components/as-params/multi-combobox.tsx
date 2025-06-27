@@ -43,7 +43,7 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
     labelKey,
     valueKey,
     isLoading,
-    skeletonCount=5,
+    skeletonCount = 5,
     onSearchChange,
 }: ParamComboboxProps<T>) {
     const navigate = useNavigate()
@@ -56,21 +56,23 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
 
     const handleSelect = (option: T) => {
         const val = option[valueKey]
+        const stringVal = String(val)
 
-        const updatedValues = currentValues.includes(val)
-            ? currentValues.filter((v: string | number) => v !== val)
-            : [...currentValues, val]
+        const existing = (
+            search[paramName]?.toString().split(",") ?? []
+        ).filter(Boolean)
+
+        const updated = existing.includes(stringVal)
+            ? existing.filter((v: string) => v !== stringVal)
+            : [...existing, stringVal]
 
         navigate({
             search: {
                 ...search,
-                [paramName]: updatedValues.length
-                    ? updatedValues.join(",")
-                    : undefined,
+                [paramName]: updated.length ? updated.join(",") : undefined,
             },
         })
     }
-
     const handleCancel = () => {
         navigate({ search: { ...search, [paramName]: undefined } })
         setOpen(false)
