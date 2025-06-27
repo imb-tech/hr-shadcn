@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { usePatch } from "@/hooks/usePatch"
 import FormInput from "@/components/form/input"
 import { useQueryClient } from "@tanstack/react-query"
-import { useParams } from "@tanstack/react-router"
+import { useParams, useSearch } from "@tanstack/react-router"
 
 type Props = {
     column: Column
@@ -26,7 +26,8 @@ const TaskColumn = ({ column, index, handleAdd, onDelete }: Props) => {
     const [state, setState] = useState<"input" | "text">("text")
     const { openModal: openModalDelete } = useModal("project-delete")
     const queryClient = useQueryClient()
-    const params = useParams({ from: "/_main/project/$id" })
+    const params = useParams({ from: "/_main/project/$id" });
+    const search = useSearch({ from: "/_main/project/$id" })
     const form = useForm<FormValue>()
 
     const handleDeleteItem = (id: number) => {
@@ -36,7 +37,7 @@ const TaskColumn = ({ column, index, handleAdd, onDelete }: Props) => {
 
     const { mutate: mutateCreate } = usePatch({
         onSuccess: () => {
-            const cacheKey = [`${PROJECTS_TASKS}/${params?.id}`]
+            const cacheKey = [`${PROJECTS_TASKS}/${params?.id}`,...Object.values(search)]
             const cacheData = queryClient.getQueryData<Column[]>(cacheKey)
             const newName = form.getValues("name")
 

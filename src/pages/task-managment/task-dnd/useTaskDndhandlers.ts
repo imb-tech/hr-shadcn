@@ -14,7 +14,7 @@ export const useTaskDndHandlers = () => {
     const { openModal: openModalCreate } = useModal("task-modal")
     const queryClient = useQueryClient()
 
-    const { data, isSuccess, isLoading} = useGet<Column[]>(`${PROJECTS_TASKS}/${params?.id}`, {
+    const { data, isSuccess, isLoading } = useGet<Column[]>(`${PROJECTS_TASKS}/${params?.id}`, {
         params: search,
         options: { enabled: !!params?.id },
     })
@@ -36,7 +36,7 @@ export const useTaskDndHandlers = () => {
         const { destination, source, draggableId, type } = result
         if (!destination) return
 
-        const cacheKey = [`${PROJECTS_TASKS}/${params?.id}`]
+        const cacheKey = [`${PROJECTS_TASKS}/${params?.id}`, ...Object.values(search)]
         const prevColumns = queryClient.getQueryData<Column[]>(cacheKey)
         if (!prevColumns) return
 
