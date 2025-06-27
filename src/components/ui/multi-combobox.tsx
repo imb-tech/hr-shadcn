@@ -64,6 +64,13 @@ export function MultiCombobox<T extends Record<string, any>>({
         onAdd ? onAdd?.() : undefined
     }
 
+    const selectedSet = new Set(values)
+    const sortedOptions = options?.slice().sort((a, b) => {
+        const aSelected = selectedSet.has(a[valueKey])
+        const bSelected = selectedSet.has(b[valueKey])
+        return aSelected === bSelected ? 0 : aSelected ? -1 : 1
+    })
+
     return (
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -128,7 +135,7 @@ export function MultiCombobox<T extends Record<string, any>>({
                     <CommandList>
                         <CommandEmpty>Mavjud emas</CommandEmpty>
                         <CommandGroup className="!overflow-y-scroll">
-                            {options?.map((d, i: number) => (
+                            {sortedOptions?.map((d, i: number) => (
                                 <CommandItem
                                     key={i}
                                     onSelect={() => handleSelect(d)}

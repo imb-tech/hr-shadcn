@@ -90,6 +90,13 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
                   .join(", ")
             : undefined
 
+    const selectedSet = new Set(currentValues)
+    const sortedOptions = options.slice().sort((a, b) => {
+        const aSelected = selectedSet.has(String(a[valueKey]))
+        const bSelected = selectedSet.has(String(b[valueKey]))
+        return aSelected === bSelected ? 0 : aSelected ? -1 : 1
+    })
+
     return (
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -137,7 +144,7 @@ export function ParamMultiCombobox<T extends Record<string, any>>({
                     <CommandList>
                         <CommandEmpty>Mavjud emas</CommandEmpty>
                         <CommandGroup>
-                            {options?.map((d, i) => (
+                            {sortedOptions?.map((d, i) => (
                                 <CommandItem
                                     key={i}
                                     onSelect={() => handleSelect(d)}
