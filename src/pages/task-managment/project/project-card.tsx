@@ -18,6 +18,10 @@ import { Download, Edit, Trash } from "lucide-react"
 import clsx from "clsx"
 import { useNavigate } from "@tanstack/react-router"
 import { format } from "date-fns"
+import { useGet } from "@/hooks/useGet"
+import { TASKS_EXCEL } from "@/constants/api-endpoints"
+import { useEffect, useState } from "react"
+import { downloadExcel } from "@/lib/download-excel"
 
 type Props = {
     handleItem: (item: FormValues) => void
@@ -27,6 +31,26 @@ type Props = {
 
 function ProjectCard({ handleItem, handleDelete, item }: Props) {
     const navigate = useNavigate()
+    const [state, setState] = useState<boolean>(false)
+    const { data, isSuccess, isLoading } = useGet(`${TASKS_EXCEL}/${item.id}`, {
+        options: { enabled: state },
+        config: {
+            responseType: "blob",
+        },
+    })
+
+    const handleExcelItem = () => {
+        setState((prev) => !prev)
+    }
+
+    useEffect(() => {
+        if (isSuccess) {
+            downloadExcel({ data: data })
+        }
+    }, [data, isSuccess])
+
+
+
     return (
         <Card
             onClick={() =>
@@ -46,7 +70,11 @@ function ProjectCard({ handleItem, handleDelete, item }: Props) {
                 <div className="space-y-4">
                     <div className="flex justify-between  items-center gap-3">
                         <h1 className="font-semibold text-xl">{item.name}</h1>
-                        <AvatarGroup max={4} total={item?.users?.length} countClass="h-10 w-10 ">
+                        <AvatarGroup
+                            max={4}
+                            total={item?.users?.length}
+                            countClass="h-10 w-10 "
+                        >
                             {item?.users.map((item, index) => (
                                 <TooltipProvider key={index}>
                                     <Tooltip>
@@ -115,12 +143,15 @@ function ProjectCard({ handleItem, handleDelete, item }: Props) {
                             <Trash size={18} />
                         </Button>
                         <Button
+                            disabled={isLoading}
+                            loading={isLoading}
                             onClick={(e) => {
                                 e.stopPropagation()
+                                handleExcelItem()
                             }}
                             size={"sm"}
                         >
-                            <Download size={18} />
+                            {!isLoading && <Download size={18} />}
                         </Button>
                     </div>
                 </div>
