@@ -72,10 +72,10 @@ function ProjectCard({ handleItem, handleDelete, item }: Props) {
                             countClass="h-10 w-10 "
                         >
                             {item?.users.map((item, index) => (
-                                <TooltipProvider key={index}>
+                                <TooltipProvider delayDuration={0} key={index}>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
-                                            <Avatar className="h-10 w-10">
+                                            <Avatar className="h-10 w-10 ">
                                                 <AvatarImage
                                                     src={
                                                         item?.face || undefined

@@ -77,7 +77,7 @@ export default function TaskCard({ item, onDelete }: Props) {
             <CardHeader className="p-3 pb-0 flex space-y-0 flex-row justify-between items-start gap-3">
                 <AvatarGroup max={4} total={item?.users_data?.length} countClass={cn("h-7 w-7")}>
                     {item?.users_data?.map((user, index) => (
-                        <TooltipProvider key={index}>
+                        <TooltipProvider delayDuration={0}  key={index}>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Avatar className="h-7 w-7">
