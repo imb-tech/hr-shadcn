@@ -10,7 +10,7 @@ const TaskList = ({ tasks, onDelete }: Props) => {
     return tasks?.map((item, index) => (
         <Draggable
             key={item.id.toString()}
-            draggableId={item.id.toString()}
+            draggableId={`task-${item.id}`}
             index={index}
         >
             {(provided) => (
@@ -23,10 +23,7 @@ const TaskList = ({ tasks, onDelete }: Props) => {
                         ...provided.draggableProps.style,
                     }}
                 >
-                    <TaskCard
-                        item={item}
-                        onDelete={() => onDelete(item.id)}
-                    />
+                    <TaskCard item={item} onDelete={() => onDelete(item.id)} />
                 </div>
             )}
         </Draggable>

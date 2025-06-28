@@ -58,18 +58,21 @@ export const useTaskDndHandlers = () => {
             return
         }
 
+        const taskId = (draggableId.replace("task-", ""))
+        const fromColId = (source.droppableId.replace("column-", ""))
+        const toColId = (destination.droppableId.replace("column-", ""))
 
-        if (source.droppableId !== destination.droppableId) {
+        if (fromColId !== toColId) {
 
             const newColumns = [...prevColumns]
-            const fromIndex = newColumns.findIndex((col) => col.id.toString() === source.droppableId)
-            const toIndex = newColumns.findIndex((col) => col.id.toString() === destination.droppableId)
+            const fromIndex = newColumns.findIndex((col) => col.id.toString() === fromColId)
+            const toIndex = newColumns.findIndex((col) => col.id.toString() === toColId)
             if (fromIndex === -1 || toIndex === -1) return
 
             const fromTasks = [...newColumns[fromIndex].tasks]
             const toTasks = [...newColumns[toIndex].tasks]
 
-            const taskIdx = fromTasks.findIndex((t: any) => t.id.toString() === draggableId)
+            const taskIdx = fromTasks.findIndex((t: any) => t.id.toString() === taskId)
             if (taskIdx === -1) return
 
             const [movingTask] = fromTasks.splice(taskIdx, 1)
@@ -87,7 +90,7 @@ export const useTaskDndHandlers = () => {
                 tasks: toTasks,
                 count: toTasks.length,
             }
-            const filterTasks = newColumns?.find(col => col.id.toString() === destination.droppableId)?.tasks || [];
+            const filterTasks = newColumns?.find(col => col.id.toString() === toColId)?.tasks || [];
             const items = filterTasks.reduce((acc, item, index) => {
                 acc[item.id] = index + 1
                 return acc
@@ -96,17 +99,17 @@ export const useTaskDndHandlers = () => {
             queryClient.setQueryData(cacheKey, newColumns)
 
             mutateCard(MOVE_TASK, {
-                status: destination.droppableId,
+                status: toColId,
                 items
             })
         } else {
 
             const newColumns = [...prevColumns]
-            const colIndex = newColumns.findIndex((col) => col.id.toString() === source.droppableId)
+            const colIndex = newColumns.findIndex((col) => col.id.toString() === fromColId)
             if (colIndex === -1) return
 
             const tasks = [...newColumns[colIndex].tasks]
-            const taskIdx = tasks.findIndex((t: any) => t.id.toString() === draggableId)
+            const taskIdx = tasks.findIndex((t: any) => t.id.toString() === taskId)
             if (taskIdx === -1) return
 
             const [movingTask] = tasks.splice(taskIdx, 1)
@@ -117,7 +120,7 @@ export const useTaskDndHandlers = () => {
                 tasks,
                 count: tasks.length,
             }
-            const filterTasks = newColumns?.find(col => col.id.toString() === destination.droppableId)?.tasks || [];
+            const filterTasks = newColumns?.find(col => col.id.toString() === toColId)?.tasks || [];
             const items = filterTasks.reduce((acc, item, index) => {
 
                 acc[item.id] = index + 1
@@ -126,7 +129,7 @@ export const useTaskDndHandlers = () => {
 
             queryClient.setQueryData(cacheKey, newColumns)
             mutateCard(MOVE_TASK, {
-                status: destination.droppableId,
+                status: toColId,
                 items
             })
 
