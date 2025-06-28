@@ -43,8 +43,14 @@ const Header = ({
                     <div>
                         <SidebarTrigger className="text-gray-500 dark:text-white" />
                     </div>
-                    <Button onClick={() => i18n.changeLanguage("ru")}>
-                        RU
+                    <Button
+                        onClick={() =>
+                            i18n.changeLanguage(
+                                i18n.language === "uz" ? "ru" : "uz",
+                            )
+                        }
+                    >
+                        {i18n.language === "uz" ? "ru" : "uz"}
                     </Button>
                     <Link
                         className="flex justify-start  items-center gap-1"

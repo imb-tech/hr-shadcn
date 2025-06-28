@@ -22,11 +22,13 @@ import { DataTable } from "@/components/ui/datatable"
 import DeleteModal from "@/components/custom/delete-modal"
 import { Badge } from "@/components/ui/badge"
 import { formatMoney } from "@/lib/format-money"
+import { useTranslation } from "react-i18next"
 
 export default function HrPage() {
     const { openModal } = useModal("delete")
     const fileInputRef = useRef<HTMLInputElement>(null)
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const params = useSearch({ from: "__root__" })
     const [excelDown, setExcelDow] = useState({ down: false, template: false })
@@ -144,7 +146,7 @@ export default function HrPage() {
                         <div className="flex  mb-3 flex-row items-center gap-3 justify-between">
                             <div className="flex items-center gap-3">
                                 <h1 className="text-xl font-medium ">
-                                    Hodimlar ro'yxati
+                                    {t("Hodimlar ro'yxati")}
                                 </h1>
                                 <Badge className="text-sm">
                                     {formatMoney(data?.count)}
@@ -155,7 +157,10 @@ export default function HrPage() {
                                 className="flex gap-1"
                                 onClick={() => navigate({ to: "/hr-create" })}
                             >
-                                <Plus className="w-5 h-5" /> <span className="sm:block hidden">Hodim qo'shish</span>
+                                <Plus className="w-5 h-5" />{" "}
+                                <span className="sm:block hidden">
+                                    {t("Hodim qo'shish")}
+                                </span>
                             </PButton>
                         </div>
                         <div className="grid lg:grid-cols-3 gap-3 w-full mb-3">
@@ -166,7 +171,7 @@ export default function HrPage() {
                                 valueKey="id"
                                 options={dataPosition || []}
                                 paramName="role_id"
-                                label="Lavozimlar"
+                                label={t("Lavozimlar")}
                             />
                             <div className="w-full flex items-center sm:gap-3 gap-1.5">
                                 <PButton
@@ -175,7 +180,7 @@ export default function HrPage() {
                                     onClick={() => handleExcel("template")}
                                     className="w-full px-2"
                                 >
-                                    Shablon
+                                    {t("Shablon")}
                                     <FileText size={18} />
                                 </PButton>
                                 <>
@@ -193,7 +198,7 @@ export default function HrPage() {
                                         onClick={handleButtonClick}
                                         className="w-full px-2"
                                     >
-                                        Yuklash{" "}
+                                        {t("Yuklash")}
                                         <Upload size={18} className="ml-2" />
                                     </PButton>
                                 </>
@@ -203,7 +208,7 @@ export default function HrPage() {
                                     onClick={() => handleExcel("down")}
                                     className="w-full px-2"
                                 >
-                                    Yuklab olish <Download size={18} />
+                                    {t("Yuklab olish")} <Download size={18} />
                                 </PButton>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "@tanstack/react-router";
 import { Building2, CirclePlus, MapPin, Pencil } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 function OfficeList() {
   const { id } = useParams({ strict:false });
@@ -15,6 +16,7 @@ function OfficeList() {
 
   const scrollbarRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<Map<string | number, HTMLDivElement>>(new Map());
+  const { t } = useTranslation()
 
   const setCardRef = (id: string | number, element: HTMLDivElement | null) => {
     if (element) {
@@ -150,7 +152,7 @@ function OfficeList() {
               <CardContent className={cn("font-semibold py-4 h-full ")}>
                 <div className="flex items-center justify-center gap-2 h-full">
                   <p className="dark:text-gray-300 line-clamp-2 text-lg">
-                    Ofis qo'shish
+                    {t("Ofis qo'shish")}
                   </p>
                   <CirclePlus />
                 </div>

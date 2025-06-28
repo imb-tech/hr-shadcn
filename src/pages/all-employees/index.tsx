@@ -4,17 +4,18 @@ import { useNavigate, useSearch } from "@tanstack/react-router"
 import EmployeeCard from "../arrivals/employee-card"
 import { useAllEmployeesListCols } from "./cols"
 import ParamTabs from "@/components/as-params/tabs"
-import { Card, CardContent } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/datatable"
 import ParamPagination from "@/components/as-params/pagination"
 import ParamInput from "@/components/as-params/input"
 import { ParamCombobox } from "@/components/as-params/combobox"
 import { tabsParam } from "../absent"
 import EmptyBox from "@/components/custom/empty-box"
+import { useTranslation } from "react-i18next"
 
 export default function AllEmployeesPage() {
     const navigate = useNavigate()
     const search: SearchParams = useSearch({ from: "__root__" })
+    const { t } = useTranslation()
     const { id, tabs, ...otherParams } = search as {
         id: string
         [key: string]: any
@@ -45,23 +46,23 @@ export default function AllEmployeesPage() {
                     <EmployeeCard
                         key={index}
                         color={
-                            item.has_attendance
-                                ? item.attendance_status == 1
-                                    ? "text-green-400 bg-green-200"
-                                    : "text-orange-300 bg-orange-200"
-                                : item.excuses_status == 1
-                                ? "text-orange-400 bg-orange-200"
-                                : "text-red-500 bg-red-200"
+                            item.has_attendance ?
+                                item.attendance_status == 1 ?
+                                    "text-green-400 bg-green-200"
+                                :   "text-orange-300 bg-orange-200"
+                            : item.excuses_status == 1 ?
+                                "text-orange-400 bg-orange-200"
+                            :   "text-red-500 bg-red-200"
                         }
                         item={item}
                         status={
-                            item.has_attendance
-                                ? item.attendance_status == 1
-                                    ? "Vaqtida kelgan"
-                                    : "Kech qolgan"
-                                : item.excuses_status == 1
-                                ? "Sababli"
-                                : "Sababsiz"
+                            item.has_attendance ?
+                                item.attendance_status == 1 ?
+                                    t("Vaqtida kelgan")
+                                :   t("Kech qolgan")
+                            : item.excuses_status == 1 ?
+                                t("Sababli")
+                            :   t("Sababsiz")
                         }
                     />
                 ))}
@@ -76,14 +77,25 @@ export default function AllEmployeesPage() {
     const tabOptions = [
         {
             value: "",
-            label: `Barchasi (${
-                Number(
-                    Number(statusCount?.true) + Number(statusCount?.false),
-                ) || 0
-            })`,
+            label: t(`barcha_hodimlar`, {
+                count:
+                    Number(
+                        Number(statusCount?.true) + Number(statusCount?.false),
+                    ) || 0,
+            }),
         },
-        { value: "1", label: `Kelganlar (${statusCount?.true || 0})` },
-        { value: "0", label: `Kelmaganlar (${statusCount?.false || 0})` },
+        {
+            value: "1",
+            label: t(`kelganlar`, {
+                count: Number(statusCount?.true || 0),
+            }),
+        },
+        {
+            value: "0",
+            label: t(`kelmaganlar`, {
+                count: Number(statusCount?.false || 0),
+            }),
+        },
     ]
 
     return (
@@ -107,11 +119,11 @@ export default function AllEmployeesPage() {
                     valueKey="id"
                     options={dataPosition || []}
                     paramName="role_id"
-                    label="Lavozimlar"
+                    label={t("Lavozimlar")}
                 />
             </div>
 
-            {search.tabs === "card" ? (
+            {search.tabs === "card" ?
                 <div className="space-y-3">
                     {renderCardView()}
 
@@ -124,8 +136,7 @@ export default function AllEmployeesPage() {
                         </div>
                     )}
                 </div>
-            ) : (
-                <>
+            :   <>
                     <div className="hidden lg:block">
                         <DataTable
                             numeration
@@ -155,7 +166,7 @@ export default function AllEmployeesPage() {
                         )}
                     </div>
                 </>
-            )}
+            }
         </div>
     )
 }
