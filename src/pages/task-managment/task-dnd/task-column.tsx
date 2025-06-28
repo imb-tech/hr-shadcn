@@ -75,7 +75,7 @@ const TaskColumn = ({ column, index, handleAdd, onDelete }: Props) => {
     }
 
     return (
-        <Draggable draggableId={column.id.toString()} index={index}>
+        <Draggable draggableId={`column-${column.id}`} index={index} >
             {(provided) => (
                 <div
                     ref={provided.innerRef}
@@ -84,7 +84,7 @@ const TaskColumn = ({ column, index, handleAdd, onDelete }: Props) => {
                 >
                     <div {...provided.dragHandleProps}>
                         <Droppable
-                            droppableId={column.id.toString()}
+                           droppableId={`column-${column.id}`}
                             type="card"
                         >
                             {(dropProvided) => (
