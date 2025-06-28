@@ -6,6 +6,7 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import "./main.css"
 import { queryClient } from "./lib/query-client"
 import { setupAxiosInterceptors } from "./services/axios-instance"
+import "./i18n/i18n"
 
 const router = createRouter({
     routeTree,

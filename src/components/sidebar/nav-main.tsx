@@ -15,6 +15,7 @@ import { Link } from "@tanstack/react-router"
 import { Skeleton } from "../ui/skeleton"
 import { memo } from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { useTranslation } from "react-i18next"
 
 export const SkeletionNav = memo(({ isopen }: { isopen?: boolean }) => {
     return Array.from({ length: 7 }).map((_, i) => (
@@ -33,6 +34,11 @@ export function NavMain() {
     const mobile = useIsMobile()
     const { data } = useGet<Profile>(GET_ME)
     const { isLoading } = usePermissions()
+
+    const { t } = useTranslation()
+
+    console.log(t("Ofis"));
+    
 
     return (
         <SidebarGroup className={"lg:pt-[74px]"}>
@@ -57,10 +63,9 @@ export function NavMain() {
                             </Link>
                         </div>
                     </SidebarMenuItem>
-                    {isLoading ? (
+                    {isLoading ?
                         <SkeletionNav isopen={open} />
-                    ) : (
-                        links.map(({ title, ...item }) => (
+                    :   links.map(({ title, ...item }) => (
                             <Link
                                 {...item}
                                 key={title}
@@ -79,22 +84,22 @@ export function NavMain() {
                                         }}
                                     >
                                         {item.icon}
-                                        <span>{title}</span>
+                                        <span>{t(title)}</span>
                                     </SidebarMenuButton>
 
-                                    {item.to === "/requests" &&
-                                    open &&
-                                    data?.excuses ? (
+                                    {(
+                                        item.to === "/requests" &&
+                                        open &&
+                                        data?.excuses
+                                    ) ?
                                         <span className="absolute text-xs right-2 top-[50%] translate-y-[-50%] size-6 z-50 flex items-center justify-center bg-primary/15 rounded-full text-primary ">
                                             {data?.excuses}
                                         </span>
-                                    ) : (
-                                        ""
-                                    )}
+                                    :   ""}
                                 </SidebarMenuItem>
                             </Link>
                         ))
-                    )}
+                    }
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>
