@@ -2,7 +2,7 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd"
 import DeleteModal from "@/components/custom/delete-modal"
 import TaskColumn from "./task-column"
 import TodoListCreate from "./todo-list-create"
-import { TASKS } from "@/constants/api-endpoints"
+import { PROJECTS_TASKS, TASKS } from "@/constants/api-endpoints"
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -26,7 +26,7 @@ const TaskDnd = ({
     onDragEnd,
     params,
     isLoading,
-}: Props) => {
+}: Props) => { 
     return (
         <div className="py-3 flex items-start gap-3 w-full">
             <DragDropContext onDragEnd={onDragEnd}>
@@ -73,7 +73,7 @@ const TaskDnd = ({
             </DragDropContext>
             <TodoListCreate />
             <DeleteModal
-                refetchKeys={[`/projects/tasks/${params?.id}`]}
+                refetchKeys={[`${PROJECTS_TASKS}/${params?.id}`]}
                 modalKey="task-delete"
                 id={currentId}
                 path={TASKS}
