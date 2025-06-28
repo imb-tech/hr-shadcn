@@ -10,6 +10,7 @@ import { usePatch } from "@/hooks/usePatch"
 import FormInput from "@/components/form/input"
 import { useQueryClient } from "@tanstack/react-query"
 import { useParams, useSearch } from "@tanstack/react-router"
+import { Badge } from "@/components/ui/badge"
 
 type Props = {
     column: Column
@@ -26,7 +27,7 @@ const TaskColumn = ({ column, index, handleAdd, onDelete }: Props) => {
     const [state, setState] = useState<"input" | "text">("text")
     const { openModal: openModalDelete } = useModal("project-delete")
     const queryClient = useQueryClient()
-    const params = useParams({ from: "/_main/project/$id" });
+    const params = useParams({ from: "/_main/project/$id" })
     const search = useSearch({ from: "/_main/project/$id" })
     const form = useForm<FormValue>()
 
@@ -37,7 +38,10 @@ const TaskColumn = ({ column, index, handleAdd, onDelete }: Props) => {
 
     const { mutate: mutateCreate } = usePatch({
         onSuccess: () => {
-            const cacheKey = [`${PROJECTS_TASKS}/${params?.id}`,...Object.values(search)]
+            const cacheKey = [
+                `${PROJECTS_TASKS}/${params?.id}`,
+                ...Object.values(search),
+            ]
             const cacheData = queryClient.getQueryData<Column[]>(cacheKey)
             const newName = form.getValues("name")
 
@@ -101,7 +105,14 @@ const TaskColumn = ({ column, index, handleAdd, onDelete }: Props) => {
                                                     )
                                                 }}
                                             >
-                                                {`${column.name}${column.count > 0 ? ` (${column.count})` : ''}`}
+                                                {column.name}
+                                                {column.count > 0 ? (
+                                                    <Badge className="ml-1 text-xs">
+                                                        {column.count}
+                                                    </Badge>
+                                                ) : (
+                                                    ""
+                                                )}
                                             </h1>
                                         ) : (
                                             <form
