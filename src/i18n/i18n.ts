@@ -24,5 +24,10 @@ i18n
             caches: ['localStorage'],
         },
     })
+    .then(() => {
+        if (!localStorage.getItem('i18next')) {
+            i18n.changeLanguage('uz')
+        }
+    })
 
 export default i18n
