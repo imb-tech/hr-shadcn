@@ -117,12 +117,12 @@ export default function TaskCard({ item, onDelete }: Props) {
                     <h3 className="font-semibold 2xl:text-[15px] text-[13px] mb-1 break-all line-clamp-1">
                         {item.title}
                     </h3>
-                    <p className="text-xs 2xl:text-[14px] break-all line-clamp-3 text-zinc-300">
+                    <p className="text-xs 2xl:text-[14px] break-all line-clamp-3 dark:text-zinc-300 text-zinc-500">
                         {item.desc}
                     </p>
                 </div>
 
-                <div className="flex items-center gap-4 justify-between text-sm text-zinc-300">
+                <div className="flex items-center gap-4 justify-between text-sm dark:text-zinc-300 text-zinc-500">
                     <div className="flex items-center gap-4 text-xs">
                         {item.deadline && (
                             <div className="flex items-center gap-1">

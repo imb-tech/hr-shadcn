@@ -3,6 +3,8 @@ import FieldLabel from "./form-label"
 import FieldError from "./form-error"
 import { Combobox as ShadcnCombobox } from "@/components/ui/combobox"
 import { getNestedValue } from "./input"
+import { ClassNameValue } from "tailwind-merge"
+
 
 type ComboboxProps<TForm extends FieldValues, T extends Record<string, any>> = {
     name: Path<TForm>
@@ -19,6 +21,7 @@ type ComboboxProps<TForm extends FieldValues, T extends Record<string, any>> = {
     skeletonCount?: number
     isLoading?: boolean
     onSearchChange?: (val: string) => void
+    className?: ClassNameValue
 }
 
 export function FormCombobox<
@@ -39,6 +42,7 @@ export function FormCombobox<
     isLoading,
     skeletonCount,
     onSearchChange,
+    className,
 }: ComboboxProps<TForm, T>) {
     const error = getNestedValue(control._formState.errors, name)
     return (
@@ -72,6 +76,7 @@ export function FormCombobox<
                         isLoading={isLoading}
                         skeletonCount={skeletonCount}
                         onSearchChange={onSearchChange}
+                        className={className}
                     />
                 )}
             />

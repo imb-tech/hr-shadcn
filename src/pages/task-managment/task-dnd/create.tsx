@@ -19,6 +19,7 @@ import { useEffect, useRef, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { getPriorityColor } from "./task-card"
+import { Progress } from "@/components/ui/progress"
 
 type Props = {
     params: { id: string }
@@ -223,6 +224,23 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
         }
     }
 
+    const handleDeleteFile = (item: {
+        file: any
+        type: string
+        id?: number
+    }) => {
+        const currentFiles = form.watch("files")
+
+        const deletedFile: any = currentFiles.find((f) => f.file === item.file)
+        const fileId = deletedFile?.id
+        const updatedFiles = currentFiles.filter((f) => f.file !== item.file)
+        form.setValue("files", updatedFiles)
+
+        if (fileId) {
+            setDeletedItem((prev) => [...prev, fileId])
+        }
+    }
+
     useEffect(() => {
         if (task?.id) {
             form.reset({
@@ -236,6 +254,10 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
             })
         }
     }, [form, task, search])
+
+    const files = form.watch("files") || []
+    const images = files.filter((f) => f.type === "image")
+    const otherFiles = files.filter((f) => f.type !== "image")
 
     return (
         <form
@@ -292,32 +314,41 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
             />
 
             {/* Subtasks */}
-            <div className="space-y-2">
-                <label>Kichik vazifalar</label>
-                {fields?.map((field, index) => (
-                    <div
-                        key={field.id}
-                        className="flex items-center gap-2 mb-2"
-                    >
-                        <FormCheckbox
-                            control={form.control}
-                            name={`subtasks.${index}.finished`}
-                        />
-                        <FormInput
-                            methods={form}
-                            name={`subtasks.${index}.title`}
-                            className="flex-1"
-                        />
-                        <Button
-                            type="button"
-                            variant="destructive"
-                            className="min-w-8"
-                            onClick={() => remove(index)}
+            <div className="space-y-2 border p-3 rounded-md">
+                <label className="text-sm">Kichik vazifalar</label>
+
+                {fields?.map((field, index) => {
+                    const isFinished = form.watch(`subtasks.${index}.finished`) // kuzatuvchi
+                    return (
+                        <div
+                            key={field.id}
+                            className="flex items-center gap-2 mb-2"
                         >
-                            <X className="w-5 h-5" />
-                        </Button>
-                    </div>
-                ))}
+                            <FormCheckbox
+                                control={form.control}
+                                name={`subtasks.${index}.finished`}
+                            />
+                            <FormInput
+                                methods={form}
+                                name={`subtasks.${index}.title`}
+                                className={`flex-1 ${
+                                    isFinished
+                                        ? "line-through text-muted-foreground"
+                                        : ""
+                                }`}
+                            />
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                className="min-w-8"
+                                onClick={() => remove(index)}
+                            >
+                                <X className="w-5 h-5" />
+                            </Button>
+                        </div>
+                    )
+                })}
+
                 <Button
                     type="button"
                     className="min-w-8 w-full"
@@ -331,18 +362,42 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
                 >
                     <Plus className="w-5 h-5" /> Qo'shish
                 </Button>
+
+                {fields.length > 0 &&
+                    (() => {
+                        const subtasks = form.watch("subtasks") || []
+                        const finished = subtasks.filter(
+                            (task: any) => task.finished,
+                        ).length
+                        const total = fields.length
+                        const percent = Math.round((finished / total) * 100)
+
+                        return (
+                            <div className="space-y-1">
+                                <Progress value={percent} className="w-full" />
+                                <div className="text-xs text-muted-foreground text-right">
+                                    Bajarilgan: {percent}%
+                                </div>
+                            </div>
+                        )
+                    })()}
             </div>
 
             {/* Images */}
-            <div>
-                <div className="flex justify-between items-center mb-4">
+            <div className="space-y-2 border p-3 rounded-md">
+                <div
+                    className={cn(
+                        "flex justify-between  items-center ",
+                        images?.length && "border-b pb-2 mb-2 items-end",
+                    )}
+                >
                     <label>Rasmlar</label>
                     <Button
                         className="w-[115px]"
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                     >
-                        <Paperclip className="w-4 h-4 mr-1" /> Fayllar
+                        <Paperclip className="w-4 h-4 mr-1" /> Yuklash
                     </Button>
                 </div>
                 <input
@@ -352,83 +407,67 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
                     onChange={handleFileUpload}
                     className="hidden"
                 />
-                <div className="grid grid-cols-3 gap-2">
-                    {form
-                        .watch("files")
-                        ?.slice()
-                        ?.sort((a, b) => (a.type === "image" ? -1 : 1))
-                        ?.map((item, i) => (
-                            <div
-                                key={i}
-                                className={cn(
-                                    "relative",
-                                    item.type !== "image" &&
-                                        "col-span-3 flex items-center justify-between gap-3",
-                                )}
-                            >
-                                {item.type === "image" ? (
-                                    <SeeInView
-                                        url={
-                                            typeof item.file !== "string"
-                                                ? URL.createObjectURL(item.file)
-                                                : item.file
-                                        }
-                                        fullWidth
-                                        className="w-full h-[200px] object-cover rounded-md border"
-                                    />
-                                ) : (
-                                    <div className="w-full text-sm flex flex-col bg-secondary rounded-md px-3 py-[10px]">
-                                        <span className="line-clamp-1 break-all">
-                                            {typeof item.file === "string"
-                                                ? item.file
-                                                : item.file.name}
-                                        </span>
-                                    </div>
-                                )}
-
+                {images?.length ? (
+                    <div className="grid grid-cols-3 gap-2">
+                        {images.map((item, i) => (
+                            <div key={i} className="relative">
+                                <SeeInView
+                                    url={
+                                        typeof item.file !== "string"
+                                            ? URL.createObjectURL(item.file)
+                                            : item.file
+                                    }
+                                    fullWidth
+                                    className="w-full h-[200px] object-cover rounded-md border"
+                                />
                                 <Button
-                                    variant={"destructive"}
+                                    variant="destructive"
                                     type="button"
-                                    className={cn(
-                                        item.type === "image"
-                                            ? " bg-red-500 hover:bg-red-500/90 absolute text-white w-7 h-7 p-0 top-0 right-0 min-w-8 "
-                                            : "",
-                                    )}
-                                    onClick={() => {
-                                        const currentFiles = form.watch("files")
-
-                                        const deletedFile: any =
-                                            currentFiles.find(
-                                                (f) => f.file === item.file,
-                                            )
-                                        const fileId = deletedFile?.id
-                                        const updatedFiles =
-                                            currentFiles.filter(
-                                                (f) => f.file !== item.file,
-                                            )
-                                        form.setValue("files", updatedFiles)
-
-                                        if (fileId) {
-                                            setDeletedItem((prev) => [
-                                                ...prev,
-                                                fileId,
-                                            ])
-                                        }
-                                    }}
+                                    className="bg-red-500 hover:bg-red-500/90 absolute text-white w-7 h-7 p-0 top-0 right-0 min-w-8"
+                                    onClick={() => handleDeleteFile(item)}
                                 >
                                     <X className="w-4 h-4" />
                                 </Button>
                             </div>
                         ))}
-                </div>
+                    </div>
+                ) : null}
+
+                {otherFiles?.length ? (
+                    <div className="flex flex-col gap-2  mb-4">
+                        <label className="border-b pb-2">Fayllar</label>
+                        {otherFiles.map((item, i) => (
+                            <div
+                                key={i}
+                                className="col-span-3 flex items-center justify-between gap-3"
+                            >
+                                <div className="w-full text-sm flex flex-col bg-secondary rounded-md px-3 py-[10px]">
+                                    <span className="line-clamp-1 break-all">
+                                        {typeof item.file === "string"
+                                            ? getFilenameFromMedia(item.file)
+                                            : item.file.name}
+                                    </span>
+                                </div>
+                                <Button
+                                    variant="destructive"
+                                    type="button"
+                                    onClick={() => handleDeleteFile(item)}
+                                >
+                                    <X className="w-4 h-4" />
+                                </Button>
+                            </div>
+                        ))}
+                    </div>
+                ) : null}
             </div>
 
             {/* Voice Notes */}
-            <div>
+            <div className={"border p-3 rounded-md"}>
                 <div
                     className={cn(
                         "flex justify-between items-center  ",
-                        form.watch("voiceNote")?.length && "mb-4",
+                        form.watch("voiceNote")?.length &&
+                            "mb-4 border-b pb-2 ",
                     )}
                 >
                     <label>Ovozli xabarlar</label>
@@ -497,10 +536,6 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
         </form>
     )
 }
-
-
-
-
 
 const getFileType = (file: File): string => {
     const mimeType = file?.type
@@ -573,3 +608,8 @@ const options = [
         key: 3,
     },
 ]
+
+const getFilenameFromMedia = (url: string) => {
+    const index = url.indexOf("media/")
+    return index !== -1 ? url.slice(index + "media/".length) : url
+}
