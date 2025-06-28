@@ -4,6 +4,7 @@ import SeeInView from "../ui/see-in-view"
 import { Label } from "../ui/label"
 import { cn } from "@/lib/utils"
 import FieldError from "./form-error"
+import { ReactNode } from "react"
 
 export default function FormImagePicker<IForm extends FieldValues>({
     name,
@@ -18,7 +19,18 @@ export default function FormImagePicker<IForm extends FieldValues>({
         formState: { errors },
     } = methods
     return (
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center gap-3">
+            {label && (
+                <Label
+                    htmlFor={name}
+                    className={cn("bg-secondary w-full text-center p-3 rounded-md",
+                        !!errors?.[name] && "text-destructive",
+                        "cursor-pointer",
+                    )}
+                >
+                    {label}
+                </Label>
+            )}
             <Controller
                 name={name}
                 control={control}
@@ -57,17 +69,6 @@ export default function FormImagePicker<IForm extends FieldValues>({
                     </div>
                 )}
             />
-            {label && (
-                <Label
-                    htmlFor={name}
-                    className={cn("bg-secondary w-full text-center p-3 rounded-md",
-                        !!errors?.[name] && "text-destructive",
-                        "cursor-pointer",
-                    )}
-                >
-                    {label}
-                </Label>
-            )}
             {!hideError && control._formState.errors?.[name] && (
                 <FieldError>
                     {control._formState.errors[name]?.message as string}
@@ -79,7 +80,7 @@ export default function FormImagePicker<IForm extends FieldValues>({
 
 interface ImagePickerProps<IForm extends FieldValues> {
     name: Path<IForm>
-    label?: string
+    label?: string | ReactNode
     disabled?: boolean
     required?: boolean
     methods: UseFormReturn<IForm>

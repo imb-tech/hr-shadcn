@@ -76,7 +76,7 @@ export default function DaysAccordion() {
                         }}
                     >
                         <AccordionItem
-                            value={String(item?.date?.slice(-2))}
+                            value={String(item?.date)}
                             className={cn(
                                 index === info.length - 1 && "!border-none",
                             )}

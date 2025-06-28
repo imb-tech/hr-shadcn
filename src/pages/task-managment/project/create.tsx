@@ -6,6 +6,7 @@ import { useModal } from "@/hooks/useModal"
 import { usePatch } from "@/hooks/usePatch"
 import { usePost } from "@/hooks/usePost"
 import { useQueryClient } from "@tanstack/react-query"
+import { Image } from "lucide-react"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -69,16 +70,16 @@ function ProjectCreate({ item }: Props) {
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormImagePicker
-                methods={form}
-                name="background"
-                label="Orqa fon rasmi"
-            />
             <FormInput
                 methods={form}
                 name="name"
                 label="Loyiha nomi"
                 required
+            />
+            <FormImagePicker
+                methods={form}
+                name="background"
+                label={<div className="flex items-center gap-2 justify-center"><Image size={20}/> <span>Orqa fon rasmi</span></div>}
             />
             <Button
                 disabled={isPendingCreate || isPendingUpdate}

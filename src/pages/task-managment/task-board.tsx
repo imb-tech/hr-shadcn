@@ -55,7 +55,12 @@ const TaskManagment = () => {
                 />
             </div>
 
-            <Modal onClose={closeModal} size="max-w-3xl" modalKey="task-modal">
+            <Modal
+                onClose={closeModal}
+                size="max-w-3xl"
+                title={<span className="opacity-0">Vazifalar qo'shish</span>}
+                modalKey="task-modal"
+            >
                 <CompleteTaskManager currentId={currentId} params={params} />
             </Modal>
             <DeleteModal

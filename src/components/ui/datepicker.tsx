@@ -9,6 +9,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { useState } from "react"
 
 export function DatePicker({
     date,
@@ -35,8 +36,9 @@ export function DatePicker({
     variant?: "secondary" | "default"
     titleHidden?: boolean
 }) {
+    const [open, setOpen] = useState(false)
     return (
-        <Popover>
+        <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
                     size={size}
@@ -55,7 +57,7 @@ export function DatePicker({
                         className={cn(
                             "text-muted-foreground h-4 w-4 ",
                             date && "mr-1 ",
-                            !titleHidden && "text-primary"
+                            !titleHidden && "text-primary",
                         )}
                     />
                     {date
@@ -72,9 +74,13 @@ export function DatePicker({
                     {...calendarProps}
                     mode="single"
                     selected={new Date(date || (defaultValue as Date))}
-                    onSelect={(newDate) =>
+                    onSelect={(newDate) => {
+                        setOpen(false)
                         setDate(format(new Date(newDate as Date), "yyyy-MM-dd"))
-                    }
+                    }}
+                    disabled={(date) =>
+                          date < new Date()
+                        }
                 />
             </PopoverContent>
         </Popover>

@@ -21,6 +21,7 @@ import { format } from "date-fns"
 import { useGet } from "@/hooks/useGet"
 import { TASKS_EXCEL } from "@/constants/api-endpoints"
 import { downloadExcel } from "@/lib/download-excel"
+import { useImageStore } from "@/store/imageStore"
 
 type Props = {
     handleItem: (item: FormValues) => void
@@ -30,15 +31,13 @@ type Props = {
 
 function ProjectCard({ handleItem, handleDelete, item }: Props) {
     const navigate = useNavigate()
-    const { data, isSuccess, isLoading, refetch } = useGet(
-        `${TASKS_EXCEL}/${item.id}`,
-        {
-            options: { enabled: false },
-            config: {
-                responseType: "blob",
-            },
+    const image = useImageStore((state) => state.image)
+    const { isLoading, refetch } = useGet(`${TASKS_EXCEL}/${item.id}`, {
+        options: { enabled: false },
+        config: {
+            responseType: "blob",
         },
-    )
+    })
 
     const handleExcelItem = async () => {
         const response = await refetch()
@@ -59,7 +58,9 @@ function ProjectCard({ handleItem, handleDelete, item }: Props) {
                 "bg-background/80 bg-blend-overlay cursor-pointer min-h-[244px]  bg-center bg-cover",
             )}
             style={{
-                backgroundImage: `url(${item.background})`,
+                backgroundImage: item?.background
+                    ? `url(${item.background})`
+                    : `url(${image})`,
             }}
         >
             <CardContent className="h-full flex justify-between flex-col gap-4">
