@@ -103,7 +103,6 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
 
     const onSubmit = async (data: QuoteCard) => {
         const formData = new FormData()
-        const dirtyFields = form.formState.dirtyFields
         const currentFiles = form.watch("files")
 
         if (currentFiles?.length) {
@@ -160,8 +159,7 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
 
         for (const [key, value] of Object.entries(data)) {
             if (
-                !["files", "subtasks", "voiceNote", "users"].includes(key) &&
-                (dirtyFields as any)[key]
+                !["files", "subtasks", "voiceNote", "users"].includes(key)
             ) {
                 formData.append(key, String(value))
             }
