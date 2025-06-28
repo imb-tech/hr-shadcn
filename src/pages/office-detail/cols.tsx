@@ -2,14 +2,17 @@ import SeeInView from "@/components/ui/see-in-view"
 import { cn } from "@/lib/utils"
 import { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
 
 export const useWorkerInfoCols = () => {
+    const { t } = useTranslation()
+
     return useMemo<ColumnDef<WorkerAttendance>[]>(
         () => [
             {
-                header: "Rasm",
+                header: t("Rasm"),
                 accessorKey: "face",
-                cell: ({row}) => {
+                cell: ({ row }) => {
                     return (
                         <SeeInView
                             url={String(row.original.face)}
@@ -18,9 +21,9 @@ export const useWorkerInfoCols = () => {
                     )
                 },
             },
-            { header: "FIO", accessorKey: "full_name" },
+            { header: t("FIO"), accessorKey: "full_name" },
             {
-                header: "Ish vaqti",
+                header: t("Ish vaqti"),
                 accessorKey: "id",
                 cell({ row }) {
                     const { work_shift_start, work_shift_end } = row.original
@@ -33,63 +36,65 @@ export const useWorkerInfoCols = () => {
                 },
             },
             {
-                header: "Keldi",
+                header: t("Keldi"),
                 accessorKey: "id",
                 cell({ row }) {
                     const { attendance } = row.original
                     return (
                         <span>
-                            {attendance?.attendance_time
-                                ? attendance?.attendance_time?.slice(0, 5)
-                                : "-"}
+                            {attendance?.attendance_time ?
+                                attendance?.attendance_time?.slice(0, 5)
+                            :   "-"}
                         </span>
                     )
                 },
             },
             {
-                header: "Ketdi",
+                header: t("Ketdi"),
                 accessorKey: "role_id",
                 cell({ row }) {
                     const { attendance } = row.original
                     return (
                         <span>
-                            {attendance?.left_time
-                                ? attendance?.left_time?.slice(0, 5)
-                                : "-"}
+                            {attendance?.left_time ?
+                                attendance?.left_time?.slice(0, 5)
+                            :   "-"}
                         </span>
                     )
                 },
             },
             {
-                header: "Kechikish",
+                header: t("Kechikish"),
                 accessorKey: "id",
                 cell({ row }) {
                     const { attendance, work_shift_start } = row.original
-                    return attendance && attendance.status === 0
-                        ? getTimeDifference(
-                              work_shift_start,
-                              attendance.attendance_time,
-                          )
-                        : "-"
+                    return attendance && attendance.status === 0 ?
+                            getTimeDifference(
+                                work_shift_start,
+                                attendance.attendance_time,
+                            )
+                        :   "-"
                 },
             },
             {
-                header: "Erta ketish vaqti",
+                header: t("Erta ketish vaqti"),
                 accessorKey: "id",
                 cell({ row }) {
                     const { attendance, work_shift_end } = row.original
-                    return attendance &&
-                        attendance.status === 0 &&
-                        attendance?.left_time
-                        ? getTimeDifference(
-                              attendance.left_time,
-                              work_shift_end,
-                          )
-                        : "-"
+                    return (
+                            attendance &&
+                                attendance.status === 0 &&
+                                attendance?.left_time
+                        ) ?
+                            getTimeDifference(
+                                attendance.left_time,
+                                work_shift_end,
+                            )
+                        :   "-"
                 },
             },
             {
-                header: "Ishlagan soati",
+                header: t("Ishlagan soati"),
                 accessorKey: "id",
                 cell({ row }) {
                     return (
@@ -98,21 +103,21 @@ export const useWorkerInfoCols = () => {
                 },
             },
             {
-                header: "Status",
+                header: t("Status"),
                 accessorKey: "entry_log_status",
                 cell({ row }) {
                     return (
                         <div className="flex items-center gap-4 justify-center">
                             <span
                                 className={cn(
-                                    row.original.entry_log_status === 1
-                                        ? "text-green-400"
-                                        : "text-orange-300",
+                                    row.original.entry_log_status === 1 ?
+                                        "text-green-400"
+                                    :   "text-orange-300",
                                 )}
                             >
-                                {row.original.entry_log_status === 1
-                                    ? "Ofisda"
-                                    : "Ofisdan tashqarida"}
+                                {row.original.entry_log_status === 1 ?
+                                    t("Ofisda")
+                                :   t("Ofisdan tashqarida")}
                             </span>
                         </div>
                     )
@@ -157,7 +162,7 @@ export function getTimeDifference(time1: string, time2: string): string {
     const formattedMinutes = String(diffMinutes).padStart(2, "0")
     const formattedSeconds = String(diffSeconds).padStart(2, "0")
 
-    return !isNegative
-        ? `${formattedHours}:${formattedMinutes}:${formattedSeconds}`
-        : "-"
+    return !isNegative ?
+            `${formattedHours}:${formattedMinutes}:${formattedSeconds}`
+        :   "-"
 }

@@ -12,9 +12,44 @@
     "Parol": "Пароль",
     "Kirish": "Войти",
 
+    "Ofis qo'shish": "Добавить офис",
+    "Ofis tahrirlash": "Редактировать офис",
     "Ofis nomi": "Название офиса",
     "Manzil": "Адрес",
     "Tushlik boshlanish vaqti": "Время начала обеда",
     "Tushlik tugash vaqti": "Время окончания обеда",
-    "Saqlash": "Сохранить"
+    "Saqlash": "Сохранить",
+
+    "Hodimlar soni": "Количество сотрудников",
+    "Kelganlar": "Пришедшие",
+    "Vaqtida kelganlar": "Пришедшие вовремя",
+    "Kech qolganlar": "Опоздавшие",
+    "Kelmaganlar": "Отсутствующие",
+    "Sababli": "По уважительной причине",
+    "Sababsiz": "Без уважительной причины",
+
+    "Lavozimlar bo'yicha yo'qlama": "Отчёт по должностям",
+    "Lavozim": "Должность",
+    "Kelmaganlar / Sababli": "Отсутств. / Причина есть",
+    "Kelmaganlar / Sababsiz": "Отсутств. / Без причины",
+    "Jami ishchilar": "Всего сотрудников",
+
+    "Rasm": "Фото",
+    "FIO": "ФИО",
+    "Ish vaqti": "Рабочее время",
+    "Keldi": "Пришел",
+    "Ketdi": "Ушел",
+    "Kechikish": "Опоздание",
+    "Erta ketish vaqti": "Время раннего ухода",
+    "Ishlagan soati": "Отработанные часы",
+    "Status": "Статус",
+    "Ofisda": "В офисе",
+    "Ofisdan tashqarida": "Вне офиса",
+
+    "Hodimlar ro'yxati": "Список сотрудников",
+    "barcha_hodimlar": "Всего ({{count}})",
+    "kelganlar": "Пришли ({{count}})",
+    "kelmaganlar": "Отсутствуют ({{count}})",
+
+    "Qidiruv...": ""
 }

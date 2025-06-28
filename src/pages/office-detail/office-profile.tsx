@@ -14,14 +14,16 @@ import {
     UserX,
     XCircle,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 export default function AttendanceDashboard() {
     const search = useSearch({ from: "__root__" })
-    const { id } = useParams({ strict:false })
+    const { id } = useParams({ strict: false })
     const { data: dataDetails } = useGet<CompanyStats>(
         `${OFFICE_DETAILS}/${id}`,
         { params: { date: search.date }, options: { enabled: Boolean(id) } },
     )
+    const { t } = useTranslation()
 
     const total = dataDetails?.total ?? 0
     const usersInCompany =
@@ -38,9 +40,9 @@ export default function AttendanceDashboard() {
 
         const percent = (value / total) * 100
 
-        return percent % 1 === 0
-            ? `${percent.toFixed(0)}%`
-            : `${percent.toFixed(2)}%`
+        return percent % 1 === 0 ?
+                `${percent.toFixed(0)}%`
+            :   `${percent.toFixed(2)}%`
     }
 
     const { checkAllow } = useCheckPermission()
@@ -59,7 +61,7 @@ export default function AttendanceDashboard() {
                                 <Users className="h-6 w-6 text-primary" />
                             </div>
                             <h1 className="text-2xl font-bold dark:text-primary-500">
-                                Hodimlar soni
+                                {t("Hodimlar soni")}
                             </h1>
                         </div>
                         <span className="text-3xl font-bold dark:text-primary-500 ">
@@ -89,7 +91,7 @@ export default function AttendanceDashboard() {
                                         <UserCheck className="h-5 w-5" />
                                     </div>
                                     <h1 className="text-2xl font-light text-[#10B981]">
-                                        Kelganlar
+                                        {t("Kelganlar")}
                                     </h1>
                                 </div>
                                 <div className="flex items-center gap-2 text-[#10B981]">
@@ -117,15 +119,14 @@ export default function AttendanceDashboard() {
                                     className="flex items-center relative justify-between hover:pr-12 group transition-all duration-300 cursor-pointer"
                                     search={{ id: String(id), status: "1" }}
                                     to={
-                                        checkAllow("roles_view")
-                                            ? "/arrivals"
-                                            : "/"
+                                        checkAllow("roles_view") ? "/arrivals"
+                                        :   "/"
                                     }
                                 >
                                     <div className="flex items-center gap-2">
                                         <Clock className="h-4 w-4 text-[#6dceaef5]" />
                                         <span className="text-sm text-[#6dceaef5]">
-                                            Vaqtida kelganlar
+                                            {t("Vaqtida kelganlar")}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -150,15 +151,14 @@ export default function AttendanceDashboard() {
                                     className="flex items-center justify-between relative hover:pr-12 group transition-all duration-300"
                                     search={{ id: String(id), status: "0" }}
                                     to={
-                                        checkAllow("roles_view")
-                                            ? "/arrivals"
-                                            : "/"
+                                        checkAllow("roles_view") ? "/arrivals"
+                                        :   "/"
                                     }
                                 >
                                     <div className="flex items-center gap-2 cursor-pointer">
                                         <Clock className="h-4 w-4 text-[#FDBA74]" />
                                         <span className="text-sm text-[#FDBA74]">
-                                            Kech qolganlar
+                                            {t("Kech qolganlar")}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -197,7 +197,7 @@ export default function AttendanceDashboard() {
                                         <UserX className="h-5 w-5" />
                                     </div>
                                     <h1 className="text-2xl font-light text-[#DC2626]">
-                                        Kelmaganlar
+                                        {t("Kelmaganlar")}
                                     </h1>
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -225,15 +225,15 @@ export default function AttendanceDashboard() {
                                     className="flex items-center justify-between relative hover:pr-12 group transition-all duration-300"
                                     search={{ id: String(id), status: "1" }}
                                     to={
-                                        checkAllow("roles_view")
-                                            ? "/absent"
-                                            : "/"
+                                        checkAllow("roles_view") ? "/absent" : (
+                                            "/"
+                                        )
                                     }
                                 >
                                     <div className="flex items-center gap-2">
                                         <AlertCircle className="h-4 w-4 text-[#FBBF24]" />
                                         <span className="text-sm text-[#FBBF24]">
-                                            Sababli
+                                            {t("Sababli")}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -263,15 +263,15 @@ export default function AttendanceDashboard() {
                                     className="flex items-center justify-between relative hover:pr-12 group transition-all duration-300"
                                     search={{ id: String(id), status: "0" }}
                                     to={
-                                        checkAllow("roles_view")
-                                            ? "/absent"
-                                            : "/"
+                                        checkAllow("roles_view") ? "/absent" : (
+                                            "/"
+                                        )
                                     }
                                 >
                                     <div className="flex items-center gap-2">
                                         <XCircle className="h-4 w-4 text-[#e75a5a]" />
                                         <span className="text-sm text-[#e75a5a]">
-                                            Sababsiz
+                                            {t("Sababsiz")}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2">

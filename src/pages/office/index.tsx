@@ -8,6 +8,7 @@ import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
 import { useModal } from "@/hooks/useModal"
 import { useStore } from "@/hooks/use-store"
+import { useTranslation } from "react-i18next"
 
 export default function OfficePage() {
     const { openModal } = useModal("delete")
@@ -15,6 +16,8 @@ export default function OfficePage() {
     const { setStore, store } = useStore<Office>("office-data")
     const navigate = useNavigate()
     const { data: companies, isLoading } = useGet<FeatureCollection>(COMPANIES)
+
+    const { t } = useTranslation()
 
     function handleEdit(itm: Office) {
         setStore(itm)
@@ -49,7 +52,7 @@ export default function OfficePage() {
 
             <DeleteModal id={store?.id} path={COMPANIES} />
 
-            <Modal size="max-w-3xl" title="Ofis qo'shish">
+            <Modal size="max-w-3xl" title={t("Ofis qo'shish")}>
                 <CreateOfficeForm />
             </Modal>
         </div>

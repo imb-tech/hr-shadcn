@@ -8,8 +8,8 @@ import axios from "axios"
 const baseURL = import.meta.env.VITE_DEFAULT_URL
 const partURL = import.meta.env.VITE_DEFAULT_PART_URL
 
-// const url = import.meta.env.DEV ? "demo.imbtech.uz" : "demo.imbtech.uz"
-const baseURLOrigin = 'http://192.168.1.123:80/api/v1/'
+const url = import.meta.env.DEV ? "demo.imbtech.uz" : window.location.hostname
+export const baseURLOrigin = 'https://' + url.split('.')[0] + partURL
 
 
 

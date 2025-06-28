@@ -2,6 +2,7 @@ import { useNavigate, useSearch } from "@tanstack/react-router"
 import { useEffect, useRef } from "react"
 import { Input, InputProps } from "../ui/input"
 import { DEBOUNCETIME } from "@/constants/default"
+import { useTranslation } from "react-i18next"
 
 type ParamInputProps = {
     searchKey?: string
@@ -18,6 +19,7 @@ export default function ParamInput({
     const params: any = useSearch({ strict: false })
     const inputRef = useRef<HTMLInputElement>(null)
     const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const { t } = useTranslation()
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -28,7 +30,7 @@ export default function ParamInput({
                 },
             })
         }
-    } 
+    }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value
@@ -59,7 +61,7 @@ export default function ParamInput({
         <>
             <Input
                 defaultValue={params[searchKey]}
-                placeholder={"Qidiruv..."}
+                placeholder={t("Qidiruv...")}
                 type="search"
                 ref={inputRef}
                 onChange={handleInputChange}
