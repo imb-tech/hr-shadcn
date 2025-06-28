@@ -16,9 +16,9 @@ function RouteComponent() {
             rightComponent={
                 <div className="flex gap-2 items-center">
                     <ExportAsExcel
-                        url="hr/daily-excel-report"
+                        url="hr/from-to-excel-report"
                         name="hodimlar_davomati"
-                        inputDate
+                        inputInterval
                     />
                     <ParamDatePicker
                         titleHidden={false}
