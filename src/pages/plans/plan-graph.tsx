@@ -7,13 +7,13 @@ import { months } from "./utils"
 
 export default function PlanGraph() {
     const curr = new Date().getMonth() + 1
-    const { data } = useGet<Profile>(GET_ME)
+    const { data } = useGet<Profile>(GET_ME);
 
     return (
         <div className="gap-3">
             <Card className="p-2 rounded-md">
                 <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-2">
-                    {months.map((month) => {
+                    {months.filter((month) => Number(month.key) >= curr).map((month) => {
                         const color = getMonthColor(
                             Number(month.key),
                             data?.balance ?? 0,

@@ -324,10 +324,13 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
                             key={field.id}
                             className="flex items-center gap-2 mb-2"
                         >
-                            <FormCheckbox
-                                control={form.control}
-                                name={`subtasks.${index}.finished`}
-                            />
+                            <div className="flex items-center gap-2">
+                                <FormCheckbox
+                                    control={form.control}
+                                    name={`subtasks.${index}.finished`}
+                                />
+                                <span className="pb-1">{index + 1}.</span>
+                            </div>
                             <FormInput
                                 methods={form}
                                 name={`subtasks.${index}.title`}
@@ -374,7 +377,10 @@ export default function CompleteTaskManager({ currentId, params }: Props) {
 
                         return (
                             <div className="space-y-1">
-                                <Progress value={percent} className="w-full" />
+                                <Progress
+                                    value={percent}
+                                    className="h-1.5 bg-[#FDBA74]"
+                                />
                                 <div className="text-xs text-muted-foreground text-right">
                                     Bajarilgan: {percent}%
                                 </div>

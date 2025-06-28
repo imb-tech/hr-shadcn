@@ -32,6 +32,7 @@ export default function OfficeDetail() {
         Array.from({ length: 8 })?.map((_, index) => (
             <PositonCard key={index} />
         ))
+        
 
     return (
         <div className=" w-full">

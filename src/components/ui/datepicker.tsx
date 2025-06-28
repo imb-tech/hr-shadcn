@@ -23,6 +23,7 @@ export function DatePicker({
     size = "lg",
     variant = "secondary",
     titleHidden = true,
+    disabledCalendar
 }: {
     date: Date | any
     setDate: any
@@ -35,6 +36,7 @@ export function DatePicker({
     size?: "default" | "lg" | "sm" | "icon"
     variant?: "secondary" | "default"
     titleHidden?: boolean
+    disabledCalendar?:boolean
 }) {
     const [open, setOpen] = useState(false)
     return (
@@ -78,9 +80,7 @@ export function DatePicker({
                         setOpen(false)
                         setDate(format(new Date(newDate as Date), "yyyy-MM-dd"))
                     }}
-                    disabled={(date) =>
-                          date < new Date()
-                        }
+                    disabled={disabledCalendar}
                 />
             </PopoverContent>
         </Popover>

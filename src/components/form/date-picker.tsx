@@ -14,6 +14,7 @@ export function FormDatePicker<TForm extends FieldValues>({
     calendarProps,
     hideError = true,
     placeholder,
+    disabledCalendar,
 }: thisProps<TForm>) {
     const error = getNestedValue(control._formState.errors, name)
     return (
@@ -49,6 +50,7 @@ export function FormDatePicker<TForm extends FieldValues>({
                         disabled={field.disabled || disabled}
                         fullWidth
                         isError={!!error}
+                        disabledCalendar={disabledCalendar}
                     />
                 )}
             />
@@ -70,4 +72,5 @@ interface thisProps<TForm extends FieldValues> {
     calendarProps?: CalendarProps | undefined
     hideError?: boolean
     placeholder?: string
+    disabledCalendar?:boolean
 }

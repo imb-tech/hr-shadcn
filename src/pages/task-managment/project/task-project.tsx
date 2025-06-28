@@ -24,6 +24,12 @@ function TaskBoard({}: Props) {
     >(`${FILTER}user`, {
         params: { search: searchCustomer },
     })
+    const { data: dataStatus } = useGet<{ todo: number; finished: number }>(
+        `taskly/tasks-stats`,
+        {
+            params: { search: search },
+        },
+    )
     const {
         data: dataProjects,
         isSuccess: isSuccessProject,
@@ -45,6 +51,8 @@ function TaskBoard({}: Props) {
         openModalDelete()
     }
 
+    console.log(dataStatus)
+
     return (
         <div className="w-full space-y-6">
             <div className="grid sm:grid-cols-3 gap-4">
@@ -63,6 +71,12 @@ function TaskBoard({}: Props) {
                     onSearchChange={(val) => setCustomerSearch(val)}
                     isLoading={isLoadingCustomer}
                 />
+                <Card className="bg-secondary/90">
+                    <CardContent className="flex justify-between items-center gap-3 py-2">
+                        <span>Topshiriqlar: {dataStatus?.todo || 0}</span>
+                        <span>Yakunlanganlar: {dataStatus?.finished || 0}</span>
+                    </CardContent>
+                </Card>
             </div>
 
             <div className="grid sm:grid-cols-3 gap-3">

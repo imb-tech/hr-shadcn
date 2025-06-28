@@ -17,6 +17,7 @@ interface IProps {
     placeholder?: string
     variant?: "secondary" | "default",
     titleHidden?:boolean
+     disabledCalendar?:boolean
 }
 
 export default function ParamDatePicker({
@@ -29,6 +30,7 @@ export default function ParamDatePicker({
     placeholder,
     variant,
     titleHidden,
+    disabledCalendar,
     ...props
 }: IProps) {
     const navigate = useNavigate()
@@ -82,12 +84,13 @@ export default function ParamDatePicker({
                 size="default"
                 variant={variant}
                 titleHidden={titleHidden}
+                disabledCalendar={disabledCalendar}
             />
             {parsedDate && !disabled && (
                 <X
                     onClick={reset}
                     size={16}
-                    className="text-red-500 absolute right-2 cursor-pointer"
+                    className="text-red-500 absolute top-[50%] translate-y-[-50%] right-2 cursor-pointer"
                 />
             )}
         </div>
