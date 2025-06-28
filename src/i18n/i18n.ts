@@ -25,7 +25,7 @@ i18n
         },
     })
     .then(() => {
-        if (!localStorage.getItem('i18next')) {
+        if (!localStorage.getItem('i18nextLng')) {
             i18n.changeLanguage('uz')
         }
     })
