@@ -17,6 +17,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import { Button } from "../ui/button"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/layouts/theme"
+import { useTranslation } from "react-i18next"
 
 const Header = ({
     rightComponent,
@@ -33,6 +34,7 @@ const Header = ({
         localStorage.clear()
         navigate({ to: "/auth" })
     }
+    const { i18n } = useTranslation()
 
     return (
         <header className="py-[10px] pr-3 pl-2 gap-4 border-b  flex items-center justify-between bg-background  max-w-full box-border">
@@ -41,6 +43,9 @@ const Header = ({
                     <div>
                         <SidebarTrigger className="text-gray-500 dark:text-white" />
                     </div>
+                    <Button onClick={() => i18n.changeLanguage("ru")}>
+                        RU
+                    </Button>
                     <Link
                         className="flex justify-start  items-center gap-1"
                         color="foreground"
@@ -101,15 +106,14 @@ const Header = ({
                         >
                             <div className="flex items-center gap-2">
                                 <User size={18} />
-                                {data?.first_name && data?.last_name ? (
+                                {data?.first_name && data?.last_name ?
                                     <p className="font-medium">
                                         {data?.first_name} {data?.last_name}
                                     </p>
-                                ) : (
-                                    <p className="font-medium ">
+                                :   <p className="font-medium ">
                                         {data?.username}
                                     </p>
-                                )}
+                                }
                             </div>
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -122,15 +126,14 @@ const Header = ({
                             }}
                             className="cursor-pointer flex items-center gap-2   "
                         >
-                            {theme === "light" ? (
+                            {theme === "light" ?
                                 <span className="flex items-center gap-2">
                                     <Sun width={18} /> Kun{" "}
                                 </span>
-                            ) : (
-                                <span className="flex items-center gap-2">
+                            :   <span className="flex items-center gap-2">
                                     <Moon width={18} /> Tun
                                 </span>
-                            )}
+                            }
                         </DropdownMenuItem>
                         <div className="w-full border-[0.5px] my-1"></div>
                         <DropdownMenuItem

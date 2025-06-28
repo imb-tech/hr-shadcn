@@ -6,6 +6,7 @@ import { createLazyFileRoute } from "@tanstack/react-router"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { usePost } from "@/hooks/usePost"
+import { useTranslation } from "react-i18next"
 
 type Form = {
     username: string
@@ -17,6 +18,7 @@ export const Route = createLazyFileRoute("/_auth/auth")({
 })
 
 function AuthComponent() {
+    const { t } = useTranslation()
     const { error, mutate, isError, isPending } = usePost({
         onSuccess: (data) => {
             const access = data?.access
@@ -48,7 +50,7 @@ function AuthComponent() {
             <FormInput
                 methods={methods}
                 name="username"
-                label="Login"
+                label={t("Login")}
                 required
                 autoComplete="on"
             />
@@ -56,12 +58,12 @@ function AuthComponent() {
                 methods={methods}
                 name="password"
                 type="password"
-                label="Parol"
+                label={t("Parol")}
                 required
                 autoComplete="on"
             />
             <Button type="submit" loading={isPending}>
-                Kirish
+                {t("Kirish")}
             </Button>
 
             {isError && (

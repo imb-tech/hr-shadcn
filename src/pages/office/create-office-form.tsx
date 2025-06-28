@@ -11,11 +11,14 @@ import { useEffect } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import DrawPolygonMap from "../map/test-map/draw-polygon-map"
+import { useTranslation } from "react-i18next"
 
 export default function CreateOfficeForm() {
     const queryClient = useQueryClient()
     const { id } = useParams({ strict: false })
     const navigate = useNavigate()
+
+    const { t } = useTranslation()
 
     const { checkAllow } = useCheckPermission()
 
@@ -95,14 +98,14 @@ export default function CreateOfficeForm() {
             >
                 <FormInput
                     required
-                    label="Ofis nomi"
+                    label={t("Ofis nomi")}
                     methods={form}
                     name="name"
                 />
 
                 <FormInput
                     required
-                    label="Manzil"
+                    label={t("Manzil")}
                     methods={form}
                     name="address"
                 />
@@ -111,14 +114,14 @@ export default function CreateOfficeForm() {
                     <FormInput
                         required
                         type="time"
-                        label={"Tushlik boshlanish vaqti"}
+                        label={t("Tushlik boshlanish vaqti")}
                         methods={form}
                         name="lunch_start_time"
                     />
                     <FormInput
                         required
                         type="time"
-                        label={"Tushlik tugash vaqti"}
+                        label={t("Tushlik tugash vaqti")}
                         methods={form}
                         name="lunch_end_time"
                     />
@@ -158,7 +161,7 @@ export default function CreateOfficeForm() {
                         disabled={isPending || isEditing}
                         type="submit"
                     >
-                        Saqlash
+                        {t("Saqlash")}
                     </Button>
                 </div>
             </form>

@@ -1,0 +1,20 @@
+{
+    "Ofis": "Офис",
+    "Xarita": "Карта",
+    "Lavozimlar": "Должности",
+    "Hodimlar": "Сотрудники",
+    "Vazifalar": "Задачи",
+    "Qo'llanma": "Руководство",
+    "So'rov": "Запросы",
+    "Balans": "Баланс",
+
+    "Login": "Логин",
+    "Parol": "Пароль",
+    "Kirish": "Войти",
+
+    "Ofis nomi": "Название офиса",
+    "Manzil": "Адрес",
+    "Tushlik boshlanish vaqti": "Время начала обеда",
+    "Tushlik tugash vaqti": "Время окончания обеда",
+    "Saqlash": "Сохранить"
+}
