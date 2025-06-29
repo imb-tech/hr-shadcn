@@ -40,21 +40,15 @@ import { formatArray, getPolygonCentroid, polygonColors } from "./util"
 import { useTheme } from "@/layouts/theme"
 import { toast } from "sonner"
 
-type TPoint = {
-    latitude: number
-    longitude: number
-}
-
 type Props = {
     defaultZoom?: number
-    defaultCenter?: TPoint
     points?: GeoJSON.GeoJSON[]
     polygons?: GeoJSON.FeatureCollection[]
 }
 
 // ForwardRef bilan wrapper
 const TestMap = forwardRef<MapRef, Props>(function TestMapComponent(
-    { defaultZoom = 14, defaultCenter, points, polygons }: Props,
+    { defaultZoom = 14, points, polygons }: Props,
     ref,
 ) {
     const internalMapRef = useRef<MapRef | null>(null)
@@ -252,8 +246,10 @@ const TestMap = forwardRef<MapRef, Props>(function TestMapComponent(
             ref={internalMapRef}
             performanceMetricsCollection
             initialViewState={{
-                latitude: defaultCenter?.latitude ?? 41.20066,
-                longitude: defaultCenter?.longitude ?? 69.236537,
+                latitude: (polygons?.[0]?.features[0].geometry as any)
+                    .coordinates[0][0][1],
+                longitude: (polygons?.[0]?.features[0].geometry as any)
+                    .coordinates[0][1][0],
                 zoom: defaultZoom,
             }}
             onMouseMove={onMouseMove}

@@ -23,9 +23,8 @@ export default function MapPage() {
                     users
                         ?.filter((u) => {
                             const matchCompany = u.company == company.id
-                            const matchRole = role_id
-                                ? u.urole_id == role_id
-                                : true
+                            const matchRole =
+                                role_id ? u.urole_id == role_id : true
                             return matchCompany && matchRole
                         })
                         ?.map((usr) => ({
@@ -109,28 +108,20 @@ export default function MapPage() {
             ],
         })) ?? []
 
-    const defaultCenter = useMemo(() => {
-        if (companies?.features) {
-            return {
-                latitude: companies?.features[0].geometry.coordinates[0],
-                longitude: companies?.features[0].geometry.coordinates[1],
-            }
-        } else return undefined
-    }, [companies])
-
     return (
         <div className="h-[90%] w-full bottom-0">
             <MapFilters
                 users={users}
                 className="mb-3 w-full flex sm:flex-row flex-col items-center gap-3"
             />
-            <TestMap
-                ref={ref}
-                defaultZoom={17}
-                points={data}
-                polygons={companies ? convertedPolygons : []}
-                defaultCenter={defaultCenter}
-            />
+            {convertedPolygons?.length ?
+                <TestMap
+                    ref={ref}
+                    defaultZoom={16}
+                    points={data}
+                    polygons={companies ? convertedPolygons : []}
+                />
+            :   null}
         </div>
     )
 }
